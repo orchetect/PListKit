@@ -31,10 +31,10 @@ var pl = OTPList(fromURL: url)
 pl?.content[string: "KeyName"] = "A string value"
 let getString = pl?.content[string: "KeyName"]      // Optional("A string value")
 
-// these 7 value types are accepable
+// these 7 value types are acceptable
 // since these getters can all fail if the key doesn't exist, they all return optionals
 pl?.content[string: "TestString"]	// String?
-pl?.content[int: "TestInt"]			// Int?
+pl?.content[int: "TestInt"]		// Int?
 pl?.content[float: "TestFloat"]		// Double?
 pl?.content[bool: "TestBool"]		// Bool?
 pl?.content[date: "TestDate"]		// Date?
@@ -43,7 +43,7 @@ pl?.content[array: "TestArray"]		// OTPListArray?, aka: Array<OTPListValue>
 pl?.content[dict: "TestDict"]		// OTPListDictionary?, aka: Dictionary<String, OTPListValue>
 
 // also, you can access a value without knowing its type beforehand:
-pl?.content[any: "TestString"]				// Any?
+pl?.content[any: "TestString"]			// Any?
 pl?.content[any: "TestString"] as? String	// String
 pl?.content[any: "TestString"] as? Int		// nil
 
@@ -79,13 +79,17 @@ pl?.content[dictCreate: "DoesNotExist1"]?[dictCreate: "DoesNotExist2"]?[string: 
 ```swift
 pl?.format = .xml
 
+// Method 1:
 // save back to disk if the file was previously loaded from disk
 pl?.save()
 
+// Method 2:
 // save to a new/different file on disk using local file path
 pl?.save(toFile: "/Users/user/Desktop/file.plist")
 
-// save to a new/different file on disk using local URL path
+// Method 3:
+// save to 
+a new/different file on disk using local URL path
 if let url = URL(string: "file:///Users/user/Desktop/file.plist") {
     pl?.save(toURL: url)
 }
