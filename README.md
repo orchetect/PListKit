@@ -88,8 +88,7 @@ pl?.save()
 pl?.save(toFile: "/Users/user/Desktop/file.plist")
 
 // Method 3:
-// save to 
-a new/different file on disk using local URL path
+// save to a new/different file on disk using local URL path
 if let url = URL(string: "file:///Users/user/Desktop/file.plist") {
     pl?.save(toURL: url)
 }
