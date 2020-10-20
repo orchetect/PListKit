@@ -53,9 +53,10 @@ To add PListKit to your Xcode project, select File → Swift Packages → Add Pa
 ### Construction
 
 ```swift
+import PListKit
+
 // new empty plist object
 let pl = PList()
-pl.format = .xml
 ```
 
 ### Loading a plist file's contents
@@ -221,7 +222,7 @@ pl.storage[array: "Keyname"]
 pl.storage[dict: "Keyname"]
 ```
 
-The subscripts are capable get and set.
+The subscripts are usable to both get and set.
 
 ```swift
 pl.storage[string: "Keyname"] = "string value"
@@ -255,7 +256,7 @@ try? pl.save(toFile: "/Users/user/Desktop/file.plist", format: .xml)
 
 ### Copy PList Object
 
-The `PList` class conforms to `NSopying` if you need to copy the entire plist object in memory.
+The `PList` class conforms to `NSCopying` if you need to copy the entire plist object in memory.
 
 ```swift
 let pl = PList(fromFile: "/Users/user/Desktop/file.plist")
