@@ -46,7 +46,10 @@ PListKit solves these issues by:
 
 The library is available as a Swift Package Manager (SPM) package.
 
-To add PListKit to your Xcode project, select File → Swift Packages → Add Package Depedancy using `https://github.com/orchetect/PListKit` as the URL.
+To add PListKit to your Xcode project:
+
+1. Select File → Swift Packages → Add Package Depedancy
+2. Add package using  `https://github.com/orchetect/PListKit` as the URL.
 
 ## Documentation
 
@@ -279,5 +282,17 @@ More methods are available in addition to what is outlined here in the documenta
 - [ ] Add cocapods / carthage support
 - [ ] Test result of creating or saving over a protected plist file. Does it fail silently, or trigger an exception? (ie: in macOS root or user preferences folder).
 - [ ] Test for memory leaks now that PList is a class, especially with `.root` objects
+
+## Author
+
+Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect](https://github.com/orchetect).
+
+## License
+
+Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/SwiftRadix/blob/master/LICENSE) for details.
+
+## Contributions
+
+Contributions are welcome. Feel free to post an Issue to discuss.
 
 This library was formerly known as OTPList.
