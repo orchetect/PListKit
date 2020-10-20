@@ -289,7 +289,7 @@ Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect]
 
 ## License
 
-Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/SwiftRadix/blob/master/LICENSE) for details.
+Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/PListKit/blob/master/LICENSE) for details.
 
 ## Contributions
 
