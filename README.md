@@ -1,103 +1,282 @@
-# OTPList
+# PListKit
+
 <p>
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/Swift4-compatible-orange.svg?style=flat" alt="Swift 4 compatible" /></a>
-<a href="https://raw.githubusercontent.com/uraimo/Bitter/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
+<a href="https://developer.apple.com/swift">
+<img src="https://img.shields.io/badge/Swift%205.2-compatible-orange.svg?style=flat"
+     alt="Swift 5.2 compatible" />
+</a>
+<a href="#installation">
+<img src="https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat"
+     alt="Swift Package Manager (SPM) compatible" />
+</a>
+<a href="https://developer.apple.com/swift">
+<img src="https://img.shields.io/badge/platform-macOS%2010.10%20|%20iOS%209.0%20|%20tvOS%209.0%20|%20watchOS%202.0-green.svg?style=flat"
+     alt="Platform - macOS 10.10 | iOS 9.0 | tvOS 9.0 | watchOS 2.0" />
+</a>
+<a href="#documentation">
+<img src="https://img.shields.io/badge/Code%20Coverage-92.7%20percent-green.svg?style=flat"
+     alt="Code Coverage - 92.7 Percent" />
+</a>
+<a href="https://github.com/orchetect/PListKit/blob/master/LICENSE">
+<img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat"
+     alt="License: MIT" />
+</a>
 </p>
 
-Read, modify, and write PList files with ease using native Swift types and convenient syntax. Supports nested dictionaries and arrays, as well as binary PList file formats.
+A multiplatform Swift library bringing functional methods and type safety to .plist (Property List) files.
 
 ## Summary
 
-OTPList is a struct, so don't pass it around as an object. Instead, instance it in a variable and access that variable.
+The challenges that Apple's standard ` PropertyListSerialization` presents:
 
-All key-value types are strongly typed with native Swift types, so it is safe and easy to use.
+1. **Lack of type safety**: it allows the inadvertent injection of incompatible value types, which can lead to unexpected errors when saving a plist file later on, and are difficult to diagnose
+2. **Root-level dictionary access only**, making traversal of nested dictionaries very cumbersome
+3. **Exposes NS value types** which can be a pain to work with
 
+PListKit solves these issues by:
 
-
-- Create an empty PList object, or initialize it from a file on disk or a `.plist` file directly from a web URL.
-
-```swift
-var pl = PList()
-
-var pl = PList(fromFile: "/Users/user/Desktop/file.plist")
-
-guard let url = URL(string: "http://www.domain.com/file.plist") else { return }
-var pl = OTPList(fromURL: url)
-```
-
-- Read values, including accessing nested dictionaries using safe Optional chaining.
-
-```swift
-pl?.content[string: "KeyName"] = "A string value"
-let getString = pl?.content[string: "KeyName"]      // Optional("A string value")
-
-// these 7 value types are acceptable
-// since these getters can all fail if the key doesn't exist, they all return optionals
-pl?.content[string: "TestString"]	// String?
-pl?.content[int: "TestInt"]		// Int?
-pl?.content[float: "TestFloat"]		// Double?
-pl?.content[bool: "TestBool"]		// Bool?
-pl?.content[date: "TestDate"]		// Date?
-pl?.content[data: "TestData"]		// Data?
-pl?.content[array: "TestArray"]		// OTPListArray?, aka: Array<OTPListValue>
-pl?.content[dict: "TestDict"]		// OTPListDictionary?, aka: Dictionary<String, OTPListValue>
-
-// also, you can access a value without knowing its type beforehand:
-pl?.content[any: "TestString"]			// Any?
-pl?.content[any: "TestString"] as? String	// String
-pl?.content[any: "TestString"] as? Int		// nil
-
-// accessing array contents:
-pl?.content[array: "TestArray"]?[0]
-pl?.content[array: "TestArray"]?[1]
-
-// acessing dictionary contents:
-pl?.content[dict: "TestDict"]?[string: "DictString"]
-pl?.content[dict: "TestDict"]?[int: "DictInt"]
-
-// accessing nested dictionary values
-pl?.content[dict: "TestNestedDict1"]?[dict: "TestNestedDict2"]?[string: "NestedString"]
-```
-
-- Modify values using the same syntax.
-
-```swift
-// add or modify key values
-pl?.content[string: "TestString"] = "New value"
-pl?.content[int: "TestInt"] = 234
-pl?.content[dict: "TestNestedDict1"]?[dict: "TestNestedDict2"]?[string: "NestedString"] = "New value"
-
-// delete a key
-pl?.content[string: "ThisWillBeDeleted"] = nil
-
-// add a key and create all nested dictionaries at the same time, if they don't exist
-pl?.content[dictCreate: "DoesNotExist1"]?[dictCreate: "DoesNotExist2"]?[string: "NestedString"] = "A string value"
-```
-
-- Save the `.plist` file back to disk in XML or Binary format.
-
-```swift
-pl?.format = .xml
-
-// Method 1:
-// save back to disk if the file was previously loaded from disk
-pl?.save()
-
-// Method 2:
-// save to a new/different file on disk using local file path
-pl?.save(toFile: "/Users/user/Desktop/file.plist")
-
-// Method 3:
-// save to a new/different file on disk using local URL path
-if let url = URL(string: "file:///Users/user/Desktop/file.plist") {
-    pl?.save(toURL: url)
-}
-```
+1. Acting as a **safe and convenient** wrapper for  `PropertyListSerialization`
+2. Providing **clean functional syntax** for
+   - easily manipulating nested keys and values
+   - loading and saving plist files
+3. Exposing **native Swift value types** for keys
+4. **Preventing the inadvertent use of incompatible value types** to ensure unexpected errors do not arise
 
 ## Installation
 
-Grab the `OTPList.swift` file from within the playground file and use it in your project.
+The library is available as a Swift Package Manager (SPM) package.
+
+To add PListKit to your Xcode project, select File → Swift Packages → Add Package Depedancy using `https://github.com/orchetect/PListKit` as the URL.
 
 ## Documentation
 
-There are more methods and use cases - for an exhaustive walk-through, open the `OTPList.playground` file.
+### Construction
+
+```swift
+// new empty plist object
+let pl = PList()
+pl.format = .xml
+```
+
+### Loading a plist file's contents
+
+The following methods are available to load external data into the `PList` object.
+
+- `.load(fromFile:)` - using a path on disk
+- `.load(fromURL:)` - using a local file URL or network resource URL
+- `.load(data:)` - using raw plist file data
+
+Load method with a single error handler:
+
+```swift
+let pl = PList()
+
+guard case .success(_) = pl.load(fromFile: "/Users/user/Desktop/file.plist")
+else {
+  // handle failure
+}
+```
+
+Load method with individual error handlers:
+
+```swift
+let pl = PList()
+
+let result = pl.load(fromFile: "/Users/user/Desktop/file.plist")
+
+switch result {
+  case .success(_):
+    // file loading worked
+  
+  case .failure(let err):
+    // an error occurred
+    switch err {
+      case .fileNotFound:
+        // handle error here
+      case .formatNotExpected:
+        // handle error here
+      case .unexpectedKeyTypeEncountered:
+        // handle error here
+      case .unexpectedKeyValueEncountered:
+        // handle error here
+      case .unhandledType:
+        // handle error here
+    }
+}
+```
+
+### Read/Write Keys
+
+```swift
+// can create intermediate dictionaries if nonexistent
+pl.createIntermediateDictionaries = true // (note: defaults to true)
+
+// create a new Int key within nested dictionaries
+pl.root
+  .dict(key: "Dict")
+  .dict(key: "Nested Dict")
+  .int(key: "Int")
+  .value = 123
+
+// read the value back
+let val = pl.root
+  .dict(key: "Dict")
+  .dict(key: "Nested Dict")
+  .int(key: "Int")
+  .value  // == Optional(123)
+```
+
+All valid property list value types map transparently to native Swift value types.
+
+```swift
+pl.root.string(key: "String").value = "a new string"
+
+pl.root.int(key: "Int").value = 123
+
+pl.root.double(key: "Double").value = 123.45
+
+pl.root.bool(key: "Bool").value = true
+
+pl.root.date(key: "Date").value = Date()
+
+pl.root.data(key: "Data").value = Data([0x01, 0x02])
+
+pl.root.array(key: "Array").value = 
+  ["a string",
+   123, 
+   123.45,
+   true, 
+   Date(), 
+   Data([0x01, 0x02])]
+
+// dictonaries can be modified directly if necessary,
+// perhaps if you need to populate a large data set or copy a nested structure
+// but otherwise it's much nicer to use the discretely typed methods above
+pl.root.dict(key: "Dictionary").value = 
+  ["Key 1" : "a string",
+   "Key 2" : 123]
+```
+
+### Manipulating Array Elements Directly
+
+Arrays can, of course, be modified in-place using native Swift subscripts.
+
+```bash
+pl.root.array(key: "Array").value?[0] = "replaced string value"
+pl.root.array(key: "Array").value?.append("new string value")
+```
+
+### Reading Arrays
+
+Since property list arrays can contain any valid plist value type simultaneously, when reading arrays you need to conditionally cast values to test their type.
+
+```swift
+// returns type PListArray, aka [PListValue]
+let arr = pl.root.array(key: "Array").value ?? []  // defaulted since the key may not exist
+
+// example: safely attempt to read first value as a String
+let str = arr.first as? String
+
+// or if you need to test each value in the array:
+for element in arr {
+  switch element {
+    case let val as String:                 print("String: \(val)")
+    case let val as Int:                    print("Int: \(val)")
+    case let val as Double:                 print("Double: \(val)")
+    case let val as Bool:                   print("Bool: \(val)")
+    case let val as Date:                   print("Date: \(val)")
+    case let val as Data:                   print("Data with \(val.count) bytes")
+    case let val as PList.PListArray:       print("Array with \(val.count) elements")
+    case let val as PList.PListDictionary:  print("Dictionary with \(val.count) elements")
+    default: break // technically, this should never happen
+  }
+}
+```
+
+### Deleting Keys
+
+```swift
+// delete a key
+pl.root.string(key: "String").value = nil
+
+// delete a dictionary or array and all of its contents, in the same fashion
+pl.root.array(key: "Array").value = nil
+pl.root.dict(key: "Dict").value = nil
+```
+
+### Subscripts
+
+A full set of chainable subscripts are also available if you choose to use them, mirroring the functional methods. To use them, reference the `storage` property directly instead of `root`.
+
+```swift
+pl.storage[any: "Keyname"] // reads key value as PListValue
+
+pl.storage[string: "Keyname"]
+pl.storage[int: "Keyname"]
+pl.storage[double: "Keyname"]
+pl.storage[bool: "Keyname"]
+pl.storage[date: "Keyname"]
+pl.storage[data: "Keyname"]
+pl.storage[array: "Keyname"]
+pl.storage[dict: "Keyname"]
+```
+
+The subscripts are capable get and set.
+
+```swift
+pl.storage[string: "Keyname"] = "string value"
+let str = pl.storage[string: "Keyname"] ?? "" // "string value"
+```
+
+Nested dictionaries can easily be accessed through chaining subscripts.
+
+```swift
+// sets nested string key if the intermediate dictionaries already exist
+pl.storage[dict: "Dict"]?[dict: "Nested Dict"]?[string: "Keyname"] = "string value"
+
+// alternative subscript creates nested dictionaries if they don't exist
+pl.storage[dictCreate: "Dict"]?[dictCreate: "Nested Dict"]?[string: "Keyname"] = "string value"
+```
+
+### Save File to Disk
+
+```swift
+// save to disk in-place, if the file was previously loaded
+// from PList(fromURL:) / PList(fromFile:) or .load(fromURL:) / .load(fromFile:)
+try? pl.save()
+
+// save to a new file on disk using file URL
+guard let url = URL(string: "file:///Users/user/Desktop/file.plist") else { return }
+try? pl.save(toURL: url, format: .xml)
+
+// save to a new file on disk using path
+try? pl.save(toFile: "/Users/user/Desktop/file.plist", format: .xml)
+```
+
+### Copy PList Object
+
+The `PList` class conforms to `NSopying` if you need to copy the entire plist object in memory.
+
+```swift
+let pl = PList(fromFile: "/Users/user/Desktop/file.plist")
+
+let pl2 = pl.copy() as! PList
+```
+
+### Additional Methods
+
+More methods are available in addition to what is outlined here in the documentation. Use code completion in the Xcode IDE code editor to discover them.
+
+## Resources
+
+- [Apple Docs: About Property Lists](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html)
+
+## Roadmap
+
+### Future Improvements
+
+- [ ] Add cocapods / carthage support
+- [ ] Test result of creating or saving over a protected plist file. Does it fail silently, or trigger an exception? (ie: in macOS root or user preferences folder).
+- [ ] Test for memory leaks now that PList is a class, especially with `.root` objects
+
+This library was formerly known as OTPList.
