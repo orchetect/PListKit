@@ -20,7 +20,7 @@ let package = Package(
 	
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-		.package(url: "https://github.com/orchetect/OTCore", from: "1.0.3")
+		.package(url: "https://github.com/orchetect/OTCore", from: "1.1.0")
     ],
 	
     targets: [

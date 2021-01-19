@@ -48,7 +48,7 @@ The library is available as a Swift Package Manager (SPM) package.
 
 To add PListKit to your Xcode project:
 
-1. Select File → Swift Packages → Add Package Depedancy
+1. Select File → Swift Packages → Add Package Dependency
 2. Add package using  `https://github.com/orchetect/PListKit` as the URL.
 
 ## Documentation
