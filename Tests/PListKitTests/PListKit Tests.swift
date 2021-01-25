@@ -166,7 +166,7 @@ class PList_Tests: XCTestCase {
 		
 		print("Cleaning up file(s)...")
 		
-		XCTAssertTrue(trashOrDelete(url: url))
+		XCTAssertNoThrow(try url.trashOrDelete())
 		
 	}
 	
@@ -242,8 +242,8 @@ class PList_Tests: XCTestCase {
 		
 		print("Cleaning up file(s)...")
 		
-		XCTAssertTrue(trashOrDelete(url: url1))
-		XCTAssertTrue(trashOrDelete(url: url2))
+		XCTAssertNoThrow(try url1.trashOrDelete())
+		XCTAssertNoThrow(try url2.trashOrDelete())
 		
 	}
 	
@@ -701,53 +701,6 @@ class PList_Tests: XCTestCase {
 		XCTAssertEqual(copy.format, .openStep)
 		
 	}
-	
-}
-
-// MARK: - Helpers
-
-/// Attemptes to move a file to the Trash if possible, otherwise attemptes to delete the file.
-@discardableResult
-fileprivate func trashOrDelete(url: URL) -> Bool {
-	
-	// funcs
-	
-	func __delFile(url: URL) -> Bool {
-		(try? FileManager.default.removeItem(at: url)) != nil
-	}
-		
-	// logic
-	
-	#if os(tvOS)
-	
-	return __delFile(url: url)
-	
-	#else
-	
-	if #available(macOS 10.8, iOS 11.0, *) {
-		
-		func __trashFile(url: URL) -> Bool {
-			if (try? FileManager.default.trashItem(at: url, resultingItemURL: nil)) == nil {
-				#if os(macOS) // .trashItem has permissions issues on iOS; ignore
-				return false
-				#endif
-			}
-			return true
-		}
-		
-		// move file to trash
-		
-		return __trashFile(url: url)
-		
-	} else {
-		
-		// delete file
-		
-		return __delFile(url: url)
-		
-	}
-	
-	#endif
 	
 }
 
