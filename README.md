@@ -282,6 +282,7 @@ More methods are available in addition to what is outlined here in the documenta
 - [ ] Add cocapods / carthage support
 - [ ] Test result of creating or saving over a protected plist file. Does it fail silently, or trigger an exception? (ie: in macOS root or user preferences folder).
 - [ ] Test for memory leaks now that PList is a class, especially with `.root` objects
+- [ ] Consider supporting PList files that have a root node other than `Dictionary` (can be any supported PList value type)
 
 ## Author
 
