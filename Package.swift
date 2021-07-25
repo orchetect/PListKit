@@ -12,35 +12,23 @@ let package = Package(
 	],
 	
     products: [
-		
         .library(
             name: "PListKit",
             targets: ["PListKit"])
-		
     ],
 	
     dependencies: [
-		
-        // Main target dependencies:
-		// (none)
-		
-		// Test target dependencies:
-		.package(url: "https://github.com/orchetect/OTCore", from: "1.1.3")
-		
+		// none
     ],
 	
     targets: [
-        
-		// Main module
         .target(
             name: "PListKit",
             dependencies: []),
 		
-		// Unit tests
         .testTarget(
             name: "PListKitTests",
-            dependencies: ["PListKit", "OTCore"])
-		
+            dependencies: ["PListKit"])
     ]
 	
 )

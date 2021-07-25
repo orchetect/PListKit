@@ -10,7 +10,6 @@
 
 import XCTest
 @testable import PListKit
-import OTCore
 
 class PList_Tests: XCTestCase {
 	
