@@ -1,27 +1,6 @@
 # PListKit
 
-<p>
-<a href="https://developer.apple.com/swift">
-<img src="https://img.shields.io/badge/Swift%205.2-compatible-orange.svg?style=flat"
-     alt="Swift 5.2 compatible" />
-</a>
-<a href="#installation">
-<img src="https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat"
-     alt="Swift Package Manager (SPM) compatible" />
-</a>
-<a href="https://developer.apple.com/swift">
-<img src="https://img.shields.io/badge/platform-macOS%2010.10%20|%20iOS%209.0%20|%20tvOS%209.0%20|%20watchOS%202.0-green.svg?style=flat"
-     alt="Platform - macOS 10.10 | iOS 9.0 | tvOS 9.0 | watchOS 2.0" />
-</a>
-<a href="#documentation">
-<img src="https://img.shields.io/badge/Code%20Coverage-92.7%20percent-green.svg?style=flat"
-     alt="Code Coverage - 92.7 Percent" />
-</a>
-<a href="https://github.com/orchetect/PListKit/blob/master/LICENSE">
-<img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat"
-     alt="License: MIT" />
-</a>
-</p>
+[![CI Build Status](https://github.com/orchetect/PListKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/PListKit/actions/workflows/build.yml) [![Platforms - macOS | iOS | tvOS | watchOS](https://img.shields.io/badge/platforms-macOS%20|%20iOS%20|%20tvOS%20|%20watchOS%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/PListKit/blob/main/LICENSE)
 
 A multiplatform Swift library bringing functional methods and type safety to .plist (Property List) files.
 
