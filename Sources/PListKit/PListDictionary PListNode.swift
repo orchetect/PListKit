@@ -47,7 +47,7 @@ extension PList {
             self.parent = parent
         }
         
-        internal func getter(_ keys: [keyNodeTypePair]? = nil) -> PListValue? {
+        internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
             
             var _keys = keys ?? []
             _keys.append((key, type))
@@ -55,7 +55,7 @@ extension PList {
             return parent?.getter(_keys)
         }
         
-        internal func setter(_ keys: [keyNodeTypePair]? = nil,
+        internal func setter(_ keys: [KeyNodeTypePair]? = nil,
                              value: PListValue?) {
             
             var _keys = keys ?? []
@@ -70,6 +70,7 @@ extension PList {
 
 extension PList.PListNode {
     
+    /// Internal
     enum NodeType {
         case dictionary
         case array
@@ -82,7 +83,8 @@ extension PList.PListNode {
         case data
     }
     
-    typealias keyNodeTypePair = (key: String, type: NodeType)
+    /// Internal
+    typealias KeyNodeTypePair = (key: String, type: NodeType)
     
 }
 
@@ -157,10 +159,10 @@ extension PList.PListNode {
             }
         }
         
-        internal override func getter(_ keys: [keyNodeTypePair]? = nil) -> PListValue? {
+        internal override func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
             
             func recursiveGet(dictionary: PList.PListDictionary?,
-                              pairs: [keyNodeTypePair]) -> PListValue?
+                              pairs: [KeyNodeTypePair]) -> PListValue?
             {
                 
                 var pairs = pairs
@@ -187,12 +189,12 @@ extension PList.PListNode {
             return recursiveGet(dictionary: dataStore, pairs: keys!)
         }
         
-        internal override func setter(_ keys: [keyNodeTypePair]? = nil,
+        internal override func setter(_ keys: [KeyNodeTypePair]? = nil,
                                       value: PListValue?)
         {
             
             func recursiveSet(dictionary: PList.PListDictionary,
-                              pairs: [keyNodeTypePair]) -> PList.PListDictionary {
+                              pairs: [KeyNodeTypePair]) -> PList.PListDictionary {
                 
                 var pairs = pairs
                 
@@ -247,7 +249,7 @@ extension PList.PListNode {
     public class SubDictionary: PList.PListNode.TreeDictionary {
         
         internal init(key: String,
-                      parent: PList.PListNode.TreeNode )
+                      parent: PList.PListNode.TreeNode)
         {
             super.init(key: key,
                        type: .dictionary,

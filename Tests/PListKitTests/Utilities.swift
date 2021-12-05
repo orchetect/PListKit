@@ -1,8 +1,6 @@
 //
-//  File.swift
-//  PListKit
-//
-//  Created by Steffan Andrews on 2021-07-24.
+//  Utilities.swift
+//  PListKit • https://github.com/orchetect/PListKit
 //
 
 import Foundation

@@ -5,18 +5,23 @@
 
 import Foundation
 
-// MARK: - Create Array/Dict
-
 extension PList {
     
+    /// Translated Array type used by PList
+    public typealias PListArray = Array<PListValue>
+    
+}
+
+extension PList.RawArray {
+    
     /// Function to recursively translate a raw dictionary imported via NSDictionary to a Swift-friendly typed tree.
-    public static func ConvertToPListArray(_ sourceArray: RawArray) -> PListArray? {
+    public func convertedToPListArray() -> PList.PListArray? {
         
         // translate to Swift-friendly types
         
-        var newArray: PListArray = []
+        var newArray: PList.PListArray = []
         
-        for element in sourceArray {
+        for element in self {
             
             // ***** type(of:) is a workaround to test for a boolean type,
             // since testing for NSNumber's boolValue constants is tricky in Swift
@@ -50,12 +55,12 @@ extension PList {
                 case let val as Data:
                     newArray.append(val)
                     
-                case let val as RawDictionary:
-                    guard let translated = ConvertToPListDictionary(val) else { return nil }
+                case let val as PList.RawDictionary:
+                    guard let translated = val.convertedToPListDictionary() else { return nil }
                     newArray.append(translated)
                     
-                case let val as RawArray:
-                    guard let translated = ConvertToPListArray(val) else { return nil }
+                case let val as PList.RawArray:
+                    guard let translated = val.convertedToPListArray() else { return nil }
                     newArray.append(translated)
                     
                 default:
@@ -67,18 +72,6 @@ extension PList {
         }
         
         return newArray
-        
-    }
-    
-}
-
-// aka, extension [AnyObject]
-extension Array where Element: AnyObject {
-    
-    /// Conveience property: same as calling `PList.ConvertToPListArray(self)`
-    public var PListArrayRepresentation: PList.PListArray? {
-        
-        PList.ConvertToPListArray(self)
         
     }
     

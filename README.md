@@ -43,19 +43,20 @@ let pl = PList()
 
 ### Loading a plist file's contents
 
-The following methods are available to load external data into the `PList` object.
+The following initializers are available to load external data into the `PList` object.
 
-- `.load(fromFile:)` - using a path on disk
-- `.load(fromURL:)` - using a local file URL or network resource URL
-- `.load(data:)` - using raw plist file data
+- `PList(file:)` - using a file path on disk
+- `PList(url:)` - using a local file URL or network resource URL
+- `PList(data:)` - using raw plist file data
+- `PList(string:)` - using raw plist file string
+- `PList(dictionary:)` - using raw dictionary
 
 Load method with a single error handler:
 
 ```swift
-let pl = PList()
-
-guard case .success(_) = pl.load(fromFile: "/Users/user/Desktop/file.plist")
-else {
+do {
+  let pl = try PList(file: "/Users/user/Desktop/file.plist")
+} catch {
   // handle failure
 }
 ```
@@ -63,28 +64,21 @@ else {
 Load method with individual error handlers:
 
 ```swift
-let pl = PList()
-
-let result = pl.load(fromFile: "/Users/user/Desktop/file.plist")
-
-switch result {
-  case .success(_):
-    // file loading worked
-  
-  case .failure(let err):
-    // an error occurred
-    switch err {
-      case .fileNotFound:
-        // handle error here
-      case .formatNotExpected:
-        // handle error here
-      case .unexpectedKeyTypeEncountered:
-        // handle error here
-      case .unexpectedKeyValueEncountered:
-        // handle error here
-      case .unhandledType:
-        // handle error here
-    }
+do {
+  let pl = try PList(file: "/Users/user/Desktop/file.plist")
+} catch let err as PList.LoadError {
+  switch err {
+    case .fileNotFound:
+      // handle error here
+    case .formatNotExpected:
+      // handle error here
+    case .unexpectedKeyTypeEncountered:
+      // handle error here
+    case .unexpectedKeyValueEncountered:
+      // handle error here
+    case .unhandledType:
+      // handle error here
+  }
 }
 ```
 
@@ -157,10 +151,7 @@ Since property list arrays can contain any valid plist value type simultaneously
 // returns type PListArray, aka [PListValue]
 let arr = pl.root.array(key: "Array").value ?? []  // defaulted since the key may not exist
 
-// example: safely attempt to read first value as a String
-let str = arr.first as? String
-
-// or if you need to test each value in the array:
+// if you need to test each value in the array, type them in a switch block:
 for element in arr {
   switch element {
     case let val as String:                 print("String: \(val)")
@@ -221,6 +212,22 @@ pl.storage[dict: "Dict"]?[dict: "Nested Dict"]?[string: "Keyname"] = "string val
 pl.storage[dictCreate: "Dict"]?[dictCreate: "Nested Dict"]?[string: "Keyname"] = "string value"
 ```
 
+Arrays can be read by index, conditionally casting to a strong type in process:
+
+```swift
+// safely attempt to read indexes
+// if index does not exist, returns nil
+// if index exists but is of wrong type, returns nil
+pl.storage[array: "Array"]?[any: 0] // read index 0 as PListValue; you must cast it yourself
+pl.storage[array: "Array"]?[string: 0] // read index 0 and cast it as? String
+pl.storage[array: "Array"]?[int: 0] // read index 0 and cast it as? Int
+pl.storage[array: "Array"]?[double: 0] // read index 0 and cast it as? Double
+pl.storage[array: "Array"]?[bool: 0] // read index 0 and cast it as? Bool
+pl.storage[array: "Array"]?[date: 0] // read index 0 and cast it as? Date
+pl.storage[array: "Array"]?[data: 0] // read index 0 and cast it as? PList.PListArray
+pl.storage[array: "Array"]?[dict: 0] // read index 0 and cast it as? PList.PListDictionary
+```
+
 ### Save File to Disk
 
 ```swift
@@ -241,7 +248,7 @@ try? pl.save(toFile: "/Users/user/Desktop/file.plist", format: .xml)
 The `PList` class conforms to `NSCopying` if you need to copy the entire plist object in memory.
 
 ```swift
-let pl = PList(fromFile: "/Users/user/Desktop/file.plist")
+let pl = PList(file: "/Users/user/Desktop/file.plist")
 
 let pl2 = pl.copy() as! PList
 ```
