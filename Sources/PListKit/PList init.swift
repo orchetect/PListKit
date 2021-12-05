@@ -111,19 +111,17 @@ extension PList {
         // just a default, will be replaced...
         var getFormat: PropertyListSerialization.PropertyListFormat = .xml
         
-        var getDict: RawDictionary?
-        
         // if this succeeds, it will update getFormat with the file's actual format
-        getDict = (try PropertyListSerialization
-                    .propertyList(from: data,
-                                  options: .init(rawValue: 0),
-                                  format: &getFormat)) as? RawDictionary
+        let getDict = (try PropertyListSerialization
+                        .propertyList(from: data,
+                                      options: .init(rawValue: 0),
+                                      format: &getFormat)) as? RawDictionary
         
-        guard let getDict = getDict
+        guard let _getDict = getDict
         else { throw LoadError.formatNotExpected }
         
         // translate to friendly Swift types
-        guard let translatedDict = getDict.convertedToPListDictionary()
+        guard let translatedDict = _getDict.convertedToPListDictionary()
         else { throw LoadError.formatNotExpected }
         
         storage = translatedDict
