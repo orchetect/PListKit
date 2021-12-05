@@ -1,5 +1,5 @@
 //
-//  PList Result.swift
+//  PList Errors.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //
 

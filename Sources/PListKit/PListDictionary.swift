@@ -7,13 +7,20 @@ import Foundation
 
 extension PList {
     
-    public static func ConvertToPListDictionary(_ sourceDictionary: RawDictionary) -> PListDictionary? {
+    /// Translated Dictionary type used by PList
+    public typealias PListDictionary = Dictionary<String, PListValue>
+    
+}
+
+extension PList.RawDictionary {
+    
+    public func convertedToPListDictionary() -> PList.PListDictionary? {
         
         // translate to Swift-friendly types
         
-        var newDict: PListDictionary = [:]
+        var newDict: PList.PListDictionary = [:]
         
-        for (keyRaw, value) in sourceDictionary {
+        for (keyRaw, value) in self {
             
             // key must be translatable to String
             guard let key = keyRaw as? String else { return nil }
@@ -61,12 +68,12 @@ extension PList {
                 case let val as Data:
                     newDict[key] = val
                     
-                case let val as RawDictionary:
-                    guard let translated = ConvertToPListDictionary(val) else { return nil }
+                case let val as PList.RawDictionary:
+                    guard let translated = val.convertedToPListDictionary() else { return nil }
                     newDict[key] = translated
                     
-                case let val as RawArray:
-                    guard let translated = ConvertToPListArray(val) else { return nil }
+                case let val as PList.RawArray:
+                    guard let translated = val.convertedToPListArray() else { return nil }
                     newDict[key] = translated
                     
                 default:
@@ -78,18 +85,6 @@ extension PList {
         }
         
         return newDict
-    }
-    
-}
-
-// aka, extension [NSObject : AnyObject]
-extension Dictionary where Key: NSObject, Value: AnyObject {
-    
-    /// Conveience property: same as calling `PList.ConvertToPListDictionary(self)`
-    public var PListDictionaryRepresentation: PList.PListDictionary? {
-        
-        PList.ConvertToPListDictionary(self)
-        
     }
     
 }

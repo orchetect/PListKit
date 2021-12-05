@@ -5,28 +5,36 @@
 
 import Foundation
 
-// MARK: - PListDictionary subscripts
-// Essentially, an extension on PListDictionary to provide subscript chaining for keys and nested dictionaries
-
+/// aka extension PListDictionary
 public extension Dictionary where Key == String, Value == PListValue {
     
     // Internal type: NSString
     subscript(string key: String) -> String? {
         get {
-            return self[key] as? String
+            self[key] as? String
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[string: key]
+            yield &value
+            self[key] = value
         }
     }
     
     // Internal type: NSNumber
     subscript(int key: String) -> Int? {
         get {
-            return self[key] as? Int
+            self[key] as? Int
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[int: key]
+            yield &value
+            self[key] = value
         }
     }
     
@@ -48,56 +56,86 @@ public extension Dictionary where Key == String, Value == PListValue {
         set {
             self[key] = newValue
         }
+        _modify {
+            var value = self[double: key]
+            yield &value
+            self[key] = value
+        }
     }
     
     // Internal type: NSCFBoolean / NSNumber boolValue
     subscript(bool key: String) -> Bool? {
         get {
-            return self[key] as? Bool
+            self[key] as? Bool
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[bool: key]
+            yield &value
+            self[key] = value
         }
     }
     
     // Internal type: NSDate
     subscript(date key: String) -> Date? {
         get {
-            return self[key] as? Date
+            self[key] as? Date
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[date: key]
+            yield &value
+            self[key] = value
         }
     }
     
     // Internal type: NSData
     subscript(data key: String) -> Data? {
         get {
-            return self[key] as? Data
+            self[key] as? Data
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[data: key]
+            yield &value
+            self[key] = value
         }
     }
     
-    // Get: Access any key's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is.
-    // Set: Set a key's value, as long as the value passed is a compatible type acceptable as a PList key's value.
+    /// Get: Access any key's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is.
+    /// Set: Set a key's value, identical to setting the standard subscript `self[] =`.
     subscript(any key: String) -> PListValue? {
         get {
-            return self[key]
+            self[key]
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[any: key]
+            yield &value
+            self[key] = value
         }
     }
     
     // Internal type: Array<AnyObject> (ordered)
     subscript(array key: String) -> PList.PListArray? {
         get {
-            return self[key] as? PList.PListArray
+            self[key] as? PList.PListArray
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[array: key]
+            yield &value
+            self[key] = value
         }
     }
     
@@ -118,13 +156,18 @@ public extension Dictionary where Key == String, Value == PListValue {
         set {
             self[key] = newValue
         }
+        _modify {
+            var value = self[arrayCreate: key]
+            yield &value
+            self[key] = value
+        }
     }
     
     // if key exists and it's a dictionary, return it. otherwise return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
     subscript(dict key: String) -> PList.PListDictionary? {
         get {
-            return self[key] as? PList.PListDictionary
+            self[key] as? PList.PListDictionary
         }
         set {
             if newValue == nil {
@@ -132,6 +175,11 @@ public extension Dictionary where Key == String, Value == PListValue {
             } else {
                 self[key] = newValue
             }
+        }
+        _modify {
+            var value = self[dict: key]
+            yield &value
+            self[key] = value
         }
     }
     
@@ -151,6 +199,11 @@ public extension Dictionary where Key == String, Value == PListValue {
         }
         set {
             self[key] = newValue
+        }
+        _modify {
+            var value = self[dictCreate: key]
+            yield &value
+            self[key] = value
         }
     }
     
