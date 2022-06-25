@@ -9,7 +9,7 @@ extension PList {
     
     /// Save the PList file to disk in-place, overwriting without confirmation.
     ///
-    /// Only applicable if the `load()` intializers or methods were already used on this class instance which would have obtained a file's location on disk while loading the file.
+    /// Only applicable if the `load()` initializers or methods were already used on this class instance which would have obtained a file's location on disk while loading the file.
     ///
     /// The `filePath` property is read and then saves to that location. If it is empty, the `fileURL` property is read and then saves to that location instead. If both are empty, an error is thrown.
     ///
