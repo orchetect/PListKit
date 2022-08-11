@@ -13,7 +13,7 @@ class PListDictionaryTests: XCTestCase {
     override func tearDown() { super.tearDown() }
     
     func testSubscripts_Get() {
-        // custom array subscripts still require the index to exist like normal indexing subscripts, but it conditionally types the element
+        // custom dictionary key subscripts still returns an Optional, but it also conditionally types the element
         
         let date = Date()
         

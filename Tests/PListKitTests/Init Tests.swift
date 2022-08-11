@@ -42,14 +42,11 @@ class InitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        guard (try? kSamplePList.write(
+        try kSamplePList.write(
             to: url,
             atomically: false,
             encoding: .utf8
-        )) != nil else {
-            XCTFail("Could not write temporary plist file to disk. Can't continue test.")
-            return
-        }
+        )
         
         // init(url:)
         let pl = try PList(url: url)
@@ -65,14 +62,11 @@ class InitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        guard (try? kSamplePList.write(
+        try kSamplePList.write(
             to: url,
             atomically: false,
             encoding: .utf8
-        )) != nil else {
-            XCTFail("Could not write temporary plist file to disk. Can't continue test.")
-            return
-        }
+        )
         
         // init(file:)
         let pl = try PList(file: url.path)
