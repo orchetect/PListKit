@@ -9,8 +9,7 @@ extension PList {
     /// Returns the raw plist content.
     /// If there is an error, an exception will be thrown.
     public func rawData(
-        format: PropertyListSerialization
-            .PropertyListFormat? = nil
+        format: PropertyListSerialization.PropertyListFormat? = nil
     ) throws -> Data {
         // if passed as nil, use `format` property
         let fileFormat = format != nil ? format! : self.format

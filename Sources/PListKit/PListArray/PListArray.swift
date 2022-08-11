@@ -14,7 +14,7 @@ public typealias PListArray = [PListValue]
 #endif
 
 extension PList.RawArray {
-    /// Function to recursively translate a raw dictionary imported via NSDictionary to a Swift-friendly typed tree.
+    /// Function to recursively translate a raw dictionary imported via `NSDictionary` to a Swift-friendly typed tree.
     public func convertedToPListArray() -> PListArray? {
         // translate to Swift-friendly types
         

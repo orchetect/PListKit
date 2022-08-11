@@ -54,27 +54,15 @@ public class PList {
     /// When setting a value using `.root`, determines whether any non-existing dictionaries in the path get created.
     public var createIntermediateDictionaries: Bool = true
     
+    // MARK: - Required init
+    
     /// Create an empty PList object, optionally specifying format.
     ///
     /// Format defaults to `xml`.
     ///
-    public required init(format: PropertyListSerialization.PropertyListFormat = .xml) {
+    public required init(
+        format: PropertyListSerialization.PropertyListFormat = .xml
+    ) {
         self.format = format
-    }
-}
-
-// MARK: - NSCopying
-
-extension PList: NSCopying {
-    public func copy(with zone: NSZone? = nil) -> Any {
-        // copy the class including data and properties
-        // and omit transient information such as `filePath` and `fileURL`
-        
-        let copy = PList(dictionary: storage)
-        
-        copy.format = format
-        copy.createIntermediateDictionaries = createIntermediateDictionaries
-        
-        return copy
     }
 }

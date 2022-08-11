@@ -13,6 +13,7 @@ public typealias PListDictionary = [String: PListValue]
 #endif
 
 extension PList.RawDictionary {
+    /// Function to recursively translate a raw array imported via `NSDictionary` to a Swift-friendly typed tree.
     public func convertedToPListDictionary() -> PListDictionary? {
         // translate to Swift-friendly types
         

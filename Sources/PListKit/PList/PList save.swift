@@ -14,7 +14,9 @@ extension PList {
     ///
     /// - parameter format: Data format on disk when saving.
     ///
-    public func save(format: PropertyListSerialization.PropertyListFormat? = nil) throws {
+    public func save(
+        format: PropertyListSerialization.PropertyListFormat? = nil
+    ) throws {
         // if passed as nil, use `format` property
         let fileFormat = format ?? self.format
         

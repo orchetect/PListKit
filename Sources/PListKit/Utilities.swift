@@ -5,7 +5,7 @@
 
 import Foundation
 
-/// Convenience method to form an NSError.
+/// Convenience method to form an `NSError`.
 internal func nsError(_ failureReason: String, recoverySuggestion: String? = nil) -> NSError {
     var userInfo: [String: Any] = [:]
     
