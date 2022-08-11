@@ -17,7 +17,7 @@ class PListArrayTests: XCTestCase {
         
         let date = Date()
         
-        let plistArray: PList.PListArray = [
+        let plistArray: PListArray = [
             "String value",
             1,
             1.0,

@@ -10,7 +10,7 @@ import Foundation
 #if swift(>=5.7)
 
 /// aka extension PListDictionary
-extension PList.PListDictionary {
+extension PListDictionary {
     // Internal type: NSString
     public subscript(string key: String) -> String? {
         get {
@@ -128,9 +128,9 @@ extension PList.PListDictionary {
     }
     
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(array key: String) -> PList.PListArray? {
+    public subscript(array key: String) -> PListArray? {
         get {
-            self[key] as? PList.PListArray
+            self[key] as? PListArray
         }
         set {
             self[key] = newValue
@@ -144,7 +144,7 @@ extension PList.PListDictionary {
     
     // if key exists and it's an array, return it. if key does not exist, create new array and return it. if key exists but it's not an array, return nil.
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(arrayCreate key: String) -> PList.PListArray? {
+    public subscript(arrayCreate key: String) -> PListArray? {
         mutating get {
             if self[key] != nil { // key exists, but we're not sure it's an array yet
                 return self[array: key] // if it's an array, return it
@@ -152,7 +152,7 @@ extension PList.PListDictionary {
             
             // key does not exist, so let's create it as a new array and return it
             
-            self[key] = PList.PListArray()
+            self[key] = PListArray()
             
             return self[array: key]
         }
@@ -168,9 +168,9 @@ extension PList.PListDictionary {
     
     // if key exists and it's a dictionary, return it. otherwise return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dict key: String) -> PList.PListDictionary? {
+    public subscript(dict key: String) -> PListDictionary? {
         get {
-            self[key] as? PList.PListDictionary
+            self[key] as? PListDictionary
         }
         set {
             if newValue == nil {
@@ -188,7 +188,7 @@ extension PList.PListDictionary {
     
     // if key exists and it's a dictionary, return it. if key does not exist, create new dictionary and return it. if key exists but it's not a dictionary, return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dictCreate key: String) -> PList.PListDictionary? {
+    public subscript(dictCreate key: String) -> PListDictionary? {
         mutating get {
             if self[key] != nil { // key exists, but we're not sure it's a dictionary yet
                 return self[dict: key] // if it's a dictionary, return it
@@ -196,7 +196,7 @@ extension PList.PListDictionary {
             
             // key does not exist, so let's create it as a new dictionary and return it
             
-            self[key] = PList.PListDictionary()
+            self[key] = PListDictionary()
             
             return self[dict: key]
         }
@@ -334,9 +334,9 @@ extension Dictionary where Key == String, Value == PListValue {
     }
     
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(array key: String) -> PList.PListArray? {
+    public subscript(array key: String) -> PListArray? {
         get {
-            self[key] as? PList.PListArray
+            self[key] as? PListArray
         }
         set {
             self[key] = newValue
@@ -350,7 +350,7 @@ extension Dictionary where Key == String, Value == PListValue {
     
     // if key exists and it's an array, return it. if key does not exist, create new array and return it. if key exists but it's not an array, return nil.
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(arrayCreate key: String) -> PList.PListArray? {
+    public subscript(arrayCreate key: String) -> PListArray? {
         mutating get {
             if self[key] != nil { // key exists, but we're not sure it's an array yet
                 return self[array: key] // if it's an array, return it
@@ -358,7 +358,7 @@ extension Dictionary where Key == String, Value == PListValue {
             
             // key does not exist, so let's create it as a new array and return it
             
-            self[key] = PList.PListArray()
+            self[key] = PListArray()
             
             return self[array: key]
         }
@@ -374,9 +374,9 @@ extension Dictionary where Key == String, Value == PListValue {
     
     // if key exists and it's a dictionary, return it. otherwise return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dict key: String) -> PList.PListDictionary? {
+    public subscript(dict key: String) -> PListDictionary? {
         get {
-            self[key] as? PList.PListDictionary
+            self[key] as? PListDictionary
         }
         set {
             if newValue == nil {
@@ -394,7 +394,7 @@ extension Dictionary where Key == String, Value == PListValue {
     
     // if key exists and it's a dictionary, return it. if key does not exist, create new dictionary and return it. if key exists but it's not a dictionary, return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dictCreate key: String) -> PList.PListDictionary? {
+    public subscript(dictCreate key: String) -> PListDictionary? {
         mutating get {
             if self[key] != nil { // key exists, but we're not sure it's a dictionary yet
                 return self[dict: key] // if it's a dictionary, return it
@@ -402,7 +402,7 @@ extension Dictionary where Key == String, Value == PListValue {
             
             // key does not exist, so let's create it as a new dictionary and return it
             
-            self[key] = PList.PListDictionary()
+            self[key] = PListDictionary()
             
             return self[dict: key]
         }

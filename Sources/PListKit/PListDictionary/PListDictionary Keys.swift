@@ -7,7 +7,7 @@ import Foundation
 
 // MARK: - Extra methods
 
-extension PList.PListDictionary {
+extension PListDictionary {
     // MARK: - Key-Pairs by type
     
     /// Returns all key-pairs containing String values.
@@ -48,14 +48,14 @@ extension PList.PListDictionary {
     }
     
     /// Returns all key-pairs that are Dictionaries.
-    public var getDictionaryKeyPairs: [String: PList.PListDictionary] {
-        filter { $0.value is PList.PListDictionary } as? [String: PList.PListDictionary]
+    public var getDictionaryKeyPairs: [String: PListDictionary] {
+        filter { $0.value is PListDictionary } as? [String: PListDictionary]
             ?? [:]
     }
     
     /// Returns all key-pairs that are ordered Arrays.
-    public var getArrayKeyPairs: [String: PList.PListArray] {
-        filter { $0.value is PList.PListArray } as? [String: PList.PListArray]
+    public var getArrayKeyPairs: [String: PListArray] {
+        filter { $0.value is PListArray } as? [String: PListArray]
             ?? [:]
     }
     
@@ -92,12 +92,12 @@ extension PList.PListDictionary {
     }
     
     /// Returns all keys that are Dictionaries.
-    public var getDictionaryKeys: Dictionary<String, PList.PListDictionary>.Keys {
+    public var getDictionaryKeys: Dictionary<String, PListDictionary>.Keys {
         getDictionaryKeyPairs.keys
     }
     
     /// Returns all keys that are ordered Arrays.
-    public var getArrayKeys: Dictionary<String, PList.PListArray>.Keys {
+    public var getArrayKeys: Dictionary<String, PListArray>.Keys {
         getArrayKeyPairs.keys
     }
 }

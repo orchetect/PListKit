@@ -10,7 +10,7 @@ import Foundation
 #if swift(>=5.7)
 
 /// aka extension PListArray
-extension PList.PListArray {
+extension PListArray {
     // Internal type: NSString
     public subscript(string index: Index) -> String? {
         get {
@@ -212,11 +212,11 @@ extension PList.PListArray {
     }
     
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(array index: Index) -> PList.PListArray?
+    public subscript(array index: Index) -> PListArray?
     {
         get {
             guard indices.contains(index) else { return nil }
-            return self[index] as? PList.PListArray
+            return self[index] as? PListArray
         }
         set {
             guard indices.contains(index) else { return }
@@ -240,11 +240,11 @@ extension PList.PListArray {
     }
     
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dict index: Index) -> PList.PListDictionary?
+    public subscript(dict index: Index) -> PListDictionary?
     {
         get {
             guard indices.contains(index) else { return nil }
-            return self[index] as? PList.PListDictionary
+            return self[index] as? PListDictionary
         }
         set {
             guard indices.contains(index) else { return }
@@ -475,12 +475,12 @@ extension Array where Element == PListValue {
     }
     
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(array index: Index) -> PList.PListArray?
+    public subscript(array index: Index) -> PListArray?
     where Element: Hashable
     {
         get {
             guard indices.contains(index) else { return nil }
-            return self[index] as? PList.PListArray
+            return self[index] as? PListArray
         }
         set {
             guard indices.contains(index) else { return }
@@ -504,12 +504,12 @@ extension Array where Element == PListValue {
     }
     
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dict index: Index) -> PList.PListDictionary?
+    public subscript(dict index: Index) -> PListDictionary?
     where Element: Hashable
     {
         get {
             guard indices.contains(index) else { return nil }
-            return self[index] as? PList.PListDictionary
+            return self[index] as? PListDictionary
         }
         set {
             guard indices.contains(index) else { return }

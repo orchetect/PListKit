@@ -5,20 +5,18 @@
 
 import Foundation
 
-extension PList {
-    #if swift(>=5.7)
-    public typealias PListDictionary = [String: any PListValue]
-    #else
-    /// Translated Dictionary type used by PList
-    public typealias PListDictionary = [String: PListValue]
-    #endif
-}
+#if swift(>=5.7)
+public typealias PListDictionary = [String: any PListValue]
+#else
+/// Translated Dictionary type used by PList
+public typealias PListDictionary = [String: PListValue]
+#endif
 
 extension PList.RawDictionary {
-    public func convertedToPListDictionary() -> PList.PListDictionary? {
+    public func convertedToPListDictionary() -> PListDictionary? {
         // translate to Swift-friendly types
         
-        var newDict: PList.PListDictionary = [:]
+        var newDict: PListDictionary = [:]
         
         for (keyRaw, value) in self {
             // key must be translatable to String

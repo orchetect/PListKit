@@ -5,22 +5,20 @@
 
 import Foundation
 
-extension PList {
-    #if swift(>=5.7)
-    /// Translated Array type used by PList
-    public typealias PListArray = [any PListValue]
-    #else
-    /// Translated Array type used by PList
-    public typealias PListArray = [PListValue]
-    #endif
-}
+#if swift(>=5.7)
+/// Translated Array type used by PList
+public typealias PListArray = [any PListValue]
+#else
+/// Translated Array type used by PList
+public typealias PListArray = [PListValue]
+#endif
 
 extension PList.RawArray {
     /// Function to recursively translate a raw dictionary imported via NSDictionary to a Swift-friendly typed tree.
-    public func convertedToPListArray() -> PList.PListArray? {
+    public func convertedToPListArray() -> PListArray? {
         // translate to Swift-friendly types
         
-        var newArray: PList.PListArray = []
+        var newArray: PListArray = []
         
         for element in self {
             // ***** type(of:) is a workaround to test for a boolean type,

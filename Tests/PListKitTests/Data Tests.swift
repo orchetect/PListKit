@@ -106,8 +106,8 @@ class DataTests: XCTestCase {
         XCTAssertFalse(val is Bool)
         XCTAssertFalse(val is Date)
         XCTAssertFalse(val is Data)
-        XCTAssertFalse(val is PList.PListArray)
-        XCTAssertFalse(val is PList.PListDictionary)
+        XCTAssertFalse(val is PListArray)
+        XCTAssertFalse(val is PListDictionary)
         
         XCTAssertEqual(val as? String, "A string value")
         
@@ -187,11 +187,11 @@ class DataTests: XCTestCase {
         )
         XCTAssertTrue(
             pl.storage[array: "TestArray"]!
-                .contains(where: { $0 is PList.PListArray })
+                .contains(where: { $0 is PListArray })
         )
         XCTAssertTrue(
             pl.storage[array: "TestArray"]!
-                .contains(where: { $0 is PList.PListDictionary })
+                .contains(where: { $0 is PListDictionary })
         )
         
         // delete array
@@ -282,7 +282,7 @@ class DataTests: XCTestCase {
     func testPListRawDictionary_convertedToPListDictionary() {
         let dict: PList.RawDictionary = ["A key" as NSString: 123 as NSNumber]
         
-        let newDict: PList.PListDictionary? = dict.convertedToPListDictionary()
+        let newDict: PListDictionary? = dict.convertedToPListDictionary()
         XCTAssertNotNil(newDict)
         XCTAssertEqual(newDict?.count, 1)
         XCTAssertEqual(newDict?[int: "A key"], 123)
@@ -294,7 +294,7 @@ class DataTests: XCTestCase {
             123 as NSNumber
         ]
         
-        let newArray: PList.PListArray? = array.convertedToPListArray()
+        let newArray: PListArray? = array.convertedToPListArray()
         XCTAssertNotNil(newArray)
         XCTAssertEqual(newArray?.count, 2)
         XCTAssertEqual(newArray?[0] as? String, "A key")

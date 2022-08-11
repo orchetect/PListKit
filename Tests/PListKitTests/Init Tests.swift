@@ -96,7 +96,7 @@ class InitTests: XCTestCase {
     func testInit_PListDictionary() throws {
         // empty dict
         
-        let dict1: PList.PListDictionary = [:]
+        let dict1: PListDictionary = [:]
         
         let pl1 = PList(dictionary: dict1)
         
@@ -104,7 +104,7 @@ class InitTests: XCTestCase {
         
         // dict with content
         
-        let dict2: PList.PListDictionary = [
+        let dict2: PListDictionary = [
             "key1": 123,
             "key2": 456.789,
             "key3": "A string"

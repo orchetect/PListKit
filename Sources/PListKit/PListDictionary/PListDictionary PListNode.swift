@@ -138,7 +138,7 @@ extension PList.PListNode {
             )
         }
         
-        public var value: PList.PListDictionary {
+        public var value: PListDictionary {
             get {
                 delegate?.storage ?? [:]
             }
@@ -149,7 +149,7 @@ extension PList.PListNode {
         
         override internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
             func recursiveGet(
-                dictionary: PList.PListDictionary?,
+                dictionary: PListDictionary?,
                 pairs: [KeyNodeTypePair]
             ) -> PListValue? {
                 var pairs = pairs
@@ -183,9 +183,9 @@ extension PList.PListNode {
             value: PListValue?
         ) {
             func recursiveSet(
-                dictionary: PList.PListDictionary,
+                dictionary: PListDictionary,
                 pairs: [KeyNodeTypePair]
-            ) -> PList.PListDictionary {
+            ) -> PListDictionary {
                 var pairs = pairs
                 
                 var dictionary = dictionary
@@ -247,9 +247,9 @@ extension PList.PListNode {
             )
         }
         
-        public var value: PList.PListDictionary? {
+        public var value: PListDictionary? {
             get {
-                getter() as? PList.PListDictionary
+                getter() as? PListDictionary
             }
             set {
                 setter(value: newValue)
@@ -282,9 +282,9 @@ extension PList.PListNode {
 
 extension PList.PListNode {
     public class ArrayKey: SubValue {
-        public var value: PList.PListArray? {
+        public var value: PListArray? {
             get {
-                getter() as? PList.PListArray
+                getter() as? PListArray
             }
             set {
                 setter(value: newValue)
