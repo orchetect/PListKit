@@ -18,7 +18,7 @@ PListKit solves these issues by:
 2. Providing **clean functional syntax** for
    - easily manipulating nested keys and values
    - loading and saving plist files
-3. Exposing **native Swift value types** for keys
+3. Dealing in **native Swift value types** for keys and values
 4. **Preventing the inadvertent use of incompatible value types** to ensure unexpected errors do not arise
 
 ## Installation
@@ -41,7 +41,7 @@ import PListKit
 let pl = PList()
 ```
 
-### Loading a plist file's contents
+### Loading plist contents
 
 The following initializers are available to load external data into the `PList` object.
 
@@ -51,35 +51,8 @@ The following initializers are available to load external data into the `PList` 
 - `PList(string:)` - using raw plist file string
 - `PList(dictionary:)` - using raw dictionary
 
-Load method with a single error handler:
-
 ```swift
-do {
-  let pl = try PList(file: "/Users/user/Desktop/file.plist")
-} catch {
-  // handle failure
-}
-```
-
-Load method with individual error handlers:
-
-```swift
-do {
-  let pl = try PList(file: "/Users/user/Desktop/file.plist")
-} catch let err as PList.LoadError {
-  switch err {
-    case .fileNotFound:
-      // handle error here
-    case .formatNotExpected:
-      // handle error here
-    case .unexpectedKeyTypeEncountered:
-      // handle error here
-    case .unexpectedKeyValueEncountered:
-      // handle error here
-    case .unhandledType:
-      // handle error here
-  }
-}
+let pl = try PList(file: "/Users/user/Desktop/file.plist")
 ```
 
 ### Read/Write Keys
@@ -118,13 +91,14 @@ pl.root.date(key: "Date").value = Date()
 
 pl.root.data(key: "Data").value = Data([0x01, 0x02])
 
-pl.root.array(key: "Array").value = 
-  ["a string",
-   123, 
-   123.45,
-   true, 
-   Date(), 
-   Data([0x01, 0x02])]
+pl.root.array(key: "Array").value = [
+  "a string",
+  123, 
+  123.45,
+  true, 
+  Date(), 
+  Data([0x01, 0x02])
+]
 
 // dictonaries can be modified directly if necessary,
 // perhaps if you need to populate a large data set or copy a nested structure
@@ -148,21 +122,19 @@ pl.root.array(key: "Array").value?.append("new string value")
 Since property list arrays can contain any valid plist value type simultaneously, when reading arrays you need to conditionally cast values to test their type.
 
 ```swift
-// returns type PListArray, aka [PListValue]
-let arr = pl.root.array(key: "Array").value ?? []  // defaulted since the key may not exist
+let arr = pl.root.array(key: "Array").value ?? [] // PListArray, aka [PListValue]
 
-// if you need to test each value in the array, type them in a switch block:
 for element in arr {
   switch element {
-    case let val as String:                 print("String: \(val)")
-    case let val as Int:                    print("Int: \(val)")
-    case let val as Double:                 print("Double: \(val)")
-    case let val as Bool:                   print("Bool: \(val)")
-    case let val as Date:                   print("Date: \(val)")
-    case let val as Data:                   print("Data with \(val.count) bytes")
-    case let val as PList.PListArray:       print("Array with \(val.count) elements")
-    case let val as PList.PListDictionary:  print("Dictionary with \(val.count) elements")
-    default: break // technically, this should never happen
+    case let val as String:           print("String: \(val)")
+    case let val as Int:              print("Int: \(val)")
+    case let val as Double:           print("Double: \(val)")
+    case let val as Bool:             print("Bool: \(val)")
+    case let val as Date:             print("Date: \(val)")
+    case let val as Data:             print("Data with \(val.count) bytes")
+    case let val as PListArray:       print("Array with \(val.count) elements")
+    case let val as PListDictionary:  print("Dictionary with \(val.count) elements")
+    default: break
   }
 }
 ```
@@ -173,7 +145,7 @@ for element in arr {
 // delete a key
 pl.root.string(key: "String").value = nil
 
-// delete a dictionary or array and all of its contents, in the same fashion
+// delete a dictionary or array and all of its contents
 pl.root.array(key: "Array").value = nil
 pl.root.dict(key: "Dict").value = nil
 ```

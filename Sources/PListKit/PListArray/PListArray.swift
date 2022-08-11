@@ -60,7 +60,8 @@ extension PList.RawArray {
                     newArray.append(translated)
                     
                 default:
-                    return nil // this should never happen
+                    // this should never happen unless the user conforms a type to `PlistValue`
+                    return nil
                 }
             }
         }
