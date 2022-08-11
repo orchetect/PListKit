@@ -16,7 +16,6 @@ import Foundation
 /// - To save to a new file, use `save(toFile:)`, or `save(toURL:)`.
 ///
 public class PList {
-    
     // MARK: - Globals
     
     internal let fileManager = FileManager.default
@@ -24,10 +23,10 @@ public class PList {
     // MARK: - Instance properties
     
     /// Get-only property that returns the path and filename of the currently loaded PList file.
-    internal(set) public var filePath: String? = nil
+    public internal(set) var filePath: String?
     
     /// Get-only property that returns the URL of the currently loaded PList file.
-    internal(set) public var fileURL: URL? = nil
+    public internal(set) var fileURL: URL?
     
     /// Root dictionary storage backing for the PList file, containing all keys and nested dictionaries.
     ///
@@ -60,20 +59,14 @@ public class PList {
     /// Format defaults to `xml`.
     ///
     public required init(format: PropertyListSerialization.PropertyListFormat = .xml) {
-        
         self.format = format
-        
     }
-    
 }
-
 
 // MARK: - NSCopying
 
 extension PList: NSCopying {
-    
     public func copy(with zone: NSZone? = nil) -> Any {
-        
         // copy the class including data and properties
         // and omit transient information such as `filePath` and `fileURL`
         
@@ -83,7 +76,5 @@ extension PList: NSCopying {
         copy.createIntermediateDictionaries = createIntermediateDictionaries
         
         return copy
-        
     }
-    
 }

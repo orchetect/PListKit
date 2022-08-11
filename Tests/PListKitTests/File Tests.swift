@@ -9,14 +9,12 @@ import XCTest
 import PListKit
 
 class FileTests: XCTestCase {
-    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
     // MARK: - File Save
     
     func testSaveFailure() throws {
-        
         let pl = try PList(data: kSamplePList.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
@@ -25,11 +23,9 @@ class FileTests: XCTestCase {
         XCTAssertThrowsError(try pl.save())
         XCTAssertThrowsError(try pl.save(format: .xml))
         XCTAssertThrowsError(try pl.save(format: .binary))
-        
     }
     
     func testSave() throws {
-        
         let pl = try PList(data: kSamplePList.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
@@ -61,9 +57,7 @@ class FileTests: XCTestCase {
         
         XCTAssertNoThrow(try url1.trashOrDelete())
         XCTAssertNoThrow(try url2.trashOrDelete())
-        
     }
-    
 }
 
 #endif

@@ -10,7 +10,6 @@ import Foundation
 // all subclasses adopt this
 
 extension PList {
-    
     /// `PList` path builder object to facilitate functional traversal of the underlying `PList` data storage.
     ///
     /// Do not instance this class directly. Instead, access the `.root` property on a `PList` object.
@@ -34,7 +33,6 @@ extension PList {
     /// ```
     ///
     public class PListNode {
-        
         internal var parent: TreeNode?
         
         internal var type: NodeType
@@ -48,28 +46,25 @@ extension PList {
         }
         
         internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
-            
             var _keys = keys ?? []
             _keys.append((key, type))
             
             return parent?.getter(_keys)
         }
         
-        internal func setter(_ keys: [KeyNodeTypePair]? = nil,
-                             value: PListValue?) {
-            
+        internal func setter(
+            _ keys: [KeyNodeTypePair]? = nil,
+            value: PListValue?
+        ) {
             var _keys = keys ?? []
             _keys.append((key, type))
             
             parent?.setter(_keys, value: value)
         }
-        
     }
-    
 }
 
 extension PList.PListNode {
-    
     /// Internal
     enum NodeType {
         case dictionary
@@ -85,18 +80,14 @@ extension PList.PListNode {
     
     /// Internal
     typealias KeyNodeTypePair = (key: String, type: NodeType)
-    
 }
-
 
 // MARK: - Nodes
 
 extension PList.PListNode {
-    
     public class TreeNode: PList.PListNode { }
     
     public class TreeDictionary: TreeNode {
-        
         public func dict(key: String) -> SubDictionary {
             PList.PListNode.SubDictionary(key: key, parent: self)
         }
@@ -128,26 +119,23 @@ extension PList.PListNode {
         public func data(key: String) -> DataKey {
             PList.PListNode.DataKey(key: key, type: .data, parent: self)
         }
-        
     }
-    
 }
-
 
 // MARK: - Root
 
 extension PList.PListNode {
-    
     public class Root: PList.PListNode.TreeDictionary {
-        
         internal weak var delegate: PList?
         
         internal init(delegate: PList? = nil) {
             self.delegate = delegate
             
-            super.init(key: "",
-                       type: .dictionary,
-                       parent: nil)
+            super.init(
+                key: "",
+                type: .dictionary,
+                parent: nil
+            )
         }
         
         public var value: PList.PListDictionary {
@@ -159,27 +147,28 @@ extension PList.PListNode {
             }
         }
         
-        internal override func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
-            
-            func recursiveGet(dictionary: PList.PListDictionary?,
-                              pairs: [KeyNodeTypePair]) -> PListValue?
-            {
-                
+        override internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
+            func recursiveGet(
+                dictionary: PList.PListDictionary?,
+                pairs: [KeyNodeTypePair]
+            ) -> PListValue? {
                 var pairs = pairs
                 
                 guard let current = pairs.popLast() else { return nil }
                 
                 switch current.type {
                 case .dictionary:
-                    if pairs.count > 0 {
-                        return recursiveGet(dictionary: dictionary?[dict: current.key], pairs: pairs)
+                    if !pairs.isEmpty {
+                        return recursiveGet(
+                            dictionary: dictionary?[dict: current.key],
+                            pairs: pairs
+                        )
                     } else {
                         return dictionary?[current.key]
                     }
                 default:
                     return dictionary?[current.key]
                 }
-                
             }
             
             guard let dataStore = delegate?.storage else { return nil }
@@ -189,13 +178,14 @@ extension PList.PListNode {
             return recursiveGet(dictionary: dataStore, pairs: keys!)
         }
         
-        internal override func setter(_ keys: [KeyNodeTypePair]? = nil,
-                                      value: PListValue?)
-        {
-            
-            func recursiveSet(dictionary: PList.PListDictionary,
-                              pairs: [KeyNodeTypePair]) -> PList.PListDictionary {
-                
+        override internal func setter(
+            _ keys: [KeyNodeTypePair]? = nil,
+            value: PListValue?
+        ) {
+            func recursiveSet(
+                dictionary: PList.PListDictionary,
+                pairs: [KeyNodeTypePair]
+            ) -> PList.PListDictionary {
                 var pairs = pairs
                 
                 var dictionary = dictionary
@@ -207,11 +197,14 @@ extension PList.PListNode {
                 
                 switch current.type {
                 case .dictionary:
-                    if pairs.count > 0
-                        && delegate?.createIntermediateDictionaries ?? false
+                    if !pairs.isEmpty,
+                       delegate?.createIntermediateDictionaries ?? false
                     {
                         if let newDict = dictionary[dictCreate: current.key] {
-                            dictionary[dict: current.key] = recursiveSet(dictionary: newDict, pairs: pairs)
+                            dictionary[dict: current.key] = recursiveSet(
+                                dictionary: newDict,
+                                pairs: pairs
+                            )
                         }
                     } else {
                         // we're not allowed to create the non-existent dictionary, so do nothing
@@ -221,39 +214,37 @@ extension PList.PListNode {
                 }
                 
                 return dictionary
-                
             }
             
             guard let dataStore = delegate?.storage else { return }
             
             guard keys != nil else { return }
             
-            let newDataStore = recursiveSet(dictionary: dataStore,
-                                            pairs: keys!)
+            let newDataStore = recursiveSet(
+                dictionary: dataStore,
+                pairs: keys!
+            )
             
             delegate?.storage = newDataStore
-            
         }
-        
     }
-    
 }
-
 
 // MARK: - Sub-nodes
 
 extension PList.PListNode {
-    
     // subnode template
     
     public class SubDictionary: PList.PListNode.TreeDictionary {
-        
-        internal init(key: String,
-                      parent: PList.PListNode.TreeNode)
-        {
-            super.init(key: key,
-                       type: .dictionary,
-                       parent: parent)
+        internal init(
+            key: String,
+            parent: PList.PListNode.TreeNode
+        ) {
+            super.init(
+                key: key,
+                type: .dictionary,
+                parent: parent
+            )
         }
         
         public var value: PList.PListDictionary? {
@@ -264,39 +255,33 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
-    
 }
-
 
 // MARK: - Sub-values
 
 // MARK: definition
 
 extension PList.PListNode {
-    
     public class SubValue: PList.PListNode {
-        
-        internal init(key: String,
-                      type: NodeType,
-                      parent: PList.PListNode.TreeDictionary)
-        {
-            super.init(key: key,
-                       type: type,
-                       parent: parent)
+        internal init(
+            key: String,
+            type: NodeType,
+            parent: PList.PListNode.TreeDictionary
+        ) {
+            super.init(
+                key: key,
+                type: type,
+                parent: parent
+            )
         }
-        
     }
-    
 }
 
 // MARK: individual subclasses
 
 extension PList.PListNode {
-    
     public class ArrayKey: SubValue {
-        
         public var value: PList.PListArray? {
             get {
                 getter() as? PList.PListArray
@@ -305,11 +290,9 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
     
     public class StringKey: SubValue {
-        
         public var value: String? {
             get {
                 getter() as? String
@@ -318,11 +301,9 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
     
     public class IntKey: SubValue {
-        
         public var value: Int? {
             get {
                 getter() as? Int
@@ -331,11 +312,9 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
     
     public class DoubleKey: SubValue {
-        
         public var value: Double? {
             get {
                 let getValue = getter()
@@ -357,11 +336,9 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
     
     public class BoolKey: SubValue {
-        
         public var value: Bool? {
             get {
                 getter() as? Bool
@@ -370,11 +347,9 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
     
     public class DateKey: SubValue {
-        
         public var value: Date? {
             get {
                 getter() as? Date
@@ -383,11 +358,9 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
     
     public class DataKey: SubValue {
-        
         public var value: Data? {
             get {
                 getter() as? Data
@@ -396,7 +369,5 @@ extension PList.PListNode {
                 setter(value: newValue)
             }
         }
-        
     }
-    
 }

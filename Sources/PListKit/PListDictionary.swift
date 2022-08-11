@@ -6,26 +6,21 @@
 import Foundation
 
 extension PList {
-    
     /// Translated Dictionary type used by PList
-    public typealias PListDictionary = Dictionary<String, PListValue>
-    
+    public typealias PListDictionary = [String: PListValue]
 }
 
 extension PList.RawDictionary {
-    
     public func convertedToPListDictionary() -> PList.PListDictionary? {
-        
         // translate to Swift-friendly types
         
         var newDict: PList.PListDictionary = [:]
         
         for (keyRaw, value) in self {
-            
             // key must be translatable to String
             guard let key = keyRaw as? String else { return nil }
             
-            //if key == "SidebarWidthTenElevenOrLater" {
+            // if key == "SidebarWidthTenElevenOrLater" {
             //    print("SidebarWidthTenElevenOrLater - type: ", String(describing: type(of: value)), "value:", value)
             //    print("NSNumber doubleValue:", (value as? NSNumber)?.doubleValue as Any)
             //    print("NSNumber intValue:", (value as? NSNumber)?.intValue as Any)
@@ -35,13 +30,12 @@ extension PList.RawDictionary {
             //    (value as? NSNumber)?.floatValue
             //    (value as? NSNumber)?.attributeKeys
             //    (value as? NSNumber)?.className
-            //}
+            // }
             
             // ***** type(of:) is a workaround to test for a boolean type, since testing for NSNumber's boolValue constants is tricky in Swift
             // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
             
             if String(describing: type(of: value)) == "__NSCFBoolean" {
-                
                 // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent failsafe
                 if let val = value as? Bool {
                     newDict[key] = val
@@ -50,7 +44,6 @@ extension PList.RawDictionary {
                 }
                 
             } else {
-                
                 switch value {
                 case let val as String:
                     newDict[key] = val
@@ -79,12 +72,9 @@ extension PList.RawDictionary {
                 default:
                     return nil // this should never happen
                 }
-                
             }
-            
         }
         
         return newDict
     }
-    
 }

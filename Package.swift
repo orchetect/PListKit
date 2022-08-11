@@ -1,10 +1,8 @@
 // swift-tools-version:5.3
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-    
     name: "PListKit",
     
     platforms: [
@@ -14,7 +12,8 @@ let package = Package(
     products: [
         .library(
             name: "PListKit",
-            targets: ["PListKit"])
+            targets: ["PListKit"]
+        )
     ],
     
     dependencies: [
@@ -24,11 +23,12 @@ let package = Package(
     targets: [
         .target(
             name: "PListKit",
-            dependencies: []),
+            dependencies: []
+        ),
         
         .testTarget(
             name: "PListKitTests",
-            dependencies: ["PListKit"])
+            dependencies: ["PListKit"]
+        )
     ]
-    
 )

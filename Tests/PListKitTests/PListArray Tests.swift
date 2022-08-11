@@ -9,12 +9,10 @@ import XCTest
 import PListKit
 
 class PListArrayTests: XCTestCase {
-    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
     func testSubscripts_Get() {
-        
         // custom array subscripts still require the index to exist like normal indexing subscripts, but it conditionally types the element
         
         let date = Date()
@@ -25,9 +23,9 @@ class PListArrayTests: XCTestCase {
             1.0,
             true,
             date,
-            Data([1,2,3]),
+            Data([1, 2, 3]),
             ["Array String", 123],
-            ["DictKey1" : "Dict string value"]
+            ["DictKey1": "Dict string value"]
         ]
         
         // index 0
@@ -88,7 +86,7 @@ class PListArrayTests: XCTestCase {
         XCTAssertEqual(plistArray[double: 5], nil)
         XCTAssertEqual(plistArray[bool: 5], nil)
         XCTAssertEqual(plistArray[date: 5], nil)
-        XCTAssertEqual(plistArray[data: 5], Data([1,2,3]))
+        XCTAssertEqual(plistArray[data: 5], Data([1, 2, 3]))
         XCTAssert(plistArray[array: 5] == nil)
         XCTAssert(plistArray[dict: 5] == nil)
         
@@ -113,7 +111,6 @@ class PListArrayTests: XCTestCase {
         XCTAssert(plistArray[array: 7] == nil)
         XCTAssertEqual(plistArray[dict: 7]?[string: "DictKey1"], "Dict string value")
         
-        
         // index 8 - doesn't exist; should return nil and not crash
         XCTAssertEqual(plistArray[string: 8], nil)
         XCTAssertEqual(plistArray[int: 8], nil)
@@ -123,9 +120,7 @@ class PListArrayTests: XCTestCase {
         XCTAssertEqual(plistArray[data: 8], nil)
         XCTAssert(plistArray[array: 8] == nil)
         XCTAssert(plistArray[dict: 8] == nil)
-        
     }
-    
 }
 
 #endif

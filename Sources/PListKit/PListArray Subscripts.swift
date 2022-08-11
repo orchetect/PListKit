@@ -6,10 +6,9 @@
 import Foundation
 
 /// aka extension PListArray
-public extension Array where Element == PListValue {
-    
+extension Array where Element == PListValue {
     // Internal type: NSString
-    subscript(string index: Index) -> String? {
+    public subscript(string index: Index) -> String? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? String
@@ -36,7 +35,7 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: NSNumber
-    subscript(int index: Index) -> Int? {
+    public subscript(int index: Index) -> Int? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? Int
@@ -63,7 +62,7 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: NSNumber
-    subscript(double index: Index) -> Double? {
+    public subscript(double index: Index) -> Double? {
         get {
             guard indices.contains(index) else { return nil }
             
@@ -101,7 +100,7 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: NSCFBoolean / NSNumber boolValue
-    subscript(bool index: Index) -> Bool? {
+    public subscript(bool index: Index) -> Bool? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? Bool
@@ -128,7 +127,7 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: NSDate
-    subscript(date index: Index) -> Date? {
+    public subscript(date index: Index) -> Date? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? Date
@@ -155,7 +154,7 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: NSData
-    subscript(data index: Index) -> Data? {
+    public subscript(data index: Index) -> Data? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? Data
@@ -183,7 +182,7 @@ public extension Array where Element == PListValue {
     
     /// Get: Access any index's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is. Returns nil if index does not exist (out-of-bounds).
     /// Set: Set a an index's value, as long as the index exists. Fails silently if index does not exist (out-of-bounds). Setting nil does nothing and will fail silently.
-    subscript(any index: Index) -> PListValue? {
+    public subscript(any index: Index) -> PListValue? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index]
@@ -209,8 +208,8 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: Array<AnyObject> (ordered)
-    subscript(array index: Index) -> PList.PListArray?
-    where Element : Hashable
+    public subscript(array index: Index) -> PList.PListArray?
+        where Element: Hashable
     {
         get {
             guard indices.contains(index) else { return nil }
@@ -238,8 +237,8 @@ public extension Array where Element == PListValue {
     }
     
     // Internal type: Dictionary<NSObject, AnyObject>
-    subscript(dict index: Index) -> PList.PListDictionary?
-    where Element : Hashable
+    public subscript(dict index: Index) -> PList.PListDictionary?
+        where Element: Hashable
     {
         get {
             guard indices.contains(index) else { return nil }
@@ -265,5 +264,4 @@ public extension Array where Element == PListValue {
             }
         }
     }
-    
 }

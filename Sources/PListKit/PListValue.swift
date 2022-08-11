@@ -10,11 +10,11 @@ public protocol PListValue { }
 
 // Add this protocol conformance to all supported PList value types
 
-extension String     : PListValue { }
-extension Int        : PListValue { }
-extension Double     : PListValue { }
-extension Bool       : PListValue { }
-extension Date       : PListValue { }
-extension Data       : PListValue { }
-extension Dictionary : PListValue where Key == String, Value == PListValue { }
-extension Array      : PListValue where Element == PListValue { }
+extension String: PListValue { }
+extension Int: PListValue { }
+extension Double: PListValue { }
+extension Bool: PListValue { }
+extension Date: PListValue { }
+extension Data: PListValue { }
+extension Dictionary: PListValue where Key == String, Value == PListValue { }
+extension Array: PListValue where Element == PListValue { }

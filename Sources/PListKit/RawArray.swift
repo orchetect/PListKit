@@ -6,8 +6,6 @@
 import Foundation
 
 extension PList {
-    
     /// Raw NSArray array used by `PropertyListSerialization`.
-    public typealias RawArray = Array<AnyObject>
-    
+    public typealias RawArray = [AnyObject]
 }

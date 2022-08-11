@@ -6,24 +6,19 @@
 import Foundation
 
 extension FileManager {
-    
     /// Backwards compatible method for retrieving a temporary folder from the system.
     ///
     /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
     public static var temporaryDirectoryCompat: URL {
-        
         if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
             return FileManager.default.temporaryDirectory
         } else {
             return URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
         }
-        
     }
-    
 }
 
 extension URL {
-    
     /// Returns whether the file/folder exists.
     /// Convenience proxy for Foundation `.fileExists` method.
     ///
@@ -32,15 +27,11 @@ extension URL {
     ///
     /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
     public var fileExists: Bool {
-        
-        FileManager.default.fileExists(atPath: self.path)
-        
+        FileManager.default.fileExists(atPath: path)
     }
-    
 }
 
 extension URL {
-    
     /// Attempts to first move a file to the Trash if possible, otherwise attempts to delete the file.
     ///
     /// If the file was moved to the trash, the new resulting `URL` is returned.
@@ -52,7 +43,6 @@ extension URL {
     /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
     @discardableResult
     public func trashOrDelete() throws -> URL? {
-        
         // funcs
         
         func __delFile(url: URL) throws {
@@ -64,10 +54,9 @@ extension URL {
         #if os(macOS) || targetEnvironment(macCatalyst) || os(iOS)
         
         if #available(macOS 10.8, iOS 11.0, *) {
-            
             // move file to trash
             
-            var resultingURL: NSURL? = nil
+            var resultingURL: NSURL?
             
             do {
                 try FileManager.default.trashItem(at: self, resultingItemURL: &resultingURL)
@@ -83,12 +72,10 @@ extension URL {
             return resultingURL?.absoluteURL
             
         } else {
-            
             // OS version requirements not met - delete file as a fallback
             
             try __delFile(url: self)
             return nil
-            
         }
         
         #elseif os(tvOS)
@@ -106,7 +93,5 @@ extension URL {
         return nil
         
         #endif
-        
     }
-    
 }

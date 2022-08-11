@@ -6,7 +6,6 @@
 import Foundation
 
 extension PList {
-    
     /// Save the PList file to disk in-place, overwriting without confirmation.
     ///
     /// Only applicable if the `load()` initializers or methods were already used on this class instance which would have obtained a file's location on disk while loading the file.
@@ -15,9 +14,7 @@ extension PList {
     ///
     /// - parameter format: Data format on disk when saving.
     ///
-    public func save(format: PropertyListSerialization.PropertyListFormat? = nil) throws
-    {
-        
+    public func save(format: PropertyListSerialization.PropertyListFormat? = nil) throws {
         // if passed as nil, use `format` property
         let fileFormat = format ?? self.format
         
@@ -26,7 +23,6 @@ extension PList {
         if let fu = fileURL { try save(toURL: fu, format: fileFormat) }
         
         throw nsError("No file path or URL supplied.")
-        
     }
     
     /// Save the PList file to disk, overwriting without confirmation.
@@ -34,10 +30,10 @@ extension PList {
     /// - parameter toFile: An absolute or relative file path.
     /// - parameter format: Data format on disk when saving.
     ///
-    public func save(toFile: String,
-                     format: PropertyListSerialization.PropertyListFormat? = nil) throws
-    {
-        
+    public func save(
+        toFile: String,
+        format: PropertyListSerialization.PropertyListFormat? = nil
+    ) throws {
         // if passed as nil, use `format` property
         let fileFormat = format ?? self.format
         
@@ -53,11 +49,13 @@ extension PList {
         
         var err: NSError?
         let result = PropertyListSerialization
-            .writePropertyList(storage as Any,
-                               to: out,
-                               format: fileFormat,
-                               options: opts,
-                               error: &err)
+            .writePropertyList(
+                storage as Any,
+                to: out,
+                format: fileFormat,
+                options: opts,
+                error: &err
+            )
         
         out.close()
         
@@ -73,7 +71,6 @@ extension PList {
         if err != nil {
             throw err!
         }
-        
     }
     
     /// Save the PList file to disk, overwriting without confirmation.
@@ -81,10 +78,10 @@ extension PList {
     /// - parameter toURL: A full file URL.
     /// - parameter format: Data format on disk when saving.
     ///
-    public func save(toURL: URL,
-                     format: PropertyListSerialization.PropertyListFormat? = nil) throws
-    {
-        
+    public func save(
+        toURL: URL,
+        format: PropertyListSerialization.PropertyListFormat? = nil
+    ) throws {
         // if passed as nil, use `format` property
         let fileFormat = format ?? self.format
         
@@ -100,11 +97,13 @@ extension PList {
         
         var err: NSError?
         let result = PropertyListSerialization
-            .writePropertyList(storage as Any,
-                               to: out,
-                               format: fileFormat,
-                               options: opts,
-                               error: &err)
+            .writePropertyList(
+                storage as Any,
+                to: out,
+                format: fileFormat,
+                options: opts,
+                error: &err
+            )
         
         out.close()
         
@@ -120,7 +119,5 @@ extension PList {
         if err != nil {
             throw err!
         }
-        
     }
-    
 }

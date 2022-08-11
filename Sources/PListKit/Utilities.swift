@@ -7,8 +7,7 @@ import Foundation
 
 /// Convenience method to form an NSError.
 internal func nsError(_ failureReason: String, recoverySuggestion: String? = nil) -> NSError {
-    
-    var userInfo: [String : Any] = [:]
+    var userInfo: [String: Any] = [:]
     
     userInfo[NSLocalizedDescriptionKey] =
         NSLocalizedString(failureReason, comment: "")
@@ -22,5 +21,4 @@ internal func nsError(_ failureReason: String, recoverySuggestion: String? = nil
     }
     
     return NSError(domain: "PListKit", code: -1, userInfo: userInfo)
-    
 }
