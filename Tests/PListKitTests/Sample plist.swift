@@ -1,5 +1,5 @@
 //
-//  Sample plist Files.swift
+//  Sample plist.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //
 
@@ -80,7 +80,6 @@ func verifySamplePListContent(_ pl: PList) {
         pl.storage[dict: "TestDict"]?[string: "DictString"],
         "A dict string value"
     )
-    
     XCTAssertEqual(
         pl.storage[dict: "TestNestedDict1"]?[dict: "TestNestedDict2"]?.count,
         1
@@ -94,22 +93,27 @@ func verifySamplePListContent(_ pl: PList) {
         pl.storage[bool: "TestBool"],
         true
     )
+    
     XCTAssertEqual(
         pl.storage[data: "TestData"],
         Data([0x00, 0xFF])
     )
+    
     XCTAssertEqual(
         pl.storage[date: "TestDate"],
         Date(timeIntervalSince1970: 1_527_904_054.0)
     )
+    
     XCTAssertEqual(
         pl.storage[double: "TestDouble"],
         456.789
     )
+    
     XCTAssertEqual(
         pl.storage[int: "TestInt"],
         234
     )
+    
     XCTAssertEqual(
         pl.storage[string: "TestString"],
         "A string value"

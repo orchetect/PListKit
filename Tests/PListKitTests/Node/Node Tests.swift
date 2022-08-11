@@ -14,7 +14,121 @@ class NodeTests: XCTestCase {
     
     // MARK: - Data Nodes
     
-    func testPListNode() throws {
+    func testGetAnyKeys() throws {
+        // test accessing values using .any(key:)
+        
+        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        verifySamplePListContent(pl)
+        
+        XCTAssertEqual(
+            (pl.root.any(key: "TestArray").value as? PListArray)?[0] as? String,
+            "String value in the array"
+        )
+        XCTAssertEqual(
+            (pl.root.any(key: "TestArray").value as? PListArray)?[1] as? Int,
+            999
+        )
+        
+        XCTAssertEqual(
+            (pl.root.any(key: "TestDict").value as? PListDictionary)?.count,
+            2
+        )
+        
+        XCTAssertEqual(
+            pl.root.any(key: "TestBool").value as? Bool,
+            true
+        )
+        
+        XCTAssertEqual(
+            pl.root.any(key: "TestData").value as? Data,
+            Data([0x00, 0xFF])
+        )
+        
+        XCTAssertEqual(
+            pl.root.any(key: "TestDate").value as? Date,
+            Date(timeIntervalSince1970: 1_527_904_054.0)
+        )
+        
+        XCTAssertEqual(
+            pl.root.any(key: "TestDouble").value as? Double,
+            456.789
+        )
+        
+        XCTAssertEqual(
+            pl.root.any(key: "TestInt").value as? Int,
+            234
+        )
+        
+        XCTAssertEqual(
+            pl.root.any(key: "TestString").value as? String,
+            "A string value"
+        )
+    }
+    
+    func testSetAnyKeys() {
+        // test setting values using .any(key:)
+        
+        let pl = PList()
+        
+        pl.root.any(key: "NewString").value = ["A new string", 123]
+        XCTAssertEqual(
+            (pl.root.any(key: "NewString").value as? PListArray)?[0] as? String,
+            "A new string"
+        )
+        XCTAssertEqual(
+            (pl.root.any(key: "NewString").value as? PListArray)?[1] as? Int,
+            123
+        )
+        
+        pl.root.any(key: "NewDict").value = ["A": 123, "B": 456]
+        XCTAssertEqual(
+            (pl.root.any(key: "NewDict").value as? PListDictionary)?["A"] as? Int,
+            123
+        )
+        XCTAssertEqual(
+            (pl.root.any(key: "NewDict").value as? PListDictionary)?["B"] as? Int,
+            456
+        )
+        
+        pl.root.any(key: "NewBool").value = true
+        XCTAssertEqual(
+            pl.storage["NewBool"] as? Bool,
+            true
+        )
+        
+        pl.root.any(key: "NewData").value = Data([0x00, 0xFF])
+        XCTAssertEqual(
+            pl.storage["NewData"] as? Data,
+            Data([0x00, 0xFF])
+        )
+        
+        let date = Date()
+        pl.root.any(key: "NewDate").value = date
+        XCTAssertEqual(
+            pl.storage["NewDate"] as? Date,
+            date
+        )
+        
+        pl.root.any(key: "NewDouble").value = 456.789
+        XCTAssertEqual(
+            pl.storage["NewDouble"] as? Double,
+            456.789
+        )
+        
+        pl.root.any(key: "NewInt").value = 234
+        XCTAssertEqual(
+            pl.storage["NewInt"] as? Int,
+            234
+        )
+        
+        pl.root.any(key: "NewString").value = "A new string"
+        XCTAssertEqual(
+            pl.storage["NewString"] as? String,
+            "A new string"
+        )
+    }
+    
+    func testGetTypedKeys() throws {
         // basic value reads using .root
         
         let pl = try PList(data: kSamplePList.data(using: .utf8)!)
@@ -77,7 +191,7 @@ class NodeTests: XCTestCase {
         )
     }
     
-    func testPListNode_ArrayMutation() throws {
+    func testArrayMutation() throws {
         // ensure arrays can be modified directly
         
         let pl = try PList(data: kSamplePList.data(using: .utf8)!)
@@ -96,7 +210,7 @@ class NodeTests: XCTestCase {
         )
     }
     
-    func testPListNode_createIntermediateDictionaries() {
+    func testCreateIntermediateDictionaries() {
         let pl = PList()
         
         pl.createIntermediateDictionaries = false
@@ -152,7 +266,7 @@ class NodeTests: XCTestCase {
         )
     }
     
-    func testPListNode_StoringPListNodeObjects() throws {
+    func testStoringPListNodeObjects() throws {
         // test to ensure that root and sub-objects can be stored in variables and subsequently acted upon
         
         let pl = try PList(data: kSamplePList.data(using: .utf8)!)
@@ -242,28 +356,6 @@ class NodeTests: XCTestCase {
         
         XCTAssertEqual(pl2.root.int(key: "double").value, 123)
         XCTAssertEqual(pl2.root.int(key: "int").value, 123)
-    }
-    
-    func testNSCopying() throws {
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
-        verifySamplePListContent(pl)
-        
-        // set up other properties
-        
-        pl.format = .binary
-        
-        // make copy
-        
-        let copy = pl.copy() as! PList
-        
-        // verify contents
-        
-        verifySamplePListContent(copy)
-        
-        // verify stored properties
-        
-        XCTAssertEqual(copy.storage.count, 9)
-        XCTAssertEqual(copy.format, .binary)
     }
 }
 

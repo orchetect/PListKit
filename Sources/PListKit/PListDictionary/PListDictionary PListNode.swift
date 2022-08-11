@@ -35,11 +35,11 @@ extension PList {
     public class PListNode {
         internal var parent: TreeNode?
         
-        internal var type: NodeType
+        internal var type: NodeType?
         
         internal var key: String
         
-        internal init(key: String, type: NodeType, parent: TreeNode?) {
+        internal init(key: String, type: NodeType? = nil, parent: TreeNode?) {
             self.key = key
             self.type = type
             self.parent = parent
@@ -47,7 +47,10 @@ extension PList {
         
         internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
             var _keys = keys ?? []
-            _keys.append((key, type))
+            
+            if let type = type {
+                _keys.append((key, type))
+            }
             
             return parent?.getter(_keys)
         }
@@ -57,7 +60,10 @@ extension PList {
             value: PListValue?
         ) {
             var _keys = keys ?? []
-            _keys.append((key, type))
+            
+            if let type = type {
+                _keys.append((key, type))
+            }
             
             parent?.setter(_keys, value: value)
         }
@@ -67,6 +73,8 @@ extension PList {
 extension PList.PListNode {
     /// Internal
     enum NodeType {
+        case any
+        
         case dictionary
         case array
         
@@ -88,6 +96,10 @@ extension PList.PListNode {
     public class TreeNode: PList.PListNode { }
     
     public class TreeDictionary: TreeNode {
+        public func any(key: String) -> AnyKey {
+            PList.PListNode.AnyKey(key: key, type: .any, parent: self)
+        }
+        
         public func dict(key: String) -> SubDictionary {
             PList.PListNode.SubDictionary(key: key, parent: self)
         }
@@ -266,7 +278,7 @@ extension PList.PListNode {
     public class SubValue: PList.PListNode {
         internal init(
             key: String,
-            type: NodeType,
+            type: NodeType? = nil,
             parent: PList.PListNode.TreeDictionary
         ) {
             super.init(
@@ -281,6 +293,17 @@ extension PList.PListNode {
 // MARK: individual subclasses
 
 extension PList.PListNode {
+    public class AnyKey: SubValue {
+        public var value: PListValue? {
+            get {
+                getter()
+            }
+            set {
+                setter(value: newValue)
+            }
+        }
+    }
+    
     public class ArrayKey: SubValue {
         public var value: PListArray? {
             get {

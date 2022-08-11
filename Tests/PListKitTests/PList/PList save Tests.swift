@@ -1,5 +1,5 @@
 //
-//  File Tests.swift
+//  PList save Tests.swift.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import PListKit
 
-class FileTests: XCTestCase {
+class PList_save_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
