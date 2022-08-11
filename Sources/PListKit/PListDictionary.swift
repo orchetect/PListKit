@@ -6,8 +6,12 @@
 import Foundation
 
 extension PList {
+    #if swift(>=5.7)
+    public typealias PListDictionary = [String: any PListValue]
+    #else
     /// Translated Dictionary type used by PList
     public typealias PListDictionary = [String: PListValue]
+    #endif
 }
 
 extension PList.RawDictionary {

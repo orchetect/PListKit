@@ -16,5 +16,12 @@ extension Double: PListValue { }
 extension Bool: PListValue { }
 extension Date: PListValue { }
 extension Data: PListValue { }
-extension Dictionary: PListValue where Key == String, Value == PListValue { }
+
+#if swift(>=5.7)
+extension Dictionary: PListValue where Key == String, Value == any PListValue { }
+extension Array: PListValue where Element == any PListValue { }
+#else
+extension Dictionary: PListValue where Key == String,
+                                        Value == PListValue { }
 extension Array: PListValue where Element == PListValue { }
+#endif

@@ -6,8 +6,13 @@
 import Foundation
 
 extension PList {
+    #if swift(>=5.7)
+    /// Translated Array type used by PList
+    public typealias PListArray = [any PListValue]
+    #else
     /// Translated Array type used by PList
     public typealias PListArray = [PListValue]
+    #endif
 }
 
 extension PList.RawArray {

@@ -7,7 +7,7 @@ import Foundation
 
 // MARK: - Extra methods
 
-extension Dictionary where Key == String, Value == PListValue {
+extension PList.PListDictionary {
     // MARK: - Key-Pairs by type
     
     /// Returns all key-pairs containing String values.
