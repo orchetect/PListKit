@@ -9,7 +9,7 @@ extension FileManager {
     /// Backwards compatible method for retrieving a temporary folder from the system.
     ///
     /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
-    public static var temporaryDirectoryCompat: URL {
+    static var temporaryDirectoryCompat: URL {
         if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
             return FileManager.default.temporaryDirectory
         } else {
@@ -26,7 +26,7 @@ extension URL {
     /// - Will still return `true` if used on an alias and the alias' original file does not exist.
     ///
     /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
-    public var fileExists: Bool {
+    var fileExists: Bool {
         FileManager.default.fileExists(atPath: path)
     }
 }
@@ -42,7 +42,7 @@ extension URL {
     ///
     /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
     @discardableResult
-    public func trashOrDelete() throws -> URL? {
+    func trashOrDelete() throws -> URL? {
         // funcs
         
         func __delFile(url: URL) throws {

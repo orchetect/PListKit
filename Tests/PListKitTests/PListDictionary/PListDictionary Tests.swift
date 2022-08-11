@@ -8,12 +8,13 @@
 import XCTest
 import PListKit
 
-class PListDictionaryTests: XCTestCase {
+class PListDictionary_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    func testSubscripts_Get() {
-        // custom dictionary key subscripts still returns an Optional, but it also conditionally types the element
+    func testSubscriptGetters() {
+        // custom dictionary key subscripts still returns an Optional,
+        // but it also conditionally types the element
         
         let date = Date()
         
@@ -120,6 +121,86 @@ class PListDictionaryTests: XCTestCase {
         XCTAssertEqual(plistDict[data: "i"], nil)
         XCTAssert(plistDict[array: "i"] == nil)
         XCTAssert(plistDict[dict: "i"] == nil)
+    }
+    
+    func testMutation() {
+        // PListDictionary?, aka: Dictionary<String, PListValue>
+        
+        let pl = PList()
+        
+        XCTAssertNil(pl.storage[dict: "TestDict"])
+        
+        // won't create the dict, so fails to create string key
+        pl.storage[dict: "TestDict"]?[string: "DictString"] = "Dictionary string"
+        XCTAssertNil(pl.storage[dict: "TestDict"]?[string: "DictString"])
+        
+        // creates the dict and the string key
+        pl.storage[dictCreate: "TestDict"]?[string: "DictString"] = "Dictionary string"
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?[string: "DictString"], "Dictionary string")
+        
+        // create nested dict
+        pl.storage[dict: "TestDict"]?[dict: "NestedDict"] = [:]
+        XCTAssertNotNil(pl.storage[dict: "TestDict"]?[dict: "NestedDict"])
+        
+        pl
+            .storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"] =
+        "A nested string"
+        XCTAssertEqual(
+            pl.storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"],
+            "A nested string"
+        )
+        
+        // copy dict
+        pl.storage[dict: "TestDict2"] = pl.storage[dict: "TestDict"]
+        XCTAssertNotNil(pl.storage[dict: "TestDict2"])
+        XCTAssertEqual(
+            pl.storage[dict: "TestDict2"]?[dict: "NestedDict"]?[string: "NestedString"],
+            "A nested string"
+        )
+        
+        // get keys
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getStringKeys.first, "DictString")
+        XCTAssertNil(pl.storage[dict: "TestDict"]?.getIntKeys.first)
+        XCTAssertNil(pl.storage[dict: "TestDict"]?.getDoubleKeys.first)
+        XCTAssertNil(pl.storage[dict: "TestDict"]?.getBoolKeys.first)
+        XCTAssertNil(pl.storage[dict: "TestDict"]?.getDateKeys.first)
+        XCTAssertNil(pl.storage[dict: "TestDict"]?.getDataKeys.first)
+        XCTAssertNil(pl.storage[dict: "TestDict"]?.getArrayKeys.first)
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getDictionaryKeys.first, "NestedDict")
+        
+        // get key pairs
+        XCTAssertEqual(
+            pl.storage[dict: "TestDict"]?.getStringKeyPairs,
+            ["DictString": "Dictionary string"]
+        )
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getIntKeyPairs, [:])
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getDoubleKeyPairs, [:])
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getBoolKeyPairs, [:])
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getDateKeyPairs, [:])
+        XCTAssertEqual(pl.storage[dict: "TestDict"]?.getDataKeyPairs, [:])
+        
+        let getArrayPairs = pl.storage[dict: "TestDict"]?.getArrayKeyPairs
+        XCTAssertEqual(getArrayPairs?.count, 0)
+        
+        let getDictPairs = pl.storage[dict: "TestDict"]?.getDictionaryKeyPairs
+        XCTAssertEqual(getDictPairs?.count, 1)
+        XCTAssertEqual(getDictPairs?.first?.key, "NestedDict")
+        let nestedDict = pl.storage[dict: "TestDict"]?[dict: "NestedDict"]
+        XCTAssertEqual(nestedDict?.first?.key, "NestedString")
+        XCTAssertEqual(nestedDict?.first?.value as? String, "A nested string")
+        
+        // delete dict
+        pl.storage[dict: "TestDict"] = nil
+        XCTAssertNil(pl.storage[dict: "TestDict"])
+    }
+    
+    func testPListRawDictionary_convertedToPListDictionary() {
+        let dict: PList.RawDictionary = ["A key" as NSString: 123 as NSNumber]
+        
+        let newDict: PListDictionary? = dict.convertedToPListDictionary()
+        XCTAssertNotNil(newDict)
+        XCTAssertEqual(newDict?.count, 1)
+        XCTAssertEqual(newDict?[int: "A key"], 123)
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  Init Tests.swift
+//  PList Init Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import PListKit
 
-class InitTests: XCTestCase {
+class PListInitTests: XCTestCase {
     func testInit() {
         let pl = PList()
         
