@@ -79,18 +79,13 @@ let val = pl.root
 All valid property list value types map transparently to native Swift value types.
 
 ```swift
+pl.root.any(key: "Any").value = "a new string" // value of any valid PListValue type
 pl.root.string(key: "String").value = "a new string"
-
 pl.root.int(key: "Int").value = 123
-
 pl.root.double(key: "Double").value = 123.45
-
 pl.root.bool(key: "Bool").value = true
-
 pl.root.date(key: "Date").value = Date()
-
 pl.root.data(key: "Data").value = Data([0x01, 0x02])
-
 pl.root.array(key: "Array").value = [
   "a string",
   123, 
@@ -101,11 +96,12 @@ pl.root.array(key: "Array").value = [
 ]
 
 // dictonaries can be modified directly if necessary,
-// perhaps if you need to populate a large data set or copy a nested structure
+// perhaps if you need to populate a large data set or copy a nested structure.
 // but otherwise it's much nicer to use the discretely typed methods above
-pl.root.dict(key: "Dictionary").value = 
-  ["Key 1" : "a string",
-   "Key 2" : 123]
+pl.root.dict(key: "Dictionary").value = [
+ "Key 1" : "a string",
+ "Key 2" : 123
+]
 ```
 
 ### Manipulating Array Elements Directly
@@ -155,7 +151,7 @@ pl.root.dict(key: "Dict").value = nil
 A full set of chainable subscripts are also available if you choose to use them, mirroring the functional methods. To use them, reference the `storage` property directly instead of `root`.
 
 ```swift
-pl.storage[any: "Keyname"] // reads key value as PListValue
+pl.storage[any: "Keyname"] // reads key value as any PListValue
 
 pl.storage[string: "Keyname"]
 pl.storage[int: "Keyname"]
@@ -237,10 +233,9 @@ More methods are available in addition to what is outlined here in the documenta
 
 ### Future Improvements
 
-- [ ] Add cocapods / carthage support
 - [ ] Test result of creating or saving over a protected plist file. Does it fail silently, or trigger an exception? (ie: in macOS root or user preferences folder).
 - [ ] Test for memory leaks now that PList is a class, especially with `.root` objects
-- [ ] Consider supporting PList files that have a root node other than `Dictionary` (can be any supported PList value type)
+- [ ] Consider supporting PList files that have a root node other than `Dictionary` (can technically be any supported PList value type)
 
 ## Author
 
