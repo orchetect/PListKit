@@ -1,6 +1,7 @@
 //
 //  PListDictionary Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -144,7 +145,7 @@ class PListDictionary_Tests: XCTestCase {
         
         pl
             .storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"] =
-        "A nested string"
+            "A nested string"
         XCTAssertEqual(
             pl.storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"],
             "A nested string"

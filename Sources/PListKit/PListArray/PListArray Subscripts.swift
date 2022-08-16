@@ -1,6 +1,7 @@
 //
 //  PListArray Subscripts.swift
 //  PListKit • https://github.com/orchetect/PListKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -212,8 +213,7 @@ extension PListArray {
     }
     
     // Internal type: Array<AnyObject> (ordered)
-    public subscript(array index: Index) -> PListArray?
-    {
+    public subscript(array index: Index) -> PListArray? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? PListArray
@@ -240,8 +240,7 @@ extension PListArray {
     }
     
     // Internal type: Dictionary<NSObject, AnyObject>
-    public subscript(dict index: Index) -> PListDictionary?
-    {
+    public subscript(dict index: Index) -> PListDictionary? {
         get {
             guard indices.contains(index) else { return nil }
             return self[index] as? PListDictionary
@@ -476,7 +475,7 @@ extension Array where Element == PListValue {
     
     // Internal type: Array<AnyObject> (ordered)
     public subscript(array index: Index) -> PListArray?
-    where Element: Hashable
+        where Element: Hashable
     {
         get {
             guard indices.contains(index) else { return nil }
@@ -505,7 +504,7 @@ extension Array where Element == PListValue {
     
     // Internal type: Dictionary<NSObject, AnyObject>
     public subscript(dict index: Index) -> PListDictionary?
-    where Element: Hashable
+        where Element: Hashable
     {
         get {
             guard indices.contains(index) else { return nil }

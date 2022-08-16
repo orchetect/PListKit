@@ -1,6 +1,7 @@
 //
 //  Node Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
