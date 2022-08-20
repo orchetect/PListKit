@@ -16,7 +16,7 @@ class PList_save_Tests: XCTestCase {
     // MARK: - File Save
     
     func testSaveFailure() throws {
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
         // no filePath or fileURL set, save will fail
@@ -27,7 +27,7 @@ class PList_save_Tests: XCTestCase {
     }
     
     func testSave() throws {
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
         // prep target filename

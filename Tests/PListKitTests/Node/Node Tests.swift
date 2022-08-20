@@ -18,7 +18,7 @@ class NodeTests: XCTestCase {
     func testGetAnyKeys() throws {
         // test accessing values using .any(key:)
         
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
         XCTAssertEqual(
@@ -132,7 +132,7 @@ class NodeTests: XCTestCase {
     func testGetTypedKeys() throws {
         // basic value reads using .root
         
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
         XCTAssertEqual(
@@ -195,7 +195,7 @@ class NodeTests: XCTestCase {
     func testArrayMutation() throws {
         // ensure arrays can be modified directly
         
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
         pl.root.array(key: "TestArray").value?[0] = "new string"
@@ -270,7 +270,7 @@ class NodeTests: XCTestCase {
     func testStoringPListNodeObjects() throws {
         // test to ensure that root and sub-objects can be stored in variables and subsequently acted upon
         
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
         
         let root = pl.root

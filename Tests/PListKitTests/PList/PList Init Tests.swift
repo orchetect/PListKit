@@ -43,7 +43,7 @@ class PListInitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        try kSamplePList.write(
+        try kSamplePListRawXML.write(
             to: url,
             atomically: false,
             encoding: .utf8
@@ -63,7 +63,7 @@ class PListInitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        try kSamplePList.write(
+        try kSamplePListRawXML.write(
             to: url,
             atomically: false,
             encoding: .utf8
@@ -79,12 +79,12 @@ class PListInitTests: XCTestCase {
     }
     
     func testInit_Data() throws {
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
     }
     
     func testInit_String() throws {
-        let pl = try PList(string: kSamplePList)
+        let pl = try PList(string: kSamplePListRawXML)
         verifySamplePListContent(pl)
     }
     

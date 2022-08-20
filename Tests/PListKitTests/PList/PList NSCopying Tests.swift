@@ -14,7 +14,7 @@ class PList_NSCopying_Tests: XCTestCase {
     override func tearDown() { super.tearDown() }
 
     func testNSCopying() throws {
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
         verifySamplePListContent(pl)
     
         // set up other properties
