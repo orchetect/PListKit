@@ -15,8 +15,29 @@ class PList_rawData_Tests: XCTestCase {
     
     // MARK: - RawData
     
-    func testRawData() throws {
-        let pl = try PList(data: kSamplePList.data(using: .utf8)!)
+    func testRawData_FromXML() throws {
+        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
+        verifySamplePListContent(pl)
+        
+        // check that rawData succeeds
+        
+        // xml
+        let rawDataXML = try pl.rawData(format: .xml)
+        let plFromXML = try PList(data: rawDataXML)
+        verifySamplePListContent(plFromXML)
+        
+        // binary
+        let rawDataBinary = try pl.rawData(format: .binary)
+        let plFromBinary = try PList(data: rawDataBinary)
+        verifySamplePListContent(plFromBinary)
+        
+        // openStep
+        // Apple docs:
+        // "The NSPropertyListOpenStepFormat constant is not supported for writing. It can be used only for reading old-style property lists."
+    }
+    
+    func testRawData_FromBinary() throws {
+        let pl = try PList(data: Data(kSamplePListRawBinary))
         verifySamplePListContent(pl)
         
         // check that rawData succeeds
