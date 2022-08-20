@@ -103,17 +103,17 @@ extension PList {
         
         // load as raw NS objects
         
-        // just a default, will be replaced...
+        // this is not determining the format, it just needs to be initialized to *some*
+        // value so that `PropertyListSerialization.propertyList` can mutate it.
         var getFormat: PropertyListSerialization.PropertyListFormat = .xml
         
         // if this succeeds, it will update getFormat with the file's actual format
         let getDict = (
-            try PropertyListSerialization
-                .propertyList(
-                    from: data,
-                    options: .init(rawValue: 0),
-                    format: &getFormat
-                )
+            try PropertyListSerialization.propertyList(
+                from: data,
+                options: .init(rawValue: 0),
+                format: &getFormat
+            )
         ) as? RawDictionary
         
         guard let _getDict = getDict
