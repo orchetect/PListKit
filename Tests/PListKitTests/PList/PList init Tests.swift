@@ -1,5 +1,5 @@
 //
-//  SingleValuePList init Tests.swift
+//  PList init Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -9,12 +9,12 @@
 import XCTest
 import PListKit
 
-final class SingleValuePList_Init_Tests: XCTestCase {
+final class PList_Init_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
     func testInit() {
-        let pl = SingleValuePList<String>()
+        let pl = PList<String>()
         
         XCTAssertEqual(pl.storage, "")
     }
@@ -23,20 +23,20 @@ final class SingleValuePList_Init_Tests: XCTestCase {
         // test throwing inits
         
         XCTAssertThrowsError(
-            try SingleValuePList<String>(url: URL(fileURLWithPath: "/aldkfjalkfgjalkfdja8u248jv34cf"))
+            try PList<String>(url: URL(fileURLWithPath: "/aldkfjalkfgjalkfdja8u248jv34cf"))
         )
         
         XCTAssertThrowsError(
-            try SingleValuePList<String>(file: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
+            try PList<String>(file: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
         )
         
         XCTAssertThrowsError(
-            try SingleValuePList<String>(data: Data([0, 1, 0, 3, 6, 9]))
+            try PList<String>(data: Data([0, 1, 0, 3, 6, 9]))
         )
         
         // special case omitted here, see test below
         //XCTAssertThrowsError(
-        //    try SingleValuePList<String>(xml: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
+        //    try PList<String>(xml: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
         //)
     }
     
@@ -45,9 +45,9 @@ final class SingleValuePList_Init_Tests: XCTestCase {
         // allow a malformed plist and just returns the input to the output
         // instead of throwing an error itself.
         // in this case, it outputs a string of the raw XML input which succeeds
-        // in initializing a SingleValuePList<String> instance
+        // in initializing a PList<String> instance
         
-        let pl = try? SingleValuePList<String>(xml: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
+        let pl = try? PList<String>(xml: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
           
         try XCTSkipIf(
             pl != nil,
@@ -67,7 +67,7 @@ final class SingleValuePList_Init_Tests: XCTestCase {
         )
         
         // init(url:)
-        let pl = try SingleValuePList<String>(url: url)
+        let pl = try PList<String>(url: url)
         kSamplePList.StringRoot.verify(matches: pl)
         
         // clean up
@@ -87,7 +87,7 @@ final class SingleValuePList_Init_Tests: XCTestCase {
         )
         
         // init(file:)
-        let pl = try SingleValuePList<String>(file: url.path)
+        let pl = try PList<String>(file: url.path)
         kSamplePList.StringRoot.verify(matches: pl)
         
         // clean up
@@ -96,7 +96,7 @@ final class SingleValuePList_Init_Tests: XCTestCase {
     }
     
     func testInit_Data() throws {
-        let pl = try SingleValuePList<String>(
+        let pl = try PList<String>(
             data: kSamplePList.StringRoot.XML.raw
                 .data(using: .utf8)!
         )
@@ -104,18 +104,18 @@ final class SingleValuePList_Init_Tests: XCTestCase {
     }
     
     func testInit_String() throws {
-        let pl = try SingleValuePList<String>(xml: kSamplePList.StringRoot.XML.raw)
+        let pl = try PList<String>(xml: kSamplePList.StringRoot.XML.raw)
         kSamplePList.StringRoot.verify(matches: pl)
     }
     
     func testInit_Root() throws {
-        let pl = SingleValuePList<String>(root: "A string" as String)
+        let pl = PList<String>(root: "A string" as String)
         XCTAssertEqual(pl.storage, "A string")
     }
     
     func testInit_RawRoot() throws {
         let value = "A string" as NSString
-        let pl = try SingleValuePList<String>(root: value)
+        let pl = try PList<String>(root: value)
         XCTAssertEqual(pl.storage, "A string")
     }
 }

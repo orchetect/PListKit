@@ -13,45 +13,20 @@ import Foundation
 /// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
 /// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
 /// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
-public final class DictionaryPList: PListProtocol, NSCopying {
-    // MARK: - PListProtocol
-    
-    public var format: PListFormat
-    public typealias Root = PListDictionary
-    public var storage: Root = [:]
-    
-    // MARK: - Class-Specific Properties
-    
-    /// When setting a value using `.root`, determines whether any non-existing dictionaries in the path get created.
-    public var createIntermediateDictionaries: Bool = true
+public typealias DictionaryPList = PList<PListDictionary>
+
+extension DictionaryPList {
+    /// Set default behavior when using the `[dict:]` subscript.
+    /// When set to `true`, all `[dict:]` subscript usage will take on `[dictCreate:]` functionality.
+    public var createIntermediateDictionaries: Bool {
+        get { _createIntermediateDictionaries }
+        set { _createIntermediateDictionaries = newValue }
+    }
     
     /// Functional nesting dictionary tree classes for clean syntax.
     public var root: PListNode.Root {
         // Create and return a new class every time this property is accessed, to avoid storing an instance of it
         PListNode.Root(delegate: self)
-    }
-    
-    // MARK: - init
-    
-    public init() {
-        self.format = .xml
-    }
-    
-    public init(format: PListFormat) {
-        self.format = format
-    }
-    
-    // MARK: - NSCopying
-    
-    public func copy(with zone: NSZone? = nil) -> Any {
-        // copy the class including data and properties
-        
-        let copy = Self(root: storage, format: format)
-        
-        copy.format = format
-        copy.createIntermediateDictionaries = createIntermediateDictionaries
-        
-        return copy
     }
 }
 
@@ -60,7 +35,7 @@ extension DictionaryPList {
     ///
     /// - parameter root: Source raw dictionary to read from.
     ///
-    /// - throws: `PListLoadError`
+    /// - throws: ``PListLoadError``
     public convenience init(
         root: RawPListDictionary,
         format: PropertyListSerialization.PropertyListFormat = .xml

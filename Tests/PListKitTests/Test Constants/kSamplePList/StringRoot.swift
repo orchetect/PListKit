@@ -13,7 +13,7 @@ import PListKit
 
 extension kSamplePList {
     enum StringRoot {
-        typealias ConcretePList = SingleValuePList<String>
+        typealias ConcretePList = PList<String>
     }
 }
 

@@ -60,18 +60,14 @@ extension Array: PListValue where Element == PListValue {
 // MARK: - Strong-Typer
 
 /// Helper method that returns `self` as a `PListValue` if it is a valid plist element type.
-public func convertToPListValue(from object: Any) -> PListValue? {
+func convertToPListValue(from object: Any) -> PListValue? {
     // ***** type(of:) is a workaround to test for a boolean type,
     // since testing for NSNumber's boolValue constants is tricky in Swift
     // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
     
     if String(describing: type(of: object)) == "__NSCFBoolean" {
         // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent failsafe
-        if let val = object as? Bool {
-            return val
-        } else {
-            return nil
-        }
+        return object as? Bool
         
     } else {
         switch object {
@@ -105,3 +101,52 @@ public func convertToPListValue(from object: Any) -> PListValue? {
         }
     }
 }
+
+func convertToWrappedPList(root object: Any,
+                           format: PListFormat) -> WrappedPList? {
+    // ***** type(of:) is a workaround to test for a boolean type,
+    // since testing for NSNumber's boolValue constants is tricky in Swift
+    // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
+    
+    if String(describing: type(of: object)) == "__NSCFBoolean" {
+        // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent failsafe
+        if let obj = object as? Bool {
+            return .boolRoot(.init(root: obj, format: format))
+        } else {
+            return nil
+        }
+        
+    } else {
+        switch object {
+        case let obj as String:
+            return .stringRoot(.init(root: obj, format: format))
+            
+        case let obj as Int:
+            // Note: values stored as <real> will import as Int if they have a decimal of .0
+            return .intRoot(.init(root: obj, format: format))
+            
+        case let obj as Double:
+            return .doubleRoot(.init(root: obj, format: format))
+            
+        case let obj as Date:
+            return .dateRoot(.init(root: obj, format: format))
+            
+        case let obj as Data:
+            return .dataRoot(.init(root: obj, format: format))
+            
+        case let obj as RawPListDictionary:
+            guard let translated = obj.convertedToPListDictionary() else { return nil }
+            return .dictionaryRoot(.init(root: translated, format: format))
+            
+        case let obj as RawPListArray:
+            guard let translated = obj.convertedToPListArray() else { return nil }
+            return .arrayRoot(.init(root: translated, format: format))
+            
+        default:
+            // this should never happen unless the user conforms a type to `PlistValue`
+            return nil
+        }
+    }
+}
+
+

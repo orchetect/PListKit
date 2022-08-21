@@ -1,5 +1,5 @@
 //
-//  SingleValuePList rawData Tests.swift
+//  PList rawData Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -9,7 +9,7 @@
 import XCTest
 import PListKit
 
-final class SingleValuePList_rawData_Tests: XCTestCase {
+final class PList_rawData_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -22,12 +22,12 @@ final class SingleValuePList_rawData_Tests: XCTestCase {
         
         // xml
         let rawDataXML = try pl.rawData(format: .xml)
-        let plFromXML = try SingleValuePList<String>(data: rawDataXML)
+        let plFromXML = try PList<String>(data: rawDataXML)
         kSamplePList.StringRoot.verify(matches: plFromXML)
         
         // binary
         let rawDataBinary = try pl.rawData(format: .binary)
-        let plFromBinary = try SingleValuePList<String>(data: rawDataBinary)
+        let plFromBinary = try PList<String>(data: rawDataBinary)
         kSamplePList.StringRoot.verify(matches: plFromBinary)
         
         // openStep
@@ -42,12 +42,12 @@ final class SingleValuePList_rawData_Tests: XCTestCase {
         
         // xml
         let rawDataXML = try pl.rawData(format: .xml)
-        let plFromXML = try SingleValuePList<String>(data: rawDataXML)
+        let plFromXML = try PList<String>(data: rawDataXML)
         kSamplePList.StringRoot.verify(matches: plFromXML)
         
         // binary
         let rawDataBinary = try pl.rawData(format: .binary)
-        let plFromBinary = try SingleValuePList<String>(data: rawDataBinary)
+        let plFromBinary = try PList<String>(data: rawDataBinary)
         kSamplePList.StringRoot.verify(matches: plFromBinary)
         
         // openStep

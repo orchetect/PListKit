@@ -35,7 +35,7 @@ public protocol PListProtocol {
     /// - `PListArray`, aka `[PListValue]`
     var storage: Root { get set }
     
-    /// Data format of PList when saved to disk.
+    /// Data format of the plist when saved to disk.
     var format: PListFormat { get set }
     
     // MARK: - Init
@@ -55,14 +55,14 @@ public protocol PListProtocol {
     ///
     /// - parameter file: An absolute file path.
     ///
-    /// - throws: `PListLoadError`
+    /// - throws: ``PListLoadError``
     init(file path: String) throws
     
     /// Instantiate a plist object by loading a plist file from a local file URL or network resource URL.
     ///
     /// - parameter url: A local file URL or network resource URL.
     ///
-    /// - throws: `PListLoadError`
+    /// - throws: ``PListLoadError``
     init(url: URL) throws
     
     // MARK: - Raw Data
@@ -71,14 +71,14 @@ public protocol PListProtocol {
     ///
     /// - parameter xml: Source plist raw XML as `String`.
     ///
-    /// - throws: `PListLoadError`
+    /// - throws: ``PListLoadError``
     init(xml string: String) throws
     
     /// Instantiate a plist object by populating its contents from parsing raw plist data.
     ///
     /// - parameter data: Source plist raw data, either XML or binary.
     ///
-    /// - throws: `PListLoadError`
+    /// - throws: ``PListLoadError``
     init(data: Data) throws
     
     /// Returns the raw plist content.

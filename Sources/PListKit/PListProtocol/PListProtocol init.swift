@@ -8,12 +8,12 @@ import Foundation
 
 extension PListProtocol {
     public init(file path: String) throws {
-        let fileContents = try Self.readFile(path: path)
+        let fileContents = try readFile(path: path)
         try self.init(data: fileContents)
     }
     
     public init(url: URL) throws {
-        let fileContents = try Self.readFile(url: url)
+        let fileContents = try readFile(url: url)
         try self.init(data: fileContents)
     }
     
@@ -39,5 +39,35 @@ extension PListProtocol {
     public init(root: Root, format: PListFormat = .xml) {
         self.init(format: format)
         self.storage = root
+    }
+}
+
+extension PListProtocol {
+    /// Instantiate a plist object by populating its contents using an existing dictionary.
+    ///
+    /// - parameter root: Source raw plist value (`NSString`, `NSNumber`, etc.)
+    ///
+    /// - throws: ``PListLoadError``
+    @_disfavoredOverload
+    public init(
+        root: AnyObject,
+        format: PropertyListSerialization.PropertyListFormat = .xml
+    ) throws {
+        guard let converted = convertToPListValue(from: root) else {
+            throw PListLoadError.unhandledType
+        }
+        
+        try self.init(pListValue: converted, format: format)
+    }
+    
+    /// Internal helper
+    init(
+        pListValue root: PListValue,
+        format: PropertyListSerialization.PropertyListFormat = .xml
+    ) throws {
+        guard let typed = root as? Root else {
+            throw PListLoadError.unhandledType
+        }
+        self.init(root: typed, format: format)
     }
 }

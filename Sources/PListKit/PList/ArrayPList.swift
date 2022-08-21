@@ -14,42 +14,14 @@ import Foundation
 /// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
 ///
 /// - Note: This plist root type is less common than `Dictionary`.
-public final class ArrayPList: PListProtocol, NSCopying {
-    // MARK: - PListProtocol
-    
-    public var format: PListFormat
-    public typealias Root = PListArray
-    public var storage: Root = []
-    
-    // MARK: - init
-    
-    public init() {
-        self.format = .xml
-    }
-    
-    public init(format: PListFormat) {
-        self.format = format
-    }
-    
-    // MARK: - NSCopying
-    
-    public func copy(with zone: NSZone? = nil) -> Any {
-        // copy the class including data and properties
-        
-        let copy = Self(root: storage, format: format)
-        
-        copy.format = format
-        
-        return copy
-    }
-}
+public typealias ArrayPList = PList<PListArray>
 
 extension ArrayPList {
     /// Instantiate an `ArrayPList` object by populating its contents using an existing dictionary.
     ///
     /// - parameter root: Source raw array to read from.
     ///
-    /// - throws: `PListLoadError`
+    /// - throws: ``PListLoadError``
     public convenience init(
         root: RawPListArray,
         format: PropertyListSerialization.PropertyListFormat = .xml

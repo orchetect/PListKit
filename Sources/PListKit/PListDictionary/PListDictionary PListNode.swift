@@ -11,27 +11,24 @@ import Foundation
 // all subclasses adopt this
 
 extension DictionaryPList {
-    /// `PList` path builder object to facilitate functional traversal of the underlying `PList` data storage.
+    /// ``PList`` path builder object to facilitate functional traversal of the underlying ``PList`` data storage.
     ///
-    /// Do not instance this class directly. Instead, access the `.root` property on a `PList` object.
+    /// Do not instance this class directly. Instead, access the `.root` property on a ``PList`` object.
     ///
     /// At the end of the path, use the `.value` property to get or set the current node's value.
     ///
-    /// ```
-    /// let pl = PList()
+    ///     let pl = DictionaryPList()
     ///
-    /// pl.root.string(key: "String") = "string value"
-    /// let val = pl.root.string(key: "String") // "string value"
-    /// ```
+    ///     pl.root.string(key: "String") = "string value"
+    ///     let val = pl.root.string(key: "String") // "string value"
+    ///
     /// It also allows for access to nested dictionaries.
     ///
-    /// ```
-    /// pl.root
-    ///   .dict(key: "Dict")
-    ///   .dict(key: "Nested Dict")
-    ///   .string(key: "String")
-    ///   .value
-    /// ```
+    ///     pl.root
+    ///       .dict(key: "Dict")
+    ///       .dict(key: "Nested Dict")
+    ///       .string(key: "String")
+    ///       .value
     ///
     public class PListNode {
         internal var parent: TreeNode?

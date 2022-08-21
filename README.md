@@ -43,12 +43,20 @@ import PListKit
 let plist = DictionaryPList()
 ```
 
-However it is possible for the root element to be any valid plist value type (array, string, number, etc.). Specialized classes are provided for these:
+However it is possible for the root element to be any valid plist value type (array, string, number, etc.).
 
-- `ArrayPList`
-- `SingleValuePList<PListValue>` - specialized to the specific concrete value type (String, Int, etc.)
+```swift
+PList<PListDictionary> // typealiased as DictionaryPList
+PList<PListArray> // typealiased as ArrayPList
+PList<String>
+PList<Int>
+PList<Double>
+PList<Bool>
+PList<Date>
+PList<Data>
+```
 
-The remainder of this documentation will work under the assumption of using `DictionaryPList` since it is by far the most common.
+The remainder of this documentation will demonstrate the use of `DictionaryPList` since it is the most common.
 
 ### Values
 
