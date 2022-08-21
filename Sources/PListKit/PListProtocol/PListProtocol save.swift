@@ -71,8 +71,5 @@ extension PListProtocol {
         if err != nil {
             throw err!
         }
-        
-        // update format property after successful file save
-        self.format = fileFormat
     }
 }

@@ -6,7 +6,7 @@
 
 import Foundation
 
-public protocol PListProtocol: AnyObject {
+public protocol PListProtocol {
     /// Root type for the plist.
     ///
     /// Valid value types, all conforming to `PListValue` protocol:
