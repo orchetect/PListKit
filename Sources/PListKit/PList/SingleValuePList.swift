@@ -38,3 +38,33 @@ public final class SingleValuePList<Root: PListValue>: PListProtocol {
         return copy
     }
 }
+
+extension SingleValuePList {
+    /// Instantiate a `SingleValuePList` object by populating its contents using an existing dictionary.
+    ///
+    /// - parameter root: Source raw plist value (`NSString`, `NSNumber`, etc.)
+    ///
+    /// - throws: `PListLoadError`
+    @_disfavoredOverload
+    public convenience init(
+        root: AnyObject,
+        format: PropertyListSerialization.PropertyListFormat = .xml
+    ) throws {
+        guard let converted = convertToPListValue(from: root) else {
+            throw PListLoadError.unhandledType
+        }
+        
+        try self.init(pListValue: converted, format: format)
+    }
+    
+    /// Internal helper
+    convenience init(
+        pListValue root: PListValue,
+        format: PropertyListSerialization.PropertyListFormat = .xml
+    ) throws {
+        guard let typed = root as? Root else {
+            throw PListLoadError.unhandledType
+        }
+        self.init(root: typed, format: format)
+    }
+}
