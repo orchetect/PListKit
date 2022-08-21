@@ -7,6 +7,24 @@
 import Foundation
 
 extension PListProtocol {
+    public init(file path: String) throws {
+        let fileContents = try Self.readFile(path: path)
+        try self.init(data: fileContents)
+    }
+    
+    public init(url: URL) throws {
+        let fileContents = try Self.readFile(url: url)
+        try self.init(data: fileContents)
+    }
+    
+    public init(xml string: String) throws {
+        guard let data = string.data(using: .utf8) else {
+            throw PListLoadError.formatNotExpected
+        }
+        
+        try self.init(data: data)
+    }
+    
     public init(data: Data) throws {
         self.init()
         

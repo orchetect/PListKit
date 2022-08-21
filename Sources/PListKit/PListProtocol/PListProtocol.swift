@@ -38,6 +38,8 @@ public protocol PListProtocol: AnyObject {
     /// Data format of PList when saved to disk.
     var format: PListFormat { get set }
     
+    // MARK: - Init
+    
     /// Create an empty plist, using default format.
     init()
     
@@ -47,13 +49,38 @@ public protocol PListProtocol: AnyObject {
     /// Create a plist from a root element, optionally specifying format.
     init(root: Root, format: PListFormat)
     
-    /// Create a plist by populating its contents from parsing raw plist data.
+    // MARK: - Init From File
+    
+    /// Instantiate a plist object by loading a plist file from disk.
     ///
-    /// - parameter data: Source data to read from.
+    /// - parameter file: An absolute file path.
+    ///
+    /// - throws: `PListLoadError`
+    init(file path: String) throws
+    
+    /// Instantiate a plist object by loading a plist file from a local file URL or network resource URL.
+    ///
+    /// - parameter url: A local file URL or network resource URL.
+    ///
+    /// - throws: `PListLoadError`
+    init(url: URL) throws
+    
+    // MARK: - Raw Data
+    
+    /// Instantiate a plist object from raw plist XML.
+    ///
+    /// - parameter xml: Source plist raw XML as `String`.
+    ///
+    /// - throws: `PListLoadError`
+    init(xml string: String) throws
+    
+    /// Instantiate a plist object by populating its contents from parsing raw plist data.
+    ///
+    /// - parameter data: Source plist raw data, either XML or binary.
     ///
     /// - throws: `PListLoadError`
     init(data: Data) throws
-        
+    
     /// Returns the raw plist content.
     /// If there is an error, an exception will be thrown.
     func rawData(

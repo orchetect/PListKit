@@ -59,39 +59,6 @@ public final class DictionaryPList: PListProtocol {
 }
 
 extension DictionaryPList {
-    /// Instantiate a `DictionaryPList` object by loading a plist file from disk.
-    ///
-    /// - parameter file: An absolute file path.
-    ///
-    /// - throws: `PList.LoadError`
-    public convenience init(file path: String) throws {
-        let fileContents = try Self.readFile(path: path)
-        try self.init(data: fileContents)
-    }
-    
-    /// Instantiate a `DictionaryPList` object by loading a plist file from a local file URL or network resource URL.
-    ///
-    /// - parameter url: A full URL.
-    ///
-    /// - throws: `PList.LoadError`
-    public convenience init(url: URL) throws {
-        let fileContents = try Self.readFile(url: url)
-        try self.init(data: fileContents)
-    }
-    
-    /// Instantiate a `DictionaryPList` object by populating its contents from a raw XML plist string.
-    ///
-    /// - parameter data: Source binary Data to read from.
-    ///
-    /// - throws: `PList.LoadError`
-    public convenience init(xml string: String) throws {
-        guard let data = string.data(using: .utf8) else {
-            throw PListLoadError.formatNotExpected
-        }
-        
-        try self.init(data: data)
-    }
-    
     /// Instantiate a `DictionaryPList` object by populating its contents using an existing dictionary.
     ///
     /// - parameter root: Source raw dictionary to read from.
