@@ -90,7 +90,7 @@ final class ArrayPList_Init_Tests: XCTestCase {
     }
     
     func testInit_PListArray() throws {
-        // empty dict
+        // empty array
         
         let dict1: PListArray = []
         
@@ -98,7 +98,7 @@ final class ArrayPList_Init_Tests: XCTestCase {
         
         XCTAssertEqual(pl1.storage.count, 0)
         
-        // dict with content
+        // array with content
         
         let dict2: PListArray = [
             123,
@@ -116,7 +116,7 @@ final class ArrayPList_Init_Tests: XCTestCase {
     }
     
     func testInit_RawPListArray() throws {
-        // empty dict
+        // empty array
         
         let dict1: RawPListArray = []
         
@@ -124,7 +124,7 @@ final class ArrayPList_Init_Tests: XCTestCase {
         
         XCTAssertEqual(pl1.storage.count, 0)
         
-        // dict with content
+        // array with content
         
         let dict2: RawPListArray = [
             123 as NSNumber,
