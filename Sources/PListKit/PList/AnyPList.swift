@@ -60,6 +60,7 @@ public struct AnyPList {
     
     // MARK: - Proxy methods
     
+    #if swift(>=5.7)
     /// Data format of the plist when saved to disk.
     /* public */ var format: PListFormat {
         plist.unwrapped().format
@@ -72,6 +73,7 @@ public struct AnyPList {
     ) throws -> Data {
         try plist.unwrapped().rawData(format: format)
     }
+    #endif
 }
 
 /// Cases containing a strongly-typed specialized ``PList`` instance.
@@ -90,19 +92,6 @@ public enum WrappedPList {
     
     #if swift(>=5.7)
     func unwrapped() -> any PListProtocol {
-        switch self {
-        case let .dictionaryRoot(pl): return pl
-        case let .arrayRoot(pl): return pl
-        case let .boolRoot(pl): return pl
-        case let .stringRoot(pl): return pl
-        case let .intRoot(pl): return pl
-        case let .doubleRoot(pl): return pl
-        case let .dateRoot(pl): return pl
-        case let .dataRoot(pl): return pl
-        }
-    }
-    #else
-    func unwrapped() -> PListProtocol {
         switch self {
         case let .dictionaryRoot(pl): return pl
         case let .arrayRoot(pl): return pl

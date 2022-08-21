@@ -68,7 +68,8 @@ extension DictionaryPList {
     }
 }
 
-extension DictionaryPList.PListNode {
+// aka extension DictionaryPList.PListNode
+extension PList.PListNode where Root == PListDictionary {
     /// Internal
     enum NodeType {
         case any
@@ -90,7 +91,8 @@ extension DictionaryPList.PListNode {
 
 // MARK: - Nodes
 
-extension DictionaryPList.PListNode {
+// aka extension DictionaryPList.PListNode
+extension PList.PListNode where Root == PListDictionary {
     public class TreeNode: DictionaryPList.PListNode { }
     
     public class TreeDictionary: TreeNode {
@@ -134,7 +136,8 @@ extension DictionaryPList.PListNode {
 
 // MARK: - Root
 
-extension DictionaryPList.PListNode {
+// aka extension DictionaryPList.PListNode
+extension PList.PListNode where Root == PListDictionary {
     public final class Root: DictionaryPList.PListNode.TreeDictionary {
         internal weak var delegate: DictionaryPList?
         
@@ -242,7 +245,8 @@ extension DictionaryPList.PListNode {
 
 // MARK: - Sub-nodes
 
-extension DictionaryPList.PListNode {
+// aka extension DictionaryPList.PListNode
+extension PList.PListNode where Root == PListDictionary {
     // subnode template
     
     public class SubDictionary: DictionaryPList.PListNode.TreeDictionary {
@@ -272,7 +276,8 @@ extension DictionaryPList.PListNode {
 
 // MARK: definition
 
-extension DictionaryPList.PListNode {
+// aka extension DictionaryPList.PListNode
+extension PList.PListNode where Root == PListDictionary {
     public class SubValue: DictionaryPList.PListNode {
         internal init(
             key: String,
@@ -290,7 +295,8 @@ extension DictionaryPList.PListNode {
 
 // MARK: individual subclasses
 
-extension DictionaryPList.PListNode {
+// aka extension DictionaryPList.PListNode
+extension PList.PListNode where Root == PListDictionary {
     public class AnyKey: SubValue {
         public var value: PListValue? {
             get {
