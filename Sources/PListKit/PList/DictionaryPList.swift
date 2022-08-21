@@ -9,13 +9,11 @@ import Foundation
 /// Class representing a Property List (plist) with a `Dictionary` root.
 /// This is the most common plist root layout and provides the most amount of useful abstractions of all plist classes in PListKit.
 ///
-/// - To initialize an empty plist, use `PList()`.
-/// - To load a plist file on disk, use the `init(file:)`, `init(url:)` constructors.
-/// - To load a raw plist file content, use the `init(data:)`, `init(string:)`, `init(dictionary:)` constructors.
-/// - To save a loaded file, use `save()`.
-/// - To save to a new file, use `save(toFile:)`, or `save(toURL:)`.
-///
-public final class DictionaryPList: PListProtocol {
+/// - To initialize an empty plist, use ``init()``.
+/// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
+/// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
+/// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
+public final class DictionaryPList: PListProtocol, NSCopying {
     // MARK: - PListProtocol
     
     public var format: PListFormat
@@ -47,7 +45,6 @@ public final class DictionaryPList: PListProtocol {
     
     public func copy(with zone: NSZone? = nil) -> Any {
         // copy the class including data and properties
-        // and omit transient information such as `filePath` and `fileURL`
         
         let copy = Self(root: storage, format: format)
         

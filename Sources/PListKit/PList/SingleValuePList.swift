@@ -8,8 +8,13 @@ import Foundation
 
 /// Class representing a Property List (plist) with a single value (non-dictionary, non-array) root.
 ///
-/// This plist root layout is less common than `Dictionary`.
-public final class SingleValuePList<Root: PListValue>: PListProtocol {
+/// - To initialize an empty plist, use ``init()``.
+/// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
+/// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
+/// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
+///
+/// - Note: This plist root type is less common than `Dictionary`.
+public final class SingleValuePList<Root: PListValue>: PListProtocol, NSCopying {
     // MARK: - PListProtocol
     
     public var format: PListFormat
@@ -29,7 +34,6 @@ public final class SingleValuePList<Root: PListValue>: PListProtocol {
     
     public func copy(with zone: NSZone? = nil) -> Any {
         // copy the class including data and properties
-        // and omit transient information such as `filePath` and `fileURL`
         
         let copy = Self(root: storage, format: format)
         
