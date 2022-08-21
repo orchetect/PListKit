@@ -6,6 +6,9 @@
 
 import Foundation
 
+/// Global file manager
+let fileManager = FileManager.default
+
 /// Convenience method to form an `NSError`.
 internal func nsError(_ failureReason: String, recoverySuggestion: String? = nil) -> NSError {
     var userInfo: [String: Any] = [:]

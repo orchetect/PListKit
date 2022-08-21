@@ -16,20 +16,19 @@ class PList_rawData_Tests: XCTestCase {
     // MARK: - RawData
     
     func testRawData_FromXML() throws {
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
         
         // check that rawData succeeds
         
         // xml
         let rawDataXML = try pl.rawData(format: .xml)
-        let plFromXML = try PList(data: rawDataXML)
-        verifySamplePListContent(plFromXML)
+        let plFromXML = try DictionaryPList(data: rawDataXML)
+        kSamplePList.DictRootAllValues.verify(matches: plFromXML)
         
         // binary
         let rawDataBinary = try pl.rawData(format: .binary)
-        let plFromBinary = try PList(data: rawDataBinary)
-        verifySamplePListContent(plFromBinary)
+        let plFromBinary = try DictionaryPList(data: rawDataBinary)
+        kSamplePList.DictRootAllValues.verify(matches: plFromBinary)
         
         // openStep
         // Apple docs:
@@ -37,20 +36,19 @@ class PList_rawData_Tests: XCTestCase {
     }
     
     func testRawData_FromBinary() throws {
-        let pl = try PList(data: Data(kSamplePListRawBinary))
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
         
         // check that rawData succeeds
         
         // xml
         let rawDataXML = try pl.rawData(format: .xml)
-        let plFromXML = try PList(data: rawDataXML)
-        verifySamplePListContent(plFromXML)
+        let plFromXML = try DictionaryPList(data: rawDataXML)
+        kSamplePList.DictRootAllValues.verify(matches: plFromXML)
         
         // binary
         let rawDataBinary = try pl.rawData(format: .binary)
-        let plFromBinary = try PList(data: rawDataBinary)
-        verifySamplePListContent(plFromBinary)
+        let plFromBinary = try DictionaryPList(data: rawDataBinary)
+        kSamplePList.DictRootAllValues.verify(matches: plFromBinary)
         
         // openStep
         // Apple docs:

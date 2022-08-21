@@ -127,7 +127,7 @@ class PListArray_Tests: XCTestCase {
     func testMutation() {
         // PListArray?, aka: Array<PListValue>
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         XCTAssertNil(pl.storage[array: "TestArray"])
         
@@ -211,7 +211,7 @@ class PListArray_Tests: XCTestCase {
     }
     
     func testPListRawArray_convertedToPListArray() {
-        let array: PList.RawArray = [
+        let array: RawPListArray = [
             "A key" as NSString,
             123 as NSNumber
         ]

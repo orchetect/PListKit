@@ -10,7 +10,6 @@ import Foundation
 
 #if swift(>=5.7)
 
-/// aka extension PListArray
 extension PListArray {
     // Internal type: NSString
     public subscript(string index: Index) -> String? {

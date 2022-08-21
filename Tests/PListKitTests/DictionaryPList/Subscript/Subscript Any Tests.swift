@@ -14,8 +14,7 @@ class SubscriptAnyTests: XCTestCase {
     override func tearDown() { super.tearDown() }
     
     func testSubscript_GetAny() throws {
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
         
         let val = pl.storage[any: "TestString"]
         

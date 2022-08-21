@@ -16,7 +16,7 @@ class SubscriptBasicTests: XCTestCase {
     func testSubscript_BasicSetGet() {
         // basic types and setters/getters
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         pl.storage[string: "TestString"] = "A test string"
         XCTAssertEqual(pl.storage[string: "TestString"], "A test string") // String?

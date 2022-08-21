@@ -127,7 +127,7 @@ class PListDictionary_Tests: XCTestCase {
     func testMutation() {
         // PListDictionary?, aka: Dictionary<String, PListValue>
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         XCTAssertNil(pl.storage[dict: "TestDict"])
         
@@ -196,7 +196,7 @@ class PListDictionary_Tests: XCTestCase {
     }
     
     func testPListRawDictionary_convertedToPListDictionary() {
-        let dict: PList.RawDictionary = ["A key" as NSString: 123 as NSNumber]
+        let dict: RawPListDictionary = ["A key" as NSString: 123 as NSNumber]
         
         let newDict: PListDictionary? = dict.convertedToPListDictionary()
         XCTAssertNotNil(newDict)

@@ -10,7 +10,7 @@ import Foundation
 
 // all subclasses adopt this
 
-extension PList {
+extension DictionaryPList {
     /// `PList` path builder object to facilitate functional traversal of the underlying `PList` data storage.
     ///
     /// Do not instance this class directly. Instead, access the `.root` property on a `PList` object.
@@ -71,7 +71,7 @@ extension PList {
     }
 }
 
-extension PList.PListNode {
+extension DictionaryPList.PListNode {
     /// Internal
     enum NodeType {
         case any
@@ -93,55 +93,55 @@ extension PList.PListNode {
 
 // MARK: - Nodes
 
-extension PList.PListNode {
-    public class TreeNode: PList.PListNode { }
+extension DictionaryPList.PListNode {
+    public class TreeNode: DictionaryPList.PListNode { }
     
     public class TreeDictionary: TreeNode {
         public func any(key: String) -> AnyKey {
-            PList.PListNode.AnyKey(key: key, type: .any, parent: self)
+            DictionaryPList.PListNode.AnyKey(key: key, type: .any, parent: self)
         }
         
         public func dict(key: String) -> SubDictionary {
-            PList.PListNode.SubDictionary(key: key, parent: self)
+            DictionaryPList.PListNode.SubDictionary(key: key, parent: self)
         }
         
         public func array(key: String) -> ArrayKey {
-            PList.PListNode.ArrayKey(key: key, type: .array, parent: self)
+            DictionaryPList.PListNode.ArrayKey(key: key, type: .array, parent: self)
         }
         
         public func string(key: String) -> StringKey {
-            PList.PListNode.StringKey(key: key, type: .string, parent: self)
+            DictionaryPList.PListNode.StringKey(key: key, type: .string, parent: self)
         }
         
         public func int(key: String) -> IntKey {
-            PList.PListNode.IntKey(key: key, type: .int, parent: self)
+            DictionaryPList.PListNode.IntKey(key: key, type: .int, parent: self)
         }
         
         public func double(key: String) -> DoubleKey {
-            PList.PListNode.DoubleKey(key: key, type: .double, parent: self)
+            DictionaryPList.PListNode.DoubleKey(key: key, type: .double, parent: self)
         }
         
         public func bool(key: String) -> BoolKey {
-            PList.PListNode.BoolKey(key: key, type: .bool, parent: self)
+            DictionaryPList.PListNode.BoolKey(key: key, type: .bool, parent: self)
         }
         
         public func date(key: String) -> DateKey {
-            PList.PListNode.DateKey(key: key, type: .date, parent: self)
+            DictionaryPList.PListNode.DateKey(key: key, type: .date, parent: self)
         }
         
         public func data(key: String) -> DataKey {
-            PList.PListNode.DataKey(key: key, type: .data, parent: self)
+            DictionaryPList.PListNode.DataKey(key: key, type: .data, parent: self)
         }
     }
 }
 
 // MARK: - Root
 
-extension PList.PListNode {
-    public class Root: PList.PListNode.TreeDictionary {
-        internal weak var delegate: PList?
+extension DictionaryPList.PListNode {
+    public final class Root: DictionaryPList.PListNode.TreeDictionary {
+        internal weak var delegate: DictionaryPList?
         
-        internal init(delegate: PList? = nil) {
+        internal init(delegate: DictionaryPList? = nil) {
             self.delegate = delegate
             
             super.init(
@@ -245,13 +245,13 @@ extension PList.PListNode {
 
 // MARK: - Sub-nodes
 
-extension PList.PListNode {
+extension DictionaryPList.PListNode {
     // subnode template
     
-    public class SubDictionary: PList.PListNode.TreeDictionary {
+    public class SubDictionary: DictionaryPList.PListNode.TreeDictionary {
         internal init(
             key: String,
-            parent: PList.PListNode.TreeNode
+            parent: DictionaryPList.PListNode.TreeNode
         ) {
             super.init(
                 key: key,
@@ -275,12 +275,12 @@ extension PList.PListNode {
 
 // MARK: definition
 
-extension PList.PListNode {
-    public class SubValue: PList.PListNode {
+extension DictionaryPList.PListNode {
+    public class SubValue: DictionaryPList.PListNode {
         internal init(
             key: String,
             type: NodeType? = nil,
-            parent: PList.PListNode.TreeDictionary
+            parent: DictionaryPList.PListNode.TreeDictionary
         ) {
             super.init(
                 key: key,
@@ -293,7 +293,7 @@ extension PList.PListNode {
 
 // MARK: individual subclasses
 
-extension PList.PListNode {
+extension DictionaryPList.PListNode {
     public class AnyKey: SubValue {
         public var value: PListValue? {
             get {

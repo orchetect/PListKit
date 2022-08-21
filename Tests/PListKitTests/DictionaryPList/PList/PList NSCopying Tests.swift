@@ -14,8 +14,7 @@ class PList_NSCopying_Tests: XCTestCase {
     override func tearDown() { super.tearDown() }
 
     func testNSCopying() throws {
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
     
         // set up other properties
     
@@ -23,11 +22,11 @@ class PList_NSCopying_Tests: XCTestCase {
     
         // make copy
     
-        let copy = pl.copy() as! PList
+        let copy = try XCTUnwrap(pl.copy() as? DictionaryPList)
     
         // verify contents
     
-        verifySamplePListContent(copy)
+        kSamplePList.DictRootAllValues.verify(matches: copy)
     
         // verify stored properties
     

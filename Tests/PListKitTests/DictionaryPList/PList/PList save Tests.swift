@@ -15,20 +15,8 @@ class PList_save_Tests: XCTestCase {
     
     // MARK: - File Save
     
-    func testSaveFailure() throws {
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
-        
-        // no filePath or fileURL set, save will fail
-        
-        XCTAssertThrowsError(try pl.save())
-        XCTAssertThrowsError(try pl.save(format: .xml))
-        XCTAssertThrowsError(try pl.save(format: .binary))
-    }
-    
     func testSave() throws {
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
         
         // prep target filename
         
@@ -40,7 +28,7 @@ class PList_save_Tests: XCTestCase {
         // save file
         
         pl.format = .xml
-        try pl.save(toURL: url1)
+        try pl.save(toFileAtURL: url1)
         
         XCTAssertTrue(url1.fileExists) // file written to disk
         
@@ -48,7 +36,7 @@ class PList_save_Tests: XCTestCase {
         let url2 = temporaryDirectoryURL.appendingPathComponent(randomFileName2)
         
         pl.format = .binary
-        try pl.save(toFile: url2.path)
+        try pl.save(toFileAtPath: url2.path)
         
         XCTAssertTrue(url2.fileExists) // file written to disk
         
