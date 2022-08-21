@@ -1,5 +1,5 @@
 //
-//  PList Init Tests.swift
+//  DictionaryPList Init Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -9,7 +9,10 @@
 import XCTest
 import PListKit
 
-class PListInitTests: XCTestCase {
+final class DictionaryPList_Init_Tests: XCTestCase {
+    override func setUp() { super.setUp() }
+    override func tearDown() { super.tearDown() }
+    
     func testInit() {
         let pl = DictionaryPList()
         
@@ -41,7 +44,7 @@ class PListInitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        try kSamplePList.DictRootAllValues.rawXML.write(
+        try kSamplePList.DictRootAllValues.XML.raw.write(
             to: url,
             atomically: false,
             encoding: .utf8
@@ -61,7 +64,7 @@ class PListInitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        try kSamplePList.DictRootAllValues.rawXML.write(
+        try kSamplePList.DictRootAllValues.XML.raw.write(
             to: url,
             atomically: false,
             encoding: .utf8
@@ -77,12 +80,12 @@ class PListInitTests: XCTestCase {
     }
     
     func testInit_Data() throws {
-        let pl = try DictionaryPList(data: kSamplePList.DictRootAllValues.rawXML.data(using: .utf8)!)
+        let pl = try DictionaryPList(data: kSamplePList.DictRootAllValues.XML.raw.data(using: .utf8)!)
         kSamplePList.DictRootAllValues.verify(matches: pl)
     }
     
     func testInit_String() throws {
-        let pl = try DictionaryPList(xml: kSamplePList.DictRootAllValues.rawXML)
+        let pl = try DictionaryPList(xml: kSamplePList.DictRootAllValues.XML.raw)
         kSamplePList.DictRootAllValues.verify(matches: pl)
     }
     

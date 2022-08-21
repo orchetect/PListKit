@@ -1,5 +1,5 @@
 //
-//  PList NSCopying Tests.swift
+//  DictionaryPList NSCopying Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -9,12 +9,12 @@
 import XCTest
 import PListKit
 
-class PList_NSCopying_Tests: XCTestCase {
+final class DictionaryPList_NSCopying_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
 
     func testNSCopying() throws {
-        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
     
         // set up other properties
     

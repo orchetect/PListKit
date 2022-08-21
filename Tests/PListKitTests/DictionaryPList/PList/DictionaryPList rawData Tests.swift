@@ -1,5 +1,5 @@
 //
-//  PList rawData Tests.swift
+//  DictionaryPList rawData Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -9,14 +9,14 @@
 import XCTest
 import PListKit
 
-class PList_rawData_Tests: XCTestCase {
+final class DictionaryPList_rawData_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
     // MARK: - RawData
     
     func testRawData_FromXML() throws {
-        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
         // check that rawData succeeds
         
@@ -36,7 +36,7 @@ class PList_rawData_Tests: XCTestCase {
     }
     
     func testRawData_FromBinary() throws {
-        let pl = try kSamplePList.DictRootAllValues.xmlDictionaryPList()
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
         // check that rawData succeeds
         
