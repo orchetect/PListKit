@@ -58,6 +58,39 @@ PList<Data>
 
 The remainder of this documentation will demonstrate the use of `DictionaryPList` since it is the most common.
 
+### Loading plist contents
+
+The following initializers are available to load external data into the `PList` object.
+
+- `init(file:)` - using a file path on disk
+- `init(url:)` - using a local file URL or network resource URL
+- `init(data:)` - using raw plist data (either XML or binary plist data)
+- `init(xml:)` - using raw plist XML string
+
+When you know the root element type ahead of time, you can use the constructors directly on the specialized `PList<>` class of its kind. The vast majority of plist files use a dictionary as the root element.
+
+```swift
+// file is known to have a dictionary root element
+let plist = try DictionaryPList(file: "/Users/user/Desktop/file.plist")
+```
+
+When you do not know the root element type ahead of time and cannot be sure it is a dictionary, use `AnyPList` to load the plist and then unwrap it to get the `PList<>` class specialized to its root element type.
+
+```swift
+let anyPL = try AnyPList(file: "/Users/user/Desktop/file.plist")
+
+switch anyPL.plist {
+  case .dictionaryRoot(let plist):
+    // plist is DictionaryPList
+  case .arrayRoot(let plist):
+    // plist is ArrayPList
+  case .stringRoot(let plist):
+    // plist is PList<Strimg> - its root is a single String value
+  
+  // ... etc. ...
+}
+```
+
 ### Values
 
 Valid plist value types, all conforming to `PListValue` protocol:
@@ -73,21 +106,7 @@ typealias PListDictionary = [String : PListValue]
 typealias PListArray = [PListValue]
 ```
 
-### Loading plist contents
-
-The following initializers are available to load external data into the `PList` object.
-
-- `DictionaryPList(file:)` - using a file path on disk
-- `DictionaryPList(url:)` - using a local file URL or network resource URL
-- `DictionaryPList(data:)` - using raw plist data (either XML or binary plist data)
-- `DictionaryPList(xml:)` - using raw plist XML string
-- `DictionaryPList(root:)` - using raw dictionary
-
-```swift
-let plist = try DictionaryPList(file: "/Users/user/Desktop/file.plist")
-```
-
-### Read/Write Keys
+### `DictionaryPList`: Read/Write Keys
 
 ```swift
 // can create intermediate dictionaries if nonexistent
@@ -136,7 +155,7 @@ plist.root.dict(key: "Dictionary").value = [
 ]
 ```
 
-### Manipulating Array Elements Directly
+### `DictionaryPList`: Manipulating Array Elements Directly
 
 Arrays can, of course, be modified in-place using native Swift subscripts.
 
@@ -145,7 +164,7 @@ plist.root.array(key: "Array").value?[0] = "replaced string value"
 plist.root.array(key: "Array").value?.append("new string value")
 ```
 
-### Reading Arrays
+### `DictionaryPList`: Reading Arrays
 
 Since property list arrays can contain any valid plist value type simultaneously, when reading arrays you need to conditionally cast values to test their type.
 
@@ -167,7 +186,7 @@ for element in array {
 }
 ```
 
-### Deleting Keys
+### `DictionaryPList`: Deleting Keys
 
 ```swift
 // delete a key
@@ -178,7 +197,7 @@ plist.root.array(key: "Array").value = nil
 plist.root.dict(key: "Dict").value = nil
 ```
 
-### Subscripts
+### `DictionaryPList`: Subscripts
 
 A full set of chainable subscripts are also available if you choose to use them, mirroring the functional methods. To use them, reference the `storage` property directly instead of `root`.
 
