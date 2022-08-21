@@ -115,7 +115,7 @@ final class DictionaryPList_Init_Tests: XCTestCase {
         XCTAssertEqual(pl2.storage[string: "key3"], "A string")
     }
     
-    func testInit_RawDictionary() throws {
+    func testInit_RawPListDictionary() throws {
         // empty dict
         
         let dict1: RawPListDictionary = [:]

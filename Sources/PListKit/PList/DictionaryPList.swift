@@ -96,7 +96,7 @@ extension DictionaryPList {
     ///
     /// - parameter root: Source raw dictionary to read from.
     ///
-    /// - throws: `PList.LoadError`
+    /// - throws: `PListLoadError`
     public convenience init(
         root: RawPListDictionary,
         format: PropertyListSerialization.PropertyListFormat = .xml

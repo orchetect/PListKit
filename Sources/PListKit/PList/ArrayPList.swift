@@ -45,7 +45,7 @@ extension ArrayPList {
     ///
     /// - parameter root: Source raw array to read from.
     ///
-    /// - throws: `PList.LoadError`
+    /// - throws: `PListLoadError`
     public convenience init(
         root: RawPListArray,
         format: PropertyListSerialization.PropertyListFormat = .xml

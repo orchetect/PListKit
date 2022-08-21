@@ -210,7 +210,7 @@ final class PListArray_Tests: XCTestCase {
         XCTAssertEqual(pl.storage[arrayCreate: "TestArrayNew2"]?.count, 0)
     }
     
-    func testPListRawArray_convertedToPListArray() {
+    func testRawPListArray_convertedToPListArray() {
         let array: RawPListArray = [
             "A key" as NSString,
             123 as NSNumber

@@ -222,7 +222,7 @@ final class PListDictionary_Tests: XCTestCase {
         XCTAssertNil(pl.storage[dict: "TestDict"])
     }
     
-    func testPListRawDictionary_convertedToPListDictionary() {
+    func testRawPListDictionary_convertedToPListDictionary() {
         let dict: RawPListDictionary = ["A key" as NSString: 123 as NSNumber]
         
         let newDict: PListDictionary? = dict.convertedToPListDictionary()
