@@ -9,7 +9,7 @@
 import XCTest
 import PListKit
 
-class PListArray_Tests: XCTestCase {
+final class PListArray_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     

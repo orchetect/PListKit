@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// Cases containing a PList instance with strongly typed root.
+/// Cases containing a PList instance with strongly-typed root.
 public enum PList {
     case dictionaryRoot(DictionaryPList)
     case arrayRoot(ArrayPList)

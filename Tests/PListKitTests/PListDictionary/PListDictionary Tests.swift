@@ -9,7 +9,7 @@
 import XCTest
 import PListKit
 
-class PListDictionary_Tests: XCTestCase {
+final class PListDictionary_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -122,6 +122,33 @@ class PListDictionary_Tests: XCTestCase {
         XCTAssertEqual(plistDict[data: "i"], nil)
         XCTAssert(plistDict[array: "i"] == nil)
         XCTAssert(plistDict[dict: "i"] == nil)
+    }
+    
+    func testSubscriptGetterAny() throws {
+        var plistDict = try kSamplePList.DictRootAllValues.XML.plist().storage
+        
+        let val = plistDict[any: "TestString"]
+        
+        // type check
+        
+        XCTAssertTrue(val is String)
+        XCTAssertFalse(val is Int)
+        XCTAssertFalse(val is Double)
+        XCTAssertFalse(val is Bool)
+        XCTAssertFalse(val is Date)
+        XCTAssertFalse(val is Data)
+        XCTAssertFalse(val is PListArray)
+        XCTAssertFalse(val is PListDictionary)
+        
+        XCTAssertEqual(val as? String, "A string value")
+        
+        // set
+        
+        plistDict[any: "TestAny"] = 123
+        XCTAssertEqual(plistDict[any: "TestAny"] as? Int, 123)
+        
+        plistDict[any: "TestAny"] = "A new string"
+        XCTAssertEqual(plistDict[any: "TestAny"] as? String, "A new string")
     }
     
     func testMutation() {

@@ -1,5 +1,5 @@
 //
-//  Node Tests.swift
+//  DictionaryPList Node Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -9,7 +9,7 @@
 import XCTest
 import PListKit
 
-class NodeTests: XCTestCase {
+final class DictionaryPList_Node_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
