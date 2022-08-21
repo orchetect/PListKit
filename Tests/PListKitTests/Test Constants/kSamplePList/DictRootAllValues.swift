@@ -6,10 +6,10 @@
 
 // swiftformat:options --wrapcollections preserve
 
+#if shouldTestCurrentPlatform
+
 import XCTest
 import PListKit
-
-#if !os(watchOS)
 
 extension kSamplePList {
     enum DictRootAllValues {
