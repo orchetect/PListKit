@@ -35,9 +35,9 @@ final class PList_Init_Tests: XCTestCase {
         )
         
         // special case omitted here, see test below
-        //XCTAssertThrowsError(
+        // XCTAssertThrowsError(
         //    try PList<String>(xml: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
-        //)
+        // )
     }
     
     func testXMLMalformed() throws {

@@ -1,5 +1,5 @@
 //
-//  DictionaryPList init Tests.swift
+//  DictionaryPList Init Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -80,7 +80,10 @@ final class DictionaryPList_Init_Tests: XCTestCase {
     }
     
     func testInit_Data() throws {
-        let pl = try DictionaryPList(data: kSamplePList.DictRootAllValues.XML.raw.data(using: .utf8)!)
+        let pl = try DictionaryPList(
+            data: kSamplePList.DictRootAllValues.XML.raw
+                .data(using: .utf8)!
+        )
         kSamplePList.DictRootAllValues.verify(matches: pl)
     }
     

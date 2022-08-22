@@ -26,7 +26,7 @@ public final class PList<Root: PListValue>: PListProtocol, NSCopying {
     // MARK: - init
     
     public init() {
-        self.format = .xml
+        format = .xml
     }
     
     public init(format: PListFormat) {
@@ -45,4 +45,3 @@ public final class PList<Root: PListValue>: PListProtocol, NSCopying {
         return copy
     }
 }
-

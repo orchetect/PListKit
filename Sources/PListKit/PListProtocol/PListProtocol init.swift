@@ -38,7 +38,7 @@ extension PListProtocol {
     /// Instantiate a PList object by providing its root element, optionally specifying format.
     public init(root: Root, format: PListFormat = .xml) {
         self.init(format: format)
-        self.storage = root
+        storage = root
     }
 }
 
