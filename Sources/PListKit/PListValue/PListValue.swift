@@ -61,7 +61,7 @@ extension Array: PListValue where Element == PListValue {
 
 /// Helper method that returns `self` as a `PListValue` if it is a valid plist element type.
 func convertToPListValue(from object: Any) -> PListValue? {
-    // ***** type(of:) is a workaround to test for a boolean type,
+    // TODO: type(of:) is a workaround to test for a boolean type,
     // since testing for NSNumber's boolValue constants is tricky in Swift
     // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
     
@@ -104,7 +104,7 @@ func convertToPListValue(from object: Any) -> PListValue? {
 
 func convertToWrappedPList(root object: Any,
                            format: PListFormat) -> WrappedPList? {
-    // ***** type(of:) is a workaround to test for a boolean type,
+    // TODO: type(of:) is a workaround to test for a boolean type,
     // since testing for NSNumber's boolValue constants is tricky in Swift
     // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
     
