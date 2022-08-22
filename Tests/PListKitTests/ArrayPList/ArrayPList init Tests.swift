@@ -120,7 +120,7 @@ final class ArrayPList_Init_Tests: XCTestCase {
         
         let dict1: RawPListArray = []
         
-        let pl1 = try ArrayPList(root: dict1)
+        let pl1 = try ArrayPList(converting: dict1)
         
         XCTAssertEqual(pl1.storage.count, 0)
         
@@ -132,7 +132,7 @@ final class ArrayPList_Init_Tests: XCTestCase {
             "A string" as NSString
         ]
         
-        let pl2 = try ArrayPList(root: dict2)
+        let pl2 = try ArrayPList(converting: dict2)
         
         XCTAssertEqual(pl2.storage.count, 3)
         

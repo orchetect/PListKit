@@ -8,7 +8,7 @@ A multiplatform Swift library bringing functional methods and type safety to .pl
 
 The challenges that Apple's standard ` PropertyListSerialization` presents:
 
-1. **Lack of type safety**: it allows the inadvertent injection of incompatible value types, which can lead to unexpected errors when saving a plist file later on, and are difficult to diagnose
+1. **Lack of type safety** which allows the inadvertent injection of incompatible value types, which can lead to unexpected errors when saving a plist file later on, and are difficult to diagnose
 2. **Root-level dictionary access only**, making traversal of nested dictionaries very cumbersome
 3. **Deals in NS value types** which is not very Swifty and requires extra boilerplate at every interaction
 
@@ -80,31 +80,46 @@ When you do not know the root element type ahead of time and cannot be sure it i
 let anyPL = try AnyPList(file: "/Users/user/Desktop/file.plist")
 
 switch anyPL.plist {
-  case .dictionaryRoot(let plist):
+case .dictionaryRoot(let plist):
     // plist is DictionaryPList
-  case .arrayRoot(let plist):
+case .arrayRoot(let plist):
     // plist is ArrayPList
-  case .stringRoot(let plist):
-    // plist is PList<Strimg> - its root is a single String value
+case .stringRoot(let plist):
+    // plist is PList<String> - its root is a single String value
   
-  // ... etc. ...
+    // ... etc. ...
 }
 ```
 
 ### Values
 
-Valid plist value types, all conforming to `PListValue` protocol:
+[Property lists](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/PropertyLists/AboutPropertyLists/AboutPropertyLists.html) have a specific set of allowable value types when dealing directly with `PropertyListSerialization`:
 
-```swift
-String
-Int
-Double
-Bool
-Date
-Data
-typealias PListDictionary = [String : PListValue]
-typealias PListArray = [PListValue]
-```
+| Abstract Type | XML element | Cocoa class | Core Foundation type |
+| --- | --- | --- | --- |
+| array | `<array>` | `NSArray` | `CFArray` |
+| dictionary | `<dict>` | `NSDictionary` | `CFDictionary` |
+| string | `<string>` | `NSString` | `CFString` |
+| data | `<data>` | `NSData` | `CFData` |
+| date | `<date>` | `NSDate` | `CFDate` |
+| integer | `<integer>` | `NSNumber` (`intValue`) | `CFNumber`, integer |
+| float | `<real>` | `NSNumber` (`floatValue`) | `CFNumber`, floating-point |
+| boolean | `<true/>` or `<false/>` | `NSNumber` `boolValue` | `CFBoolean` |
+
+In PListKit, the ``PList`` class uses Swift-native value types instead and seamlessly translates them to/from the `PropertyListSerialization` types for you when loading or saving the plist to disk.
+
+These all conform to the ``PListValue`` protocol which allows any of them to be nested within dictionaries or arrays while ensuring type safety by preventing invalid types:
+
+| Abstract Type | PListKit Swift Type | Typealias |
+| --- | --- | --- |
+| array | `[` ``PListValue`` `]` | ``PListArray`` |
+| dictionary | `[` `String:` ``PListValue`` `]` | ``PListDictionary`` |
+| string | `String` | - |
+| data | `Data` | - |
+| date | `Date` | - |
+| integer | `Int` | - |
+| float | `Double` | - |
+| boolean | `Bool` | - |
 
 ### `DictionaryPList`: Read/Write Keys
 
@@ -114,17 +129,17 @@ plist.createIntermediateDictionaries = true // (note: defaults to true)
 
 // create a new Int key within nested dictionaries
 plist.root
-  .dict(key: "Dict")
-  .dict(key: "Nested Dict")
-  .int(key: "Int")
-  .value = 123
+    .dict(key: "Dict")
+    .dict(key: "Nested Dict")
+    .int(key: "Int")
+    .value = 123
 
 // read the value back
 let val = plist.root
-  .dict(key: "Dict")
-  .dict(key: "Nested Dict")
-  .int(key: "Int")
-  .value  // == Optional(123)
+    .dict(key: "Dict")
+    .dict(key: "Nested Dict")
+    .int(key: "Int")
+    .value  // == Optional(123)
 ```
 
 All valid property list value types map transparently to native Swift value types.
@@ -138,20 +153,20 @@ plist.root.bool(key: "Bool").value = true
 plist.root.date(key: "Date").value = Date()
 plist.root.data(key: "Data").value = Data([0x01, 0x02])
 plist.root.array(key: "Array").value = [
-  "a string",
-  123, 
-  123.45,
-  true, 
-  Date(), 
-  Data([0x01, 0x02])
+    "a string",
+    123, 
+    123.45,
+    true, 
+    Date(), 
+    Data([0x01, 0x02])
 ]
 
-// dictonaries can be modified directly if necessary,
+// dictionaries can be modified directly if necessary,
 // perhaps if you need to populate a large data set or copy a nested structure.
 // but otherwise it's much nicer to use the discretely typed methods above
 plist.root.dict(key: "Dictionary").value = [
- "Key 1" : "a string",
- "Key 2" : 123
+   "Key 1" : "a string",
+   "Key 2" : 123
 ]
 ```
 
@@ -159,7 +174,7 @@ plist.root.dict(key: "Dictionary").value = [
 
 Arrays can, of course, be modified in-place using native Swift subscripts.
 
-```bash
+```swift
 plist.root.array(key: "Array").value?[0] = "replaced string value"
 plist.root.array(key: "Array").value?.append("new string value")
 ```
@@ -172,7 +187,7 @@ Since property list arrays can contain any valid plist value type simultaneously
 let array = plist.root.array(key: "Array").value ?? [] // PListArray, aka [PListValue]
 
 for element in array {
-  switch element {
+    switch element {
     case let val as String:           print("String: \(val)")
     case let val as Int:              print("Int: \(val)")
     case let val as Double:           print("Double: \(val)")
@@ -182,7 +197,7 @@ for element in array {
     case let val as PListArray:       print("Array with \(val.count) elements")
     case let val as PListDictionary:  print("Dictionary with \(val.count) elements")
     default: break
-  }
+    }
 }
 ```
 
@@ -232,11 +247,11 @@ plist.storage[dictCreate: "Dict"]?[dictCreate: "Nested Dict"]?[string: "Keyname"
 
 // subscript bodies may be on new lines in the event of very long subscript chains
 plist.storage[
-  dictCreate: "Dict"
+    dictCreate: "Dict"
 ]?[
-  dictCreate: "Nested Dict"
+    dictCreate: "Nested Dict"
 ]?[
-  string: "Keyname"
+    string: "Keyname"
 ] = "string value"
 ```
 
@@ -246,14 +261,14 @@ Arrays can be read by index, conditionally casting to a strong type in process:
 // safely attempt to read indexes
 // if index does not exist, returns nil
 // if index exists but is of wrong type, returns nil
-plist.storage[array: "Array"]?[any: 0] // read index 0 as PListValue; must cast it yourself
-plist.storage[array: "Array"]?[string: 0] // read index 0 and cast it as? String
-plist.storage[array: "Array"]?[int: 0] // read index 0 and cast it as? Int
-plist.storage[array: "Array"]?[double: 0] // read index 0 and cast it as? Double
-plist.storage[array: "Array"]?[bool: 0] // read index 0 and cast it as? Bool
-plist.storage[array: "Array"]?[date: 0] // read index 0 and cast it as? Date
-plist.storage[array: "Array"]?[data: 0] // read index 0 and cast it as? PList.PListArray
-plist.storage[array: "Array"]?[dict: 0] // read index 0 and cast it as? PList.PListDictionary
+plist.storage[array: "Array"]?[any: 0]    // read index 0 as PListValue; must cast it yourself
+plist.storage[array: "Array"]?[string: 0] // read index 0 as? String
+plist.storage[array: "Array"]?[int: 0]    // read index 0 as? Int
+plist.storage[array: "Array"]?[double: 0] // read index 0 as? Double
+plist.storage[array: "Array"]?[bool: 0]   // read index 0 as? Bool
+plist.storage[array: "Array"]?[date: 0]   // read index 0 as? Date
+plist.storage[array: "Array"]?[data: 0]   // read index 0 as? PList.PListArray
+plist.storage[array: "Array"]?[dict: 0]   // read index 0 as? PList.PListDictionary
 ```
 
 ### Save File to Disk
@@ -279,7 +294,7 @@ let plist2 = plist.copy() as? DictionaryPList
 
 ### Additional Methods
 
-More methods are available in addition to what is outlined here in the documentation. Use code completion in the Xcode IDE code editor to discover them.
+More methods are available in addition to what is outlined here in the documentation. See the bundled DocC documentation in Xcode's IDE by running the Build Documentation command.
 
 ## Resources
 

@@ -17,18 +17,22 @@ extension DictionaryPList {
     ///
     /// At the end of the path, use the `.value` property to get or set the current node's value.
     ///
-    ///     let pl = DictionaryPList()
+    /// ```swift
+    /// let pl = DictionaryPList() // typealias of PList<PListDictionary>
     ///
-    ///     pl.root.string(key: "String") = "string value"
-    ///     let val = pl.root.string(key: "String") // "string value"
+    /// pl.root.string(key: "String") = "string value"
+    /// let val = pl.root.string(key: "String") // "string value"
+    /// ```
     ///
     /// It also allows for access to nested dictionaries.
     ///
-    ///     pl.root
-    ///       .dict(key: "Dict")
-    ///       .dict(key: "Nested Dict")
-    ///       .string(key: "String")
-    ///       .value
+    /// ```swift
+    /// pl.root
+    ///     .dict(key: "Dict")
+    ///     .dict(key: "Nested Dict")
+    ///     .string(key: "String")
+    ///     .value
+    /// ```
     ///
     public class PListNode {
         internal var parent: TreeNode?

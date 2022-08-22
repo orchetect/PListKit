@@ -29,9 +29,10 @@ extension RawPListArray {
     }
 }
 
-// MARK: - API Changes in 1.3.0
+// MARK: - API Changes in 2.0.0
 
 extension PList {
+    /// This type has been renamed to ``RawPListArray``.
     @available(*, deprecated, renamed: "RawPListArray")
     public typealias RawArray = RawPListArray
 }

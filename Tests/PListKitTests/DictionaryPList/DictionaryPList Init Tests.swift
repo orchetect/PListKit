@@ -123,7 +123,7 @@ final class DictionaryPList_Init_Tests: XCTestCase {
         
         let dict1: RawPListDictionary = [:]
         
-        let pl1 = try DictionaryPList(root: dict1)
+        let pl1 = try DictionaryPList(converting: dict1)
         
         XCTAssertEqual(pl1.storage.count, 0)
         
@@ -135,7 +135,7 @@ final class DictionaryPList_Init_Tests: XCTestCase {
             "key3" as NSString: "A string" as NSString
         ]
         
-        let pl2 = try DictionaryPList(root: dict2)
+        let pl2 = try DictionaryPList(converting: dict2)
         
         XCTAssertEqual(pl2.storage.count, 3)
         

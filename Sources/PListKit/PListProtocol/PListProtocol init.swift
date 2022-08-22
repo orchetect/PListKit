@@ -43,14 +43,15 @@ extension PListProtocol {
 }
 
 extension PListProtocol {
-    /// Instantiate a plist object by populating its contents using an existing dictionary.
+    /// Instantiate a plist object by converting a raw root value.
     ///
-    /// - parameter root: Source raw plist value (`NSString`, `NSNumber`, etc.)
-    ///
+    /// - parameters:
+    ///   - root: Source raw plist value (`NSDictionary`, `NSString`, `NSNumber`, etc.)
+    ///   - format: plist format
+    /// 
     /// - throws: ``PListLoadError``
-    @_disfavoredOverload
     public init(
-        root: AnyObject,
+        converting root: AnyObject,
         format: PropertyListSerialization.PropertyListFormat = .xml
     ) throws {
         guard let converted = convertToPListValue(from: root) else {

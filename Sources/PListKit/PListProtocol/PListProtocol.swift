@@ -6,6 +6,7 @@
 
 import Foundation
 
+/// Protocol which all ``PList`` classes adopt, which provides core methods for loading and saving plist data.
 public protocol PListProtocol {
     /// Root type for the plist.
     ///
@@ -43,10 +44,10 @@ public protocol PListProtocol {
     /// Create an empty plist, using default format.
     init()
     
-    /// Create an empty plist, optionally specifying format.
+    /// Create an empty plist, specifying format.
     init(format: PListFormat)
     
-    /// Create a plist from a root element, optionally specifying format.
+    /// Create a plist from a root element, specifying format.
     init(root: Root, format: PListFormat)
     
     // MARK: - Init From File
@@ -74,7 +75,7 @@ public protocol PListProtocol {
     /// - throws: ``PListLoadError``
     init(xml string: String) throws
     
-    /// Instantiate a plist object by populating its contents from parsing raw plist data.
+    /// Instantiate a plist object from raw plist data.
     ///
     /// - parameter data: Source plist raw data, either XML or binary.
     ///

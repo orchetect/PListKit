@@ -115,7 +115,7 @@ final class PList_Init_Tests: XCTestCase {
     
     func testInit_RawRoot() throws {
         let value = "A string" as NSString
-        let pl = try PList<String>(root: value)
+        let pl = try PList<String>(converting: value)
         XCTAssertEqual(pl.storage, "A string")
     }
 }

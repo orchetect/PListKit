@@ -6,13 +6,13 @@
 
 import Foundation
 
-/// Class representing a Property List (plist) with a `Dictionary` root.
+/// Class representing a Property List (plist) with a ``PListDictionary`` root.
 /// This is the most common plist root layout and provides the most amount of useful abstractions of all plist classes in PListKit.
 ///
-/// - To initialize an empty plist, use ``init()``.
-/// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
-/// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
-/// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
+/// - To initialize an empty plist, use ``PList/init()``.
+/// - To load a plist file from file path or URL, use the ``PList/init(file:)`` or ``PList/init(url:)`` constructor.
+/// - To load a raw plist file content, use the ``PList/init(data:)`` or ``PList/init(xml:)`` constructor.
+/// - To save to a file, use ``PList/save(toFileAtPath:format:)``, or ``PList/save(toFileAtURL:format:)``.
 public typealias DictionaryPList = PList<PListDictionary>
 
 extension DictionaryPList {
@@ -33,12 +33,14 @@ extension DictionaryPList {
 extension DictionaryPList {
     /// Instantiate a `DictionaryPList` object by populating its contents using an existing dictionary.
     ///
-    /// - parameter root: Source raw dictionary to read from.
+    /// - parameters:
+    ///   - root: Source raw dictionary
+    ///   - format: Property list format
     ///
     /// - throws: ``PListLoadError``
     public convenience init(
-        root: RawPListDictionary,
-        format: PropertyListSerialization.PropertyListFormat = .xml
+        converting root: RawPListDictionary,
+        format: PListFormat = .xml
     ) throws {
         guard let converted = root.convertedToPListDictionary() else {
             throw PListLoadError.formatNotExpected

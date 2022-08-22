@@ -6,7 +6,11 @@
 
 import Foundation
 
-/// Generic class wrapping a specialized concrete Property List (``PList``) class.
+/// Generic class wrapping a specialized Property List (``PList``) class.
+///
+/// Using a file or data initializer on this class can be a generic entry-point for reading anonymous plist files. When you have no foreknowledge about a plist's root element this allows you to unwrap the ``PList`` instance specialized to the plist's root type.
+///
+/// See <doc:Load-a-plist-file-from-disk> and <doc:Working-with-Non-Dictionary-plists> for details on using `AnyPList`.
 public struct AnyPList {
     /// Contains a specialized ``PList`` instance.
     public let plist: WrappedPList
@@ -48,7 +52,7 @@ public struct AnyPList {
         try self.init(data: data)
     }
     
-    /// Instantiate a plist object by populating its contents from parsing raw plist data.
+    /// Instantiate a plist object from raw plist data.
     ///
     /// - parameter data: Source plist raw data, either XML or binary.
     ///
