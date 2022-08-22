@@ -48,7 +48,7 @@ extension PListProtocol {
     /// - parameters:
     ///   - root: Source raw plist value (`NSDictionary`, `NSString`, `NSNumber`, etc.)
     ///   - format: plist format
-    /// 
+    ///
     /// - throws: ``PListLoadError``
     public init(
         converting root: AnyObject,

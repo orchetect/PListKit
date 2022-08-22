@@ -17,7 +17,7 @@ public typealias PListArray = [any PListValue]
 /// Strongly-typed Array type used by ``PList``.
 ///
 /// When building with Swift 5.7, this type is `[any PListValue]`.
-/// 
+///
 /// When building with Swift 5.6 or earlier, this type is `[PListValue]`.
 public typealias PListArray = [PListValue]
 #endif
