@@ -4,19 +4,22 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import PListKit
 
-class SubscriptBasicTests: XCTestCase {
+final class Subscript_Basic_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
+    /// Just to test the basic API on the class to ensure it works as expected.
+    /// Not meant to be an exhaustive test of dictionary subscripts;
+    /// extensive dictionary unit tests already exist in PListDictionary Tests.swift
     func testSubscript_BasicSetGet() {
         // basic types and setters/getters
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         pl.storage[string: "TestString"] = "A test string"
         XCTAssertEqual(pl.storage[string: "TestString"], "A test string") // String?

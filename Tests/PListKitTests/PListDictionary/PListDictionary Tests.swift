@@ -4,12 +4,12 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import PListKit
 
-class PListDictionary_Tests: XCTestCase {
+final class PListDictionary_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -124,10 +124,37 @@ class PListDictionary_Tests: XCTestCase {
         XCTAssert(plistDict[dict: "i"] == nil)
     }
     
+    func testSubscriptGetterAny() throws {
+        var plistDict = try kSamplePList.DictRootAllValues.XML.plist().storage
+        
+        let val = plistDict[any: "TestString"]
+        
+        // type check
+        
+        XCTAssertTrue(val is String)
+        XCTAssertFalse(val is Int)
+        XCTAssertFalse(val is Double)
+        XCTAssertFalse(val is Bool)
+        XCTAssertFalse(val is Date)
+        XCTAssertFalse(val is Data)
+        XCTAssertFalse(val is PListArray)
+        XCTAssertFalse(val is PListDictionary)
+        
+        XCTAssertEqual(val as? String, "A string value")
+        
+        // set
+        
+        plistDict[any: "TestAny"] = 123
+        XCTAssertEqual(plistDict[any: "TestAny"] as? Int, 123)
+        
+        plistDict[any: "TestAny"] = "A new string"
+        XCTAssertEqual(plistDict[any: "TestAny"] as? String, "A new string")
+    }
+    
     func testMutation() {
         // PListDictionary?, aka: Dictionary<String, PListValue>
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         XCTAssertNil(pl.storage[dict: "TestDict"])
         
@@ -195,8 +222,8 @@ class PListDictionary_Tests: XCTestCase {
         XCTAssertNil(pl.storage[dict: "TestDict"])
     }
     
-    func testPListRawDictionary_convertedToPListDictionary() {
-        let dict: PList.RawDictionary = ["A key" as NSString: 123 as NSNumber]
+    func testRawPListDictionary_convertedToPListDictionary() {
+        let dict: RawPListDictionary = ["A key" as NSString: 123 as NSNumber]
         
         let newDict: PListDictionary? = dict.convertedToPListDictionary()
         XCTAssertNotNil(newDict)

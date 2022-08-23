@@ -1,20 +1,21 @@
 //
-//  PList Init Tests.swift
+//  DictionaryPList Init Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import PListKit
 
-class PListInitTests: XCTestCase {
+final class DictionaryPList_Init_Tests: XCTestCase {
+    override func setUp() { super.setUp() }
+    override func tearDown() { super.tearDown() }
+    
     func testInit() {
-        let pl = PList()
+        let pl = DictionaryPList()
         
-        XCTAssertNil(pl.filePath)
-        XCTAssertNil(pl.fileURL)
         XCTAssertTrue(pl.storage.isEmpty)
     }
     
@@ -22,19 +23,19 @@ class PListInitTests: XCTestCase {
         // test throwing inits
         
         XCTAssertThrowsError(
-            try PList(url: URL(fileURLWithPath: "/aldkfjalkfgjalkfdja8u248jv34cf"))
+            try DictionaryPList(url: URL(fileURLWithPath: "/aldkfjalkfgjalkfdja8u248jv34cf"))
         )
         
         XCTAssertThrowsError(
-            try PList(file: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
+            try DictionaryPList(file: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
         )
         
         XCTAssertThrowsError(
-            try PList(data: Data([0, 1, 0, 3, 6, 9]))
+            try DictionaryPList(data: Data([0, 1, 0, 3, 6, 9]))
         )
         
         XCTAssertThrowsError(
-            try PList(string: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
+            try DictionaryPList(xml: "asdfsdflk44ucr384cuwurm9xu38fnianaif")
         )
     }
     
@@ -43,15 +44,15 @@ class PListInitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        try kSamplePListRawXML.write(
+        try kSamplePList.DictRootAllValues.XML.raw.write(
             to: url,
             atomically: false,
             encoding: .utf8
         )
         
         // init(url:)
-        let pl = try PList(url: url)
-        verifySamplePListContent(pl)
+        let pl = try DictionaryPList(url: url)
+        kSamplePList.DictRootAllValues.verify(matches: pl)
         
         // clean up
         print("Cleaning up file(s)...")
@@ -63,15 +64,15 @@ class PListInitTests: XCTestCase {
         let temporaryDirectoryURL = FileManager.temporaryDirectoryCompat
         let randomFileName = "temp-\(UUID().uuidString).plist"
         let url = temporaryDirectoryURL.appendingPathComponent(randomFileName)
-        try kSamplePListRawXML.write(
+        try kSamplePList.DictRootAllValues.XML.raw.write(
             to: url,
             atomically: false,
             encoding: .utf8
         )
         
         // init(file:)
-        let pl = try PList(file: url.path)
-        verifySamplePListContent(pl)
+        let pl = try DictionaryPList(file: url.path)
+        kSamplePList.DictRootAllValues.verify(matches: pl)
         
         // clean up
         print("Cleaning up file(s)...")
@@ -79,13 +80,16 @@ class PListInitTests: XCTestCase {
     }
     
     func testInit_Data() throws {
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try DictionaryPList(
+            data: kSamplePList.DictRootAllValues.XML.raw
+                .data(using: .utf8)!
+        )
+        kSamplePList.DictRootAllValues.verify(matches: pl)
     }
     
     func testInit_String() throws {
-        let pl = try PList(string: kSamplePListRawXML)
-        verifySamplePListContent(pl)
+        let pl = try DictionaryPList(xml: kSamplePList.DictRootAllValues.XML.raw)
+        kSamplePList.DictRootAllValues.verify(matches: pl)
     }
     
     func testInit_PListDictionary() throws {
@@ -93,7 +97,7 @@ class PListInitTests: XCTestCase {
         
         let dict1: PListDictionary = [:]
         
-        let pl1 = PList(dictionary: dict1)
+        let pl1 = DictionaryPList(root: dict1)
         
         XCTAssertEqual(pl1.storage.count, 0)
         
@@ -105,7 +109,7 @@ class PListInitTests: XCTestCase {
             "key3": "A string"
         ]
         
-        let pl2 = PList(dictionary: dict2)
+        let pl2 = DictionaryPList(root: dict2)
         
         XCTAssertEqual(pl2.storage.count, 3)
         
@@ -114,24 +118,24 @@ class PListInitTests: XCTestCase {
         XCTAssertEqual(pl2.storage[string: "key3"], "A string")
     }
     
-    func testInit_RawDictionary() throws {
+    func testInit_RawPListDictionary() throws {
         // empty dict
         
-        let dict1: PList.RawDictionary = [:]
+        let dict1: RawPListDictionary = [:]
         
-        let pl1 = try PList(dictionary: dict1)
+        let pl1 = try DictionaryPList(converting: dict1)
         
         XCTAssertEqual(pl1.storage.count, 0)
         
         // dict with content
         
-        let dict2: PList.RawDictionary = [
+        let dict2: RawPListDictionary = [
             "key1" as NSString: 123 as NSNumber,
             "key2" as NSString: 456.789 as NSNumber,
             "key3" as NSString: "A string" as NSString
         ]
         
-        let pl2 = try PList(dictionary: dict2)
+        let pl2 = try DictionaryPList(converting: dict2)
         
         XCTAssertEqual(pl2.storage.count, 3)
         

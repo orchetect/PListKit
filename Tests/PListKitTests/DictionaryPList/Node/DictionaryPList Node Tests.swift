@@ -1,15 +1,15 @@
 //
-//  Node Tests.swift
+//  DictionaryPList Node Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import PListKit
 
-class NodeTests: XCTestCase {
+final class DictionaryPList_Node_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -18,8 +18,7 @@ class NodeTests: XCTestCase {
     func testGetAnyKeys() throws {
         // test accessing values using .any(key:)
         
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
         XCTAssertEqual(
             (pl.root.any(key: "TestArray").value as? PListArray)?[0] as? String,
@@ -69,7 +68,7 @@ class NodeTests: XCTestCase {
     func testSetAnyKeys() {
         // test setting values using .any(key:)
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         pl.root.any(key: "NewString").value = ["A new string", 123]
         XCTAssertEqual(
@@ -132,8 +131,7 @@ class NodeTests: XCTestCase {
     func testGetTypedKeys() throws {
         // basic value reads using .root
         
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
         XCTAssertEqual(
             pl.root.array(key: "TestArray").value?[0] as? String,
@@ -195,8 +193,7 @@ class NodeTests: XCTestCase {
     func testArrayMutation() throws {
         // ensure arrays can be modified directly
         
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
         pl.root.array(key: "TestArray").value?[0] = "new string"
         XCTAssertEqual(
@@ -212,7 +209,7 @@ class NodeTests: XCTestCase {
     }
     
     func testCreateIntermediateDictionaries() {
-        let pl = PList()
+        let pl = DictionaryPList()
         
         pl.createIntermediateDictionaries = false
         
@@ -270,8 +267,7 @@ class NodeTests: XCTestCase {
     func testStoringPListNodeObjects() throws {
         // test to ensure that root and sub-objects can be stored in variables and subsequently acted upon
         
-        let pl = try PList(data: kSamplePListRawXML.data(using: .utf8)!)
-        verifySamplePListContent(pl)
+        let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
         let root = pl.root
         
@@ -337,7 +333,7 @@ class NodeTests: XCTestCase {
         // test ground rules that were implemented regarding Int and Double casting
         // as a workaround of PropertyListSerialization's merging of <integer> and <real> types into NSNumber
         
-        let pl = PList()
+        let pl = DictionaryPList()
         
         pl.root.double(key: "double").value = 123
         pl.root.int(key: "int").value = 123
@@ -346,7 +342,7 @@ class NodeTests: XCTestCase {
         
         let data = try pl.rawData(format: .xml)
         
-        let pl2 = try PList(data: data)
+        let pl2 = try DictionaryPList(data: data)
         
         // both cast/convert as a Double
         

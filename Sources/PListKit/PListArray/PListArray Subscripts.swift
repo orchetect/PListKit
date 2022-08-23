@@ -10,7 +10,6 @@ import Foundation
 
 #if swift(>=5.7)
 
-/// aka extension PListArray
 extension PListArray {
     // Internal type: NSString
     public subscript(string index: Index) -> String? {
@@ -222,7 +221,7 @@ extension PListArray {
             guard indices.contains(index) else { return }
             
             // setting nil fails silently
-            if let _newValue = newValue as? Element {
+            if let _newValue = newValue {
                 self[index] = _newValue
             }
         }
@@ -233,7 +232,7 @@ extension PListArray {
             guard indices.contains(index) else { return }
             
             // setting nil fails silently
-            if let _value = value as? Element {
+            if let _value = value {
                 self[index] = _value
             }
         }
@@ -249,7 +248,7 @@ extension PListArray {
             guard indices.contains(index) else { return }
             
             // setting nil fails silently
-            if let _newValue = newValue as? Element {
+            if let _newValue = newValue {
                 self[index] = _newValue
             }
         }
@@ -260,7 +259,7 @@ extension PListArray {
             guard indices.contains(index) else { return }
             
             // setting nil fails silently
-            if let _value = value as? Element {
+            if let _value = value {
                 self[index] = _value
             }
         }

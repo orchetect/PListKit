@@ -6,64 +6,59 @@
 
 import Foundation
 
-// MARK: - PList
-
 /// Class representing a Property List (plist).
 ///
-/// - To initialize an empty plist, use `PList()`.
-/// - To load a plist file on disk, use the `init(file:)`, `init(url:)` constructors.
-/// - To load a raw plist file content, use the `init(data:)`, `init(string:)`, `init(dictionary:)` constructors.
-/// - To save a loaded file, use `save()`.
-/// - To save to a new file, use `save(toFile:)`, or `save(toURL:)`.
+/// The `PList` class is specialized by providing the root element type.
 ///
-public class PList {
-    // MARK: - Globals
+/// The most common is a dictionary-rooted plist (``DictionaryPList``)
+///
+/// ```swift
+/// PList<PListDictionary> // typealias: DictionaryPList
+/// ```
+///
+/// For special use cases, a plist can be rooted with any valid ``PListValue`` type, such as an array or single value like String or Int.
+///
+/// ```swift
+/// PList<PListArray> // typealias: ArrayPList
+/// PList<String>
+/// PList<Int>
+/// // etc.
+/// ```
+///
+/// - To initialize an empty plist, use ``init()``.
+/// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
+/// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
+/// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
+///
+/// - Note: ``DictionaryPList`` is the most common plist root type and is recommended.
+public final class PList<Root: PListValue>: PListProtocol, NSCopying {
+    // MARK: - PListProtocol
     
-    internal let fileManager = FileManager.default
+    public var format: PListFormat
+    public var storage: Root = .defaultPListValue()
     
-    // MARK: - Instance properties
+    // (this is exposed only on PList<PListDictionary> by way of computed property)
+    internal var _createIntermediateDictionaries: Bool = false
     
-    /// Get-only property that returns the path and filename of the currently loaded PList file.
-    public internal(set) var filePath: String?
+    // MARK: - init
     
-    /// Get-only property that returns the URL of the currently loaded PList file.
-    public internal(set) var fileURL: URL?
-    
-    /// Root dictionary storage backing for the PList file, containing all keys and nested dictionaries.
-    ///
-    /// Valid value types, all conforming to `PListValue` protocol:
-    ///
-    /// - `String`
-    /// - `Int`
-    /// - `Double`
-    /// - `Bool`
-    /// - `Date`
-    /// - `Data`
-    /// - `PListDictionary`, aka `[String : PListValue]`
-    /// - `PListArray`, aka `[PListValue]`
-    public var storage: PListDictionary = [:]
-    
-    /// Functional nesting tree classes for clean syntax.
-    public var root: PListNode.Root {
-        // Create and return a new class every time this property is accessed, to avoid storing an instance of it
-        PListNode.Root(delegate: self)
+    public init() {
+        format = .xml
     }
     
-    /// Data format of PList when saved to disk.
-    public var format: PropertyListSerialization.PropertyListFormat
-    
-    /// When setting a value using `.root`, determines whether any non-existing dictionaries in the path get created.
-    public var createIntermediateDictionaries: Bool = true
-    
-    // MARK: - Required init
-    
-    /// Create an empty PList object, optionally specifying format.
-    ///
-    /// Format defaults to `xml`.
-    ///
-    public required init(
-        format: PropertyListSerialization.PropertyListFormat = .xml
-    ) {
+    public init(format: PListFormat) {
         self.format = format
+    }
+    
+    // MARK: - NSCopying
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        // copy the class including data and properties
+        
+        let copy = Self(root: storage, format: format)
+        
+        copy.format = format
+        
+        return copy
     }
 }

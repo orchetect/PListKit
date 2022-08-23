@@ -1,16 +1,14 @@
 //
-//  PList rawData.swift
+//  PListProtocol rawData.swift
 //  PListKit • https://github.com/orchetect/PListKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
-extension PList {
-    /// Returns the raw plist content.
-    /// If there is an error, an exception will be thrown.
+extension PListProtocol {
     public func rawData(
-        format: PropertyListSerialization.PropertyListFormat? = nil
+        format: PListFormat? = nil
     ) throws -> Data {
         // if passed as nil, use `format` property
         let fileFormat = format != nil ? format! : self.format

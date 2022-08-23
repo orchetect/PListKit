@@ -10,7 +10,6 @@ import Foundation
 
 #if swift(>=5.7)
 
-/// aka extension PListDictionary
 extension PListDictionary {
     // Internal type: NSString
     public subscript(string key: String) -> String? {
