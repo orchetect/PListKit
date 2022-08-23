@@ -312,4 +312,4 @@ Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/PList
 
 Contributions are welcome. Feel free to post an Issue to discuss.
 
-This library was formerly known as OTPList. 
+This library was formerly known as OTPList.
