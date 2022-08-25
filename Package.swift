@@ -35,24 +35,15 @@ let package = Package(
 )
 
 func addShouldTestFlag() {
-    // swiftSettings may be nil so we can't directly append to it
-    
-    var swiftSettings = package.targets
-        .first(where: { $0.name == "PListKitTests" })?
-        .swiftSettings ?? []
-    
-    swiftSettings.append(.define("shouldTestCurrentPlatform"))
-    
-    package.targets
-        .first(where: { $0.name == "PListKitTests" })?
-        .swiftSettings = swiftSettings
+    package.targets.filter { $0.isTest }.forEach { target in
+        if target.swiftSettings == nil { target.swiftSettings = [] }
+        target.swiftSettings?.append(.define("shouldTestCurrentPlatform"))
+    }
 }
 
-// Swift version in Xcode 12.5.1 which introduced watchOS testing
-#if os(watchOS) && swift(>=5.4.2)
+// Xcode 12.5.1 (Swift 5.4.2) introduced watchOS testing
+#if swift(>=5.4.2)
 addShouldTestFlag()
-#elseif os(watchOS)
-// don't add flag
-#else
+#elseif !os(watchOS)
 addShouldTestFlag()
 #endif
