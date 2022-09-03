@@ -201,7 +201,8 @@ extension PList.PListNode where Root == PListDictionary {
         ) {
             func recursiveSet(
                 dictionary: PListDictionary,
-                pairs: [KeyNodeTypePair]
+                pairs: [KeyNodeTypePair],
+                isRoot: Bool
             ) -> PListDictionary {
                 var pairs = pairs
                 
@@ -214,17 +215,24 @@ extension PList.PListNode where Root == PListDictionary {
                 
                 switch current.type {
                 case .dictionary:
-                    if !pairs.isEmpty,
-                       delegate?.createIntermediateDictionaries ?? false
+                    if isRoot,
+                       pairs.isEmpty
                     {
-                        if let newDict = dictionary[dictCreate: current.key] {
-                            dictionary[dict: current.key] = recursiveSet(
-                                dictionary: newDict,
-                                pairs: pairs
-                            )
-                        }
+                        dictionary[current.key] = value
                     } else {
-                        // we're not allowed to create the non-existent dictionary, so do nothing
+                        if !pairs.isEmpty,
+                           delegate?.createIntermediateDictionaries ?? false
+                        {
+                            if let newDict = dictionary[dictCreate: current.key] {
+                                dictionary[dict: current.key] = recursiveSet(
+                                    dictionary: newDict,
+                                    pairs: pairs,
+                                    isRoot: false
+                                )
+                            }
+                        } else {
+                            // we're not allowed to create the non-existent dictionary, so do nothing
+                        }
                     }
                 default:
                     dictionary[current.key] = value
@@ -235,11 +243,12 @@ extension PList.PListNode where Root == PListDictionary {
             
             guard let dataStore = delegate?.storage else { return }
             
-            guard keys != nil else { return }
+            guard let keys = keys else { return }
             
             let newDataStore = recursiveSet(
                 dictionary: dataStore,
-                pairs: keys!
+                pairs: keys,
+                isRoot: true
             )
             
             delegate?.storage = newDataStore

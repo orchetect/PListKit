@@ -264,6 +264,46 @@ final class DictionaryPList_Node_Tests: XCTestCase {
         )
     }
     
+    func testSet_Root() throws {
+        let pl = DictionaryPList()
+        
+        pl.createIntermediateDictionaries = false
+        
+        // set that `.value =` set works as expected
+        
+        pl.root.array(key: "NewArray").value = [123, "A string"]
+        let arr = try XCTUnwrap(pl.storage["NewArray"] as? PListArray)
+        XCTAssertEqual(arr[0] as? Int, 123)
+        XCTAssertEqual(arr[1] as? String, "A string")
+        
+        pl.root.dict(key: "NewDict").value = ["Key1": 123, "Key2": "A string"]
+        let dict = try XCTUnwrap(pl.storage["NewDict"] as? PListDictionary)
+        
+        XCTAssertEqual(dict["Key1"] as? Int, 123)
+        XCTAssertEqual(dict["Key2"] as? String, "A string")
+        
+        pl.root.bool(key: "NewBool").value = true
+        XCTAssertEqual(pl.storage["NewBool"] as? Bool, true)
+        
+        pl.root.data(key: "NewData").value = Data([0x00, 0xFF])
+        XCTAssertEqual(pl.storage["NewData"] as? Data, Data([0x00, 0xFF]))
+        
+        pl.root.date(key: "NewDate").value = Date(timeIntervalSince1970: 1_527_904_054.0)
+        XCTAssertEqual(pl.storage["NewDate"] as? Date, Date(timeIntervalSince1970: 1_527_904_054.0))
+        
+        pl.root.bool(key: "NewBool").value = true
+        XCTAssertEqual(pl.storage["NewBool"] as? Bool, true)
+        
+        pl.root.double(key: "NewDouble").value = 456.789
+        XCTAssertEqual(pl.storage["NewDouble"] as? Double, 456.789)
+        
+        pl.root.int(key: "NewInt").value = 234
+        XCTAssertEqual(pl.storage["NewInt"] as? Int, 234)
+        
+        pl.root.string(key: "NewString").value = "A new string"
+        XCTAssertEqual(pl.storage["NewString"] as? String, "A new string")
+    }
+    
     func testStoringPListNodeObjects() throws {
         // test to ensure that root and sub-objects can be stored in variables and subsequently acted upon
         
