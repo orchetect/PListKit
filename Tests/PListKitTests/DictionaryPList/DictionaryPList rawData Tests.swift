@@ -1,7 +1,7 @@
 //
 //  DictionaryPList rawData Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -32,7 +32,8 @@ final class DictionaryPList_rawData_Tests: XCTestCase {
         
         // openStep
         // Apple docs:
-        // "The NSPropertyListOpenStepFormat constant is not supported for writing. It can be used only for reading old-style property lists."
+        // "The NSPropertyListOpenStepFormat constant is not supported for writing. It can be used
+        // only for reading old-style property lists."
     }
     
     func testRawData_FromBinary() throws {
@@ -52,7 +53,8 @@ final class DictionaryPList_rawData_Tests: XCTestCase {
         
         // openStep
         // Apple docs:
-        // "The NSPropertyListOpenStepFormat constant is not supported for writing. It can be used only for reading old-style property lists."
+        // "The NSPropertyListOpenStepFormat constant is not supported for writing. It can be used
+        // only for reading old-style property lists."
     }
 }
 

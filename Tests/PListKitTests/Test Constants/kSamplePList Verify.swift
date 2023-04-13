@@ -1,7 +1,7 @@
 //
 //  kSamplePList Verify.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform

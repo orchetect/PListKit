@@ -1,7 +1,7 @@
 //
 //  RawPListDictionary.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -23,7 +23,8 @@ extension RawPListDictionary {
             guard let key = keyRaw as? String else { return nil }
             
             // if key == "SidebarWidthTenElevenOrLater" {
-            //    print("SidebarWidthTenElevenOrLater - type: ", String(describing: type(of: value)), "value:", value)
+            //    print("SidebarWidthTenElevenOrLater - type: ", String(describing: type(of:
+            //      value)), "value:", value)
             //    print("NSNumber doubleValue:", (value as? NSNumber)?.doubleValue as Any)
             //    print("NSNumber intValue:", (value as? NSNumber)?.intValue as Any)
             //    (value as? NSNumber)?.boolValue

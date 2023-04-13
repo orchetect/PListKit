@@ -1,7 +1,7 @@
 //
 //  DictionaryPList Node Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -305,7 +305,8 @@ final class DictionaryPList_Node_Tests: XCTestCase {
     }
     
     func testStoringPListNodeObjects() throws {
-        // test to ensure that root and sub-objects can be stored in variables and subsequently acted upon
+        // test to ensure that root and sub-objects can be stored in variables and subsequently
+        // acted upon
         
         let pl = try kSamplePList.DictRootAllValues.XML.plist()
         
@@ -371,7 +372,8 @@ final class DictionaryPList_Node_Tests: XCTestCase {
     
     func testNumberCasting() throws {
         // test ground rules that were implemented regarding Int and Double casting
-        // as a workaround of PropertyListSerialization's merging of <integer> and <real> types into NSNumber
+        // as a workaround of PropertyListSerialization's merging of <integer> and <real> types into
+        // NSNumber
         
         let pl = DictionaryPList()
         

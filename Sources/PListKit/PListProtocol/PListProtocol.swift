@@ -1,12 +1,13 @@
 //
 //  PListProtocol.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
-/// Protocol which all ``PList`` classes adopt, which provides core methods for loading and saving plist data.
+/// Protocol which all ``PList`` classes adopt, which provides core methods for loading and saving
+/// plist data.
 public protocol PListProtocol {
     /// Root type for the plist.
     ///
@@ -59,7 +60,8 @@ public protocol PListProtocol {
     /// - throws: ``PListLoadError``
     init(file path: String) throws
     
-    /// Instantiate a plist object by loading a plist file from a local file URL or network resource URL.
+    /// Instantiate a plist object by loading a plist file from a local file URL or network resource
+    /// URL.
     ///
     /// - parameter url: A local file URL or network resource URL.
     ///

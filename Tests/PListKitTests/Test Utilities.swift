@@ -1,7 +1,7 @@
 //
 //  Test Utilities.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -11,7 +11,8 @@ import Foundation
 extension FileManager {
     /// Backwards compatible method for retrieving a temporary folder from the system.
     ///
-    /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
+    /// - copyright: Borrowed from [OTCore 1.4.10](https://github.com/orchetect/OTCore) under MIT
+    ///   license.
     static var temporaryDirectoryCompat: URL {
         if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
             return FileManager.default.temporaryDirectory
@@ -28,14 +29,16 @@ extension URL {
     /// - Will return `false` if used on a symlink and the symlink's original file does not exist.
     /// - Will still return `true` if used on an alias and the alias' original file does not exist.
     ///
-    /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
+    /// - copyright: Borrowed from [OTCore 1.4.10](https://github.com/orchetect/OTCore) under MIT
+    ///   license.
     var fileExists: Bool {
         FileManager.default.fileExists(atPath: path)
     }
 }
 
 extension URL {
-    /// Attempts to first move a file to the Trash if possible, otherwise attempts to delete the file.
+    /// Attempts to first move a file to the Trash if possible, otherwise attempts to delete the
+    /// file.
     ///
     /// If the file was moved to the trash, the new resulting `URL` is returned.
     ///
@@ -43,7 +46,8 @@ extension URL {
     ///
     /// If both operations were unsuccessful, an error is thrown.
     ///
-    /// - copyright: Borrowed from [OTCore 1.1.8](https://github.com/orchetect/OTCore) under MIT license.
+    /// - copyright: Borrowed from [OTCore 1.4.10](https://github.com/orchetect/OTCore) under MIT
+    ///   license.
     @discardableResult
     func trashOrDelete() throws -> URL? {
         // funcs

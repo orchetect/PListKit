@@ -1,16 +1,19 @@
 //
 //  AnyPList.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 /// Generic class wrapping a specialized Property List (``PList``) class.
 ///
-/// Using a file or data initializer on this class can be a generic entry-point for reading anonymous plist files. When you have no foreknowledge about a plist's root element this allows you to unwrap the ``PList`` instance specialized to the plist's root type.
+/// Using a file or data initializer on this class can be a generic entry-point for reading
+/// anonymous plist files. When you have no foreknowledge about a plist's root element this allows
+/// you to unwrap the ``PList`` instance specialized to the plist's root type.
 ///
-/// See <doc:Load-a-plist-file-from-disk> and <doc:Working-with-Non-Dictionary-plists> for details on using `AnyPList`.
+/// See <doc:Load-a-plist-file-from-disk> and <doc:Working-with-Non-Dictionary-plists> for details
+/// on using `AnyPList`.
 public struct AnyPList {
     /// Contains a specialized ``PList`` instance.
     public let plist: WrappedPList
@@ -29,7 +32,8 @@ public struct AnyPList {
         try self.init(data: fileContents)
     }
     
-    /// Instantiate a plist object by loading a plist file from a local file URL or network resource URL.
+    /// Instantiate a plist object by loading a plist file from a local file URL or network resource
+    /// URL.
     ///
     /// - parameter url: A local file URL or network resource URL.
     ///
@@ -115,7 +119,8 @@ public enum WrappedPList {
 ///// Generic class wrapping a specialized concrete Property List (plist) class.
 /////
 ///// - To initialize an empty plist, use ``init()``.
-///// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
+///// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)``
+/// constructor.
 ///// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
 ///// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
 // public final class PList<Wrapped: PListProtocol>: PListProtocol, NSCopying {

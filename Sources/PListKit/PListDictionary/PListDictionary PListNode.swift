@@ -1,7 +1,7 @@
 //
 //  PListDictionary PListNode.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -11,9 +11,11 @@ import Foundation
 // all subclasses adopt this
 
 extension DictionaryPList {
-    /// ``PList`` path builder object to facilitate functional traversal of the underlying ``PList`` data storage.
+    /// ``PList`` path builder object to facilitate functional traversal of the underlying ``PList``
+    /// data storage.
     ///
-    /// Do not instance this class directly. Instead, access the `.root` property on a ``PList`` object.
+    /// Do not instance this class directly. Instead, access the `.root` property on a ``PList``
+    /// object.
     ///
     /// At the end of the path, use the `.value` property to get or set the current node's value.
     ///
@@ -209,7 +211,8 @@ extension PList.PListNode where Root == PListDictionary {
                 var dictionary = dictionary
                 
                 guard let current = pairs.popLast() else {
-                    // this should never happen but as a failsafe, just return the dictionary unchanged
+                    // this should never happen but as a failsafe, just return the dictionary
+                    // unchanged
                     return dictionary
                 }
                 
@@ -231,7 +234,8 @@ extension PList.PListNode where Root == PListDictionary {
                                 )
                             }
                         } else {
-                            // we're not allowed to create the non-existent dictionary, so do nothing
+                            // we're not allowed to create the non-existent dictionary, so do
+                            // nothing
                         }
                     }
                 default:

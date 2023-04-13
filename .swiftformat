@@ -9,7 +9,7 @@
 --closurevoid remove
 --commas inline
 --conflictmarkers reject
---decimalgrouping 3,6
+--decimalgrouping ignore
 --elseposition same-line
 --emptybraces spaced
 --enumthreshold 0
@@ -23,7 +23,7 @@
 --funcattributes prev-line
 --groupedextension "MARK: %c"
 --guardelse auto
---header "\n {file}\n PListKit • https://github.com/orchetect/PListKit\n © {year} Steffan Andrews • Licensed under MIT License\n"
+--header "\n {file}\n PListKit • https://github.com/orchetect/PListKit\n © 2020-{year} Steffan Andrews • Licensed under MIT License\n"
 --hexgrouping 4,8
 --hexliteralcase uppercase
 --ifdef no-indent

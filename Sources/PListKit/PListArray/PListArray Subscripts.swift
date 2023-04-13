@@ -1,7 +1,7 @@
 //
 //  PListArray Subscripts.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -184,8 +184,11 @@ extension PListArray {
         }
     }
     
-    /// Get: Access any index's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is. Returns nil if index does not exist (out-of-bounds).
-    /// Set: Set a an index's value, as long as the index exists. Fails silently if index does not exist (out-of-bounds). Setting nil does nothing and will fail silently.
+    /// Get: Access any index's value without prior knowledge of its type. You must then test for
+    /// its type afterwards to determine what type it is. Returns nil if index does not exist
+    /// (out-of-bounds).
+    /// Set: Set a an index's value, as long as the index exists. Fails silently if index does not
+    /// exist (out-of-bounds). Setting nil does nothing and will fail silently.
     public subscript(any index: Index) -> (any PListValue)? {
         get {
             guard indices.contains(index) else { return nil }
@@ -445,8 +448,11 @@ extension Array where Element == PListValue {
         }
     }
     
-    /// Get: Access any index's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is. Returns nil if index does not exist (out-of-bounds).
-    /// Set: Set a an index's value, as long as the index exists. Fails silently if index does not exist (out-of-bounds). Setting nil does nothing and will fail silently.
+    /// Get: Access any index's value without prior knowledge of its type. You must then test for
+    /// its type afterwards to determine what type it is. Returns nil if index does not exist
+    /// (out-of-bounds).
+    /// Set: Set a an index's value, as long as the index exists. Fails silently if index does not
+    /// exist (out-of-bounds). Setting nil does nothing and will fail silently.
     public subscript(any index: Index) -> PListValue? {
         get {
             guard indices.contains(index) else { return nil }

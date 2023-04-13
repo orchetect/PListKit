@@ -1,12 +1,14 @@
 //
 //  PListValue.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
-/// Protocol representing all native Swift value types that property lists support, to facilitate type safety and help prevent PList file save failure due to inadvertent use of incompatible value types.
+/// Protocol representing all native Swift value types that property lists support, to facilitate
+/// type safety and help prevent PList file save failure due to inadvertent use of incompatible
+/// value types.
 public protocol PListValue {
     static func defaultPListValue() -> Self
 }
@@ -63,10 +65,12 @@ extension Array: PListValue where Element == PListValue {
 func convertToPListValue(from object: Any) -> PListValue? {
     // TODO: type(of:) is a workaround to test for a boolean type,
     // since testing for NSNumber's boolValue constants is tricky in Swift
-    // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
+    // this may be a computationally expensive operation, so ideally it should be replaced with a
+    // better method in future
     
     if String(describing: type(of: object)) == "__NSCFBoolean" {
-        // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent failsafe
+        // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent
+        // failsafe
         return object as? Bool
         
     } else {
@@ -102,16 +106,15 @@ func convertToPListValue(from object: Any) -> PListValue? {
     }
 }
 
-func convertToWrappedPList(
-    root object: Any,
-    format: PListFormat
-) -> WrappedPList? {
+func convertToWrappedPList(root object: Any, format: PListFormat) -> WrappedPList? {
     // TODO: type(of:) is a workaround to test for a boolean type,
     // since testing for NSNumber's boolValue constants is tricky in Swift
-    // this may be a computationally expensive operation, so ideally it should be replaced with a better method in future
+    // this may be a computationally expensive operation, so ideally it should be replaced with a
+    // better method in future
     
     if String(describing: type(of: object)) == "__NSCFBoolean" {
-        // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent failsafe
+        // ensure conversion to Bool actually succeeds; if not, add as its original type as a silent
+        // failsafe
         if let obj = object as? Bool {
             return .boolRoot(.init(root: obj, format: format))
         } else {

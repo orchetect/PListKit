@@ -1,7 +1,7 @@
 //
 //  PListDictionary Subscripts.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -111,7 +111,8 @@ extension PListDictionary {
         }
     }
     
-    /// Get: Access any key's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is.
+    /// Get: Access any key's value without prior knowledge of its type. You must then test for its
+    /// type afterwards to determine what type it is.
     /// Set: Set a key's value, identical to setting the standard subscript `self[] =`.
     public subscript(any key: String) -> (any PListValue)? {
         get {
@@ -142,7 +143,8 @@ extension PListDictionary {
         }
     }
     
-    // if key exists and it's an array, return it. if key does not exist, create new array and return it. if key exists but it's not an array, return nil.
+    // if key exists and it's an array, return it. if key does not exist, create new array and
+    // return it. if key exists but it's not an array, return nil.
     // Internal type: Array<AnyObject> (ordered)
     public subscript(arrayCreate key: String) -> PListArray? {
         mutating get {
@@ -186,7 +188,8 @@ extension PListDictionary {
         }
     }
     
-    // if key exists and it's a dictionary, return it. if key does not exist, create new dictionary and return it. if key exists but it's not a dictionary, return nil.
+    // if key exists and it's a dictionary, return it. if key does not exist, create new dictionary
+    // and return it. if key exists but it's not a dictionary, return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
     public subscript(dictCreate key: String) -> PListDictionary? {
         mutating get {
@@ -317,7 +320,8 @@ extension Dictionary where Key == String, Value == PListValue {
         }
     }
     
-    /// Get: Access any key's value without prior knowledge of its type. You must then test for its type afterwards to determine what type it is.
+    /// Get: Access any key's value without prior knowledge of its type. You must then test for its
+    /// type afterwards to determine what type it is.
     /// Set: Set a key's value, identical to setting the standard subscript `self[] =`.
     public subscript(any key: String) -> PListValue? {
         get {
@@ -348,7 +352,8 @@ extension Dictionary where Key == String, Value == PListValue {
         }
     }
     
-    // if key exists and it's an array, return it. if key does not exist, create new array and return it. if key exists but it's not an array, return nil.
+    // if key exists and it's an array, return it. if key does not exist, create new array and
+    // return it. if key exists but it's not an array, return nil.
     // Internal type: Array<AnyObject> (ordered)
     public subscript(arrayCreate key: String) -> PListArray? {
         mutating get {
@@ -392,7 +397,8 @@ extension Dictionary where Key == String, Value == PListValue {
         }
     }
     
-    // if key exists and it's a dictionary, return it. if key does not exist, create new dictionary and return it. if key exists but it's not a dictionary, return nil.
+    // if key exists and it's a dictionary, return it. if key does not exist, create new dictionary
+    // and return it. if key exists but it's not a dictionary, return nil.
     // Internal type: Dictionary<NSObject, AnyObject>
     public subscript(dictCreate key: String) -> PListDictionary? {
         mutating get {

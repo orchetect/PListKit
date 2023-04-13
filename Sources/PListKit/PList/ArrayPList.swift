@@ -1,7 +1,7 @@
 //
 //  ArrayPList.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,9 +9,12 @@ import Foundation
 /// Class representing a Property List (plist) with a ``PListArray`` root.
 ///
 /// - To initialize an empty plist, use ``PList/init()``.
-/// - To load a plist file from file path or URL, use the ``PList/init(file:)`` or ``PList/init(url:)`` constructor.
-/// - To load a raw plist file content, use the ``PList/init(data:)`` or ``PList/init(xml:)`` constructor.
-/// - To save to a file, use ``PList/save(toFileAtPath:format:)``, or ``PList/save(toFileAtURL:format:)``.
+/// - To load a plist file from file path or URL, use the ``PList/init(file:)`` or
+/// ``PList/init(url:)`` constructor.
+/// - To load a raw plist file content, use the ``PList/init(data:)`` or ``PList/init(xml:)``
+///   constructor.
+/// - To save to a file, use ``PList/save(toFileAtPath:format:)``, or
+///   ``PList/save(toFileAtURL:format:)``.
 ///
 /// - Note: This plist root type is less common than ``DictionaryPList``.
 public typealias ArrayPList = PList<PListArray>

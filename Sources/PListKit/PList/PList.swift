@@ -1,7 +1,7 @@
 //
 //  PList.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -16,7 +16,8 @@ import Foundation
 /// PList<PListDictionary> // typealias: DictionaryPList
 /// ```
 ///
-/// For special use cases, a plist can be rooted with any valid ``PListValue`` type, such as an array or single value like String or Int.
+/// For special use cases, a plist can be rooted with any valid ``PListValue`` type, such as an
+/// array or single value like String or Int.
 ///
 /// ```swift
 /// PList<PListArray> // typealias: ArrayPList
@@ -26,7 +27,8 @@ import Foundation
 /// ```
 ///
 /// - To initialize an empty plist, use ``init()``.
-/// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)`` constructor.
+/// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)``
+///   constructor.
 /// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
 /// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
 ///
