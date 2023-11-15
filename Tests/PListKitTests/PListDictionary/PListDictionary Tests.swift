@@ -6,8 +6,8 @@
 
 #if shouldTestCurrentPlatform
 
-import XCTest
 import PListKit
+import XCTest
 
 final class PListDictionary_Tests: XCTestCase {
     override func setUp() { super.setUp() }
@@ -170,7 +170,8 @@ final class PListDictionary_Tests: XCTestCase {
         pl.storage[dict: "TestDict"]?[dict: "NestedDict"] = [:]
         XCTAssertNotNil(pl.storage[dict: "TestDict"]?[dict: "NestedDict"])
         
-        pl.storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"] = "A nested string"
+        pl.storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"] =
+            "A nested string"
         XCTAssertEqual(
             pl.storage[dict: "TestDict"]?[dict: "NestedDict"]?[string: "NestedString"],
             "A nested string"

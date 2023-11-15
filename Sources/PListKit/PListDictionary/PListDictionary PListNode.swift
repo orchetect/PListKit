@@ -37,19 +37,19 @@ extension DictionaryPList {
     /// ```
     ///
     public class PListNode {
-        internal var parent: TreeNode?
+        var parent: TreeNode?
         
-        internal var type: NodeType?
+        var type: NodeType?
         
-        internal var key: String
+        var key: String
         
-        internal init(key: String, type: NodeType? = nil, parent: TreeNode?) {
+        init(key: String, type: NodeType? = nil, parent: TreeNode?) {
             self.key = key
             self.type = type
             self.parent = parent
         }
         
-        internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
+        func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
             var _keys = keys ?? []
             
             if let type = type {
@@ -59,7 +59,7 @@ extension DictionaryPList {
             return parent?.getter(_keys)
         }
         
-        internal func setter(
+        func setter(
             _ keys: [KeyNodeTypePair]? = nil,
             value: PListValue?
         ) {
@@ -145,9 +145,9 @@ extension PList.PListNode where Root == PListDictionary {
 // aka extension DictionaryPList.PListNode
 extension PList.PListNode where Root == PListDictionary {
     public final class Root: DictionaryPList.PListNode.TreeDictionary {
-        internal weak var delegate: DictionaryPList?
+        weak var delegate: DictionaryPList?
         
-        internal init(delegate: DictionaryPList? = nil) {
+        init(delegate: DictionaryPList? = nil) {
             self.delegate = delegate
             
             super.init(
@@ -166,7 +166,7 @@ extension PList.PListNode where Root == PListDictionary {
             }
         }
         
-        override internal func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
+        override func getter(_ keys: [KeyNodeTypePair]? = nil) -> PListValue? {
             func recursiveGet(
                 dictionary: PListDictionary?,
                 pairs: [KeyNodeTypePair]
@@ -288,7 +288,7 @@ extension PList.PListNode where Root == PListDictionary {
     // subnode template
     
     public class SubDictionary: DictionaryPList.PListNode.TreeDictionary {
-        internal init(
+        init(
             key: String,
             parent: DictionaryPList.PListNode.TreeNode
         ) {
@@ -317,7 +317,7 @@ extension PList.PListNode where Root == PListDictionary {
 // aka extension DictionaryPList.PListNode
 extension PList.PListNode where Root == PListDictionary {
     public class SubValue: DictionaryPList.PListNode {
-        internal init(
+        init(
             key: String,
             type: NodeType? = nil,
             parent: DictionaryPList.PListNode.TreeDictionary

@@ -6,8 +6,8 @@
 
 #if shouldTestCurrentPlatform
 
-import XCTest
 import PListKit
+import XCTest
 
 final class AnyPList_Tests: XCTestCase {
     override func setUp() { super.setUp() }

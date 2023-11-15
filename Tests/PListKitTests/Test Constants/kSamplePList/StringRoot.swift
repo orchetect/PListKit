@@ -8,8 +8,8 @@
 
 #if shouldTestCurrentPlatform
 
-import XCTest
 import PListKit
+import XCTest
 
 extension kSamplePList {
     enum StringRoot {

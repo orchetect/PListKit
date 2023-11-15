@@ -40,7 +40,7 @@ public final class PList<Root: PListValue>: PListProtocol, NSCopying {
     public var storage: Root = .defaultPListValue()
     
     // (this is exposed only on PList<PListDictionary> by way of computed property)
-    internal var _createIntermediateDictionaries: Bool = false
+    var _createIntermediateDictionaries: Bool = false
     
     // MARK: - init
     

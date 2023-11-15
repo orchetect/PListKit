@@ -6,8 +6,8 @@
 
 #if shouldTestCurrentPlatform
 
-import XCTest
 import PListKit
+import XCTest
 
 /// Namespace for sample plist constants.
 enum kSamplePList { }
