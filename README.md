@@ -6,7 +6,7 @@ A multiplatform Swift library bringing functional methods and type safety to .pl
 
 ## Summary
 
-The challenges that Apple's standard ` PropertyListSerialization` presents:
+The challenges that Apple's standard `PropertyListSerialization` presents:
 
 1. **Lack of type safety** which allows the inadvertent injection of incompatible value types, which can lead to unexpected errors when saving a plist file later on, and are difficult to diagnose
 2. **Root-level dictionary access only**, making traversal of nested dictionaries very cumbersome
@@ -14,7 +14,7 @@ The challenges that Apple's standard ` PropertyListSerialization` presents:
 
 PListKit solves these issues by:
 
-1. Acting as a **safe and convenient** wrapper for  `PropertyListSerialization`
+1. Acting as a **safe and convenient** wrapper for `PropertyListSerialization`
 2. Providing **clean functional syntax** for
    - easily manipulating nested keys and values in dictionary trees
    - loading and saving plist files
