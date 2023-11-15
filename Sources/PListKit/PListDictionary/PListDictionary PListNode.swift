@@ -197,45 +197,65 @@ extension PList.PListNode where Root == PListDictionary {
             return recursiveGet(dictionary: dataStore, pairs: keys!)
         }
         
-        override internal func setter(
+        override func setter(
             _ keys: [KeyNodeTypePair]? = nil,
             value: PListValue?
         ) {
             func recursiveSet(
                 dictionary: PListDictionary,
                 pairs: [KeyNodeTypePair],
-                isRoot: Bool
+                isInRoot: Bool
             ) -> PListDictionary {
                 var pairs = pairs
-                
+                 
                 var dictionary = dictionary
-                
+                 
                 guard let current = pairs.popLast() else {
                     // this should never happen but as a failsafe, just return the dictionary
                     // unchanged
+                    assertionFailure(
+                        "Recursive plist setter failure: no more values. Please file a bug for PListKit."
+                    )
                     return dictionary
                 }
                 
                 switch current.type {
                 case .dictionary:
-                    if isRoot,
-                       pairs.isEmpty
-                    {
-                        dictionary[current.key] = value
+                    if isInRoot, pairs.isEmpty {
+                        fallthrough
                     } else {
-                        if !pairs.isEmpty,
-                           delegate?.createIntermediateDictionaries ?? false
-                        {
-                            if let newDict = dictionary[dictCreate: current.key] {
+                        if let existingDict = dictionary[current.key] as? PListDictionary {
+                            // dictionary exists, don't need to create it
+                            if pairs.isEmpty {
+                                fallthrough
+                            } else {
                                 dictionary[dict: current.key] = recursiveSet(
-                                    dictionary: newDict,
+                                    dictionary: existingDict,
                                     pairs: pairs,
-                                    isRoot: false
+                                    isInRoot: false
                                 )
                             }
                         } else {
-                            // we're not allowed to create the non-existent dictionary, so do
-                            // nothing
+                            // dictionary doesn't exist; create if allowed
+                            if delegate?.createIntermediateDictionaries ?? false {
+                                if let newDict = dictionary[dictCreate: current.key] {
+                                    if pairs.isEmpty {
+                                        fallthrough
+                                    } else {
+                                        dictionary[dict: current.key] = recursiveSet(
+                                            dictionary: newDict,
+                                            pairs: pairs,
+                                            isInRoot: false
+                                        )
+                                    }
+                                } else {
+                                    // this should never happen
+                                    // print("Error creating new plist dictionary.")
+                                }
+                            } else {
+                                // we're not allowed to create the non-existent dictionary, so do
+                                // nothing
+                            }
                         }
                     }
                 default:
@@ -249,10 +269,11 @@ extension PList.PListNode where Root == PListDictionary {
             
             guard let keys = keys else { return }
             
+            // recursively set nested elements starting from root
             let newDataStore = recursiveSet(
                 dictionary: dataStore,
                 pairs: keys,
-                isRoot: true
+                isInRoot: true
             )
             
             delegate?.storage = newDataStore
