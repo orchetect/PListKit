@@ -35,7 +35,7 @@ let package = Package(
 )
 
 func addShouldTestFlag() {
-    package.targets.filter { $0.isTest }.forEach { target in
+    package.targets.filter(\.isTest).forEach { target in
         if target.swiftSettings == nil { target.swiftSettings = [] }
         target.swiftSettings?.append(.define("shouldTestCurrentPlatform"))
     }

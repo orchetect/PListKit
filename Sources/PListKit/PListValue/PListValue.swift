@@ -61,7 +61,7 @@ extension Array: PListValue where Element == PListValue {
 
 // MARK: - Strong-Typer
 
-/// Helper method that returns `self` as a `PListValue` if it is a valid plist element type.
+/// Helper method that returns `object` as a `PListValue` if it is a valid plist element type.
 func convertToPListValue(from object: Any) -> PListValue? {
     // TODO: type(of:) is a workaround to test for a boolean type,
     // since testing for NSNumber's boolValue constants is tricky in Swift
