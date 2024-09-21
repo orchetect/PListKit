@@ -1,7 +1,7 @@
 //
 //  ArrayPList init Tests.swift
 //  PListKit • https://github.com/orchetect/PListKit
-//  © 2020-2023 Steffan Andrews • Licensed under MIT License
+//  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
 import PListKit
