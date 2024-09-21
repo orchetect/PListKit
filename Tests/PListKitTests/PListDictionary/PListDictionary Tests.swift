@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -230,5 +228,3 @@ final class PListDictionary_Tests: XCTestCase {
         XCTAssertEqual(newDict?[int: "A key"], 123)
     }
 }
-
-#endif

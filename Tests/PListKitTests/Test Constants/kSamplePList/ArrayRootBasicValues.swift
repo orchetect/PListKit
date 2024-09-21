@@ -6,8 +6,6 @@
 
 // swiftformat:options --wrapcollections preserve
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -72,5 +70,3 @@ extension kSamplePList.ArrayRootBasicValues {
         XCTAssertEqual(pl.storage[1] as? Int, 123)
     }
 }
-
-#endif

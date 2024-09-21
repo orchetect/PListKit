@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -83,5 +81,3 @@ fileprivate let plistContent: String = """
     </dict>
     </plist>
     """
-
-#endif

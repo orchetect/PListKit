@@ -33,17 +33,3 @@ let package = Package(
         )
     ]
 )
-
-func addShouldTestFlag() {
-    package.targets.filter(\.isTest).forEach { target in
-        if target.swiftSettings == nil { target.swiftSettings = [] }
-        target.swiftSettings?.append(.define("shouldTestCurrentPlatform"))
-    }
-}
-
-// Xcode 12.5.1 (Swift 5.4.2) introduced watchOS testing
-#if swift(>=5.4.2)
-addShouldTestFlag()
-#elseif !os(watchOS)
-addShouldTestFlag()
-#endif

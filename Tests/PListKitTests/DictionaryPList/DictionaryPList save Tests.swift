@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -63,5 +61,3 @@ final class DictionaryPList_save_Tests: XCTestCase {
         XCTAssertNoThrow(try url.trashOrDelete())
     }
 }
-
-#endif

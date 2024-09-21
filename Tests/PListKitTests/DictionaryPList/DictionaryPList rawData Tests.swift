@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -57,5 +55,3 @@ final class DictionaryPList_rawData_Tests: XCTestCase {
         // only for reading old-style property lists."
     }
 }
-
-#endif

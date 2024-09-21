@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -223,5 +221,3 @@ final class PListArray_Tests: XCTestCase {
         XCTAssertEqual(newArray?[1] as? Int, 123)
     }
 }
-
-#endif

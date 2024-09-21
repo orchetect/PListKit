@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -55,5 +53,3 @@ final class kSamplePList_Verify: XCTestCase {
         kSamplePList.StringRoot.verify(matches: plist)
     }
 }
-
-#endif

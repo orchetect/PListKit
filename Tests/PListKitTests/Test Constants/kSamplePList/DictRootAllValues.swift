@@ -6,8 +6,6 @@
 
 // swiftformat:options --wrapcollections preserve
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -211,5 +209,3 @@ extension kSamplePList.DictRootAllValues {
         )
     }
 }
-    
-#endif

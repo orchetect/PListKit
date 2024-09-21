@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -34,5 +32,3 @@ final class DictionaryPList_NSCopying_Tests: XCTestCase {
         XCTAssertEqual(copy.format, .binary)
     }
 }
-
-#endif

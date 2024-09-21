@@ -6,8 +6,6 @@
 
 // swiftformat:options --wrapcollections preserve
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -65,5 +63,3 @@ extension kSamplePList.StringRoot {
         XCTAssertEqual(pl.storage, "Just a string")
     }
 }
-
-#endif

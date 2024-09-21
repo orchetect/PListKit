@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -144,5 +142,3 @@ final class DictionaryPList_Init_Tests: XCTestCase {
         XCTAssertEqual(pl2.storage[string: "key3"], "A string")
     }
 }
-
-#endif

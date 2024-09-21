@@ -4,8 +4,6 @@
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import PListKit
 import XCTest
 
@@ -679,5 +677,3 @@ final class DictionaryPList_Node_Tests: XCTestCase {
         XCTAssertEqual(pl2.root.int(key: "int").value, 123)
     }
 }
-
-#endif
