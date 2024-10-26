@@ -8,12 +8,8 @@ import PListKit
 import XCTest
 
 final class DictionaryPList_Init_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     func testInit() {
         let pl = DictionaryPList()
-        
         XCTAssertTrue(pl.storage.isEmpty)
     }
     

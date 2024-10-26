@@ -8,10 +8,7 @@ import PListKit
 import XCTest
 
 final class DictionaryPList_NSCopying_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-
-    func testNSCopying() throws {
+   func testNSCopying() throws {
         let pl = try kSamplePList.DictRootAllValues.XML.plist()
     
         // set up other properties

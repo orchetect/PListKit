@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class Subscript_Basic_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     /// Just to test the basic API on the class to ensure it works as expected.
     /// Not meant to be an exhaustive test of dictionary subscripts;
     /// extensive dictionary unit tests already exist in PListDictionary Tests.swift

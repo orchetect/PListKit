@@ -8,11 +8,6 @@ import PListKit
 import XCTest
 
 final class DictionaryPList_save_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    // MARK: - File Save
-    
     func testSave_toFileAtURL() throws {
         let pl = try kSamplePList.DictRootAllValues.XML.plist()
         

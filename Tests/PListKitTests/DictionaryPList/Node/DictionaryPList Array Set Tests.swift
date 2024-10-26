@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class DictionaryPList_ArraySet_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     /// Test to deal with an edge case where setting an Array as a
     /// Dictionary key's value as would fail.
     /// GitHub Issue: https://github.com/orchetect/PListKit/discussions/9

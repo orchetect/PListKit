@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class PListDictionary_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     func testSubscriptGetters() {
         // custom dictionary key subscripts still returns an Optional,
         // but it also conditionally types the element

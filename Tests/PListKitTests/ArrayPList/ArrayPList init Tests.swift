@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class ArrayPList_Init_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     func testInit() {
         let pl = ArrayPList()
         

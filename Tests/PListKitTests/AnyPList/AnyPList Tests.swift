@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class AnyPList_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     func testInit_XML_DictionaryRoot() throws {
         let anyPL = try AnyPList(xml: kSamplePList.DictRootAllValues.XML.raw)
         guard case let .dictionaryRoot(pl) = anyPL.plist else { XCTFail(); return }

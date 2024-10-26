@@ -8,12 +8,8 @@ import PListKit
 import XCTest
 
 final class PList_Init_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     func testInit() {
         let pl = PList<String>()
-        
         XCTAssertEqual(pl.storage, "")
     }
     

@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class kSamplePList_Verify: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     // MARK: - ArrayRootBasicValues
     
     func testArrayRootBasicValues_XML_Verify() throws {

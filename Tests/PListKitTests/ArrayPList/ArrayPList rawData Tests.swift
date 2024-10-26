@@ -8,11 +8,6 @@ import PListKit
 import XCTest
 
 final class ArrayPList_rawData_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    // MARK: - RawData
-    
     func testRawData_FromXML() throws {
         let pl = try kSamplePList.ArrayRootBasicValues.XML.plist()
         

@@ -8,11 +8,6 @@ import PListKit
 import XCTest
 
 final class DictionaryPList_Node_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    // MARK: - Data Nodes
-    
     func testGetAnyKeys() throws {
         // test accessing values using .any(key:)
         

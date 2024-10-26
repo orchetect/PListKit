@@ -8,9 +8,6 @@ import PListKit
 import XCTest
 
 final class PListArray_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
     func testSubscriptGetters() {
         // custom array subscripts still require the index to exist like
         // normal indexing subscripts, but it conditionally types the element
