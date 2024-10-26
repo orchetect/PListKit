@@ -7,7 +7,7 @@
 import Foundation
 
 func readFile(path: String) throws -> Data {
-    guard fileManager.fileExists(atPath: path)
+    guard FileManager.default.fileExists(atPath: path)
     else { throw PListLoadError.fileNotFound }
     
     let url = URL(fileURLWithPath: path)
@@ -19,7 +19,7 @@ func readFile(path: String) throws -> Data {
 
 func readFile(url: URL) throws -> Data {
     if url.isFileURL {
-        guard fileManager.fileExists(atPath: url.path)
+        guard FileManager.default.fileExists(atPath: url.path)
         else { throw PListLoadError.fileNotFound }
     }
     
