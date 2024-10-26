@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// Generic class wrapping a specialized Property List (``PList``) class.
+/// Type-erased box wrapping a specialized Property List (``PList``) class.
 ///
 /// Using a file or data initializer on this class can be a generic entry-point for reading
 /// anonymous plist files. When you have no foreknowledge about a plist's root element this allows
@@ -113,72 +113,3 @@ public enum WrappedPList {
     }
     #endif
 }
-
-// TODO: - experimental code, can delete later
-
-///// Generic class wrapping a specialized concrete Property List (plist) class.
-/////
-///// - To initialize an empty plist, use ``init()``.
-///// - To load a plist file from file path or URL, use the ``init(file:)`` or ``init(url:)``
-/// constructor.
-///// - To load a raw plist file content, use the ``init(data:)`` or ``init(xml:)`` constructor.
-///// - To save to a file, use ``save(toFileAtPath:format:)``, or ``save(toFileAtURL:format:)``.
-// public final class PList<Wrapped: PListProtocol>: PListProtocol, NSCopying {
-//    /// Specialized plist class instance being wrapped.
-//    public var base: Wrapped
-//
-//    // MARK: - PListProtocol
-//
-//    public typealias Root = Wrapped.Root
-//
-//    public var storage: Root {
-//        get {
-//            base.storage
-//        }
-//        set {
-//            base.storage = newValue
-//        }
-//        _modify {
-//            yield &base.storage
-//        }
-//    }
-//
-//    public var format: PListFormat {
-//        get { base.format }
-//        set { base.format = newValue }
-//    }
-//
-//    // MARK: - init
-//
-//    public init() {
-//        base = Wrapped()
-//    }
-//
-//    public init(format: PListFormat) {
-//        base = Wrapped(format: format)
-//    }
-//
-//    // MARK: - NSCopying
-//
-//    public func copy(with zone: NSZone? = nil) -> Any {
-//        // copy the class including data and properties
-//
-//        // don't want to force PListProtocol itself to adopt NSCopying
-//        // so conditionally cast it here. all plist classes in PListKit will work.
-//        guard let copiedPList = (base as? NSCopying)?
-//            .copy() as? Wrapped
-//        else {
-//            // return empty plist in event of failure
-//            return Self(wrapping: Wrapped())
-//        }
-//
-//        let copy = Self(wrapping: copiedPList)
-//
-//        return copy
-//    }
-//
-//    /// Wraps a specialized plist class.
-//    public init(wrapping plist: Wrapped) {
-//        self.base = plist
-//    }
-// }
