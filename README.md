@@ -46,8 +46,13 @@ Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect]
 
 Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/PListKit/blob/master/LICENSE) for details.
 
+## Community & Support
+
+Please do not email maintainers for technical support. Several options are available for issues and questions:
+
+- Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/PListKit/discussions).
+- If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/PListKit/issues).
+
 ## Contributions
 
-Contributions are welcome. Feel free to post an Issue to discuss.
-
-This library was formerly known as OTPList.
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/PListKit/discussions) first prior to new submitting PRs for features or modifications is encouraged.
