@@ -41,7 +41,7 @@ jobs:
     - name: Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
    
-   macOS-15:
+  macOS-15:
     name: macOS 15
     runs-on: macos-latest
     steps:
