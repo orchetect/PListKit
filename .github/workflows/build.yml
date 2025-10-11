@@ -26,7 +26,7 @@ on:
 
 env:
   SCHEME: "PListKit-CI"
-  
+
 jobs:
   macOS-14:
     name: macOS 14 Sonoma (Xcode 15.4)
@@ -40,7 +40,7 @@ jobs:
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-  
+   
    macOS-15:
     name: macOS 15
     runs-on: macos-latest
